@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <%- include('../partials/head', {title: 'All Courses'}) %>
+    <body>
+        <h1><%= deck.name %></h1>
+        <h2>Cards:</h2>
+        <style>
+            .cards-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                max-width: 600px;
+                row-gap: 1rem;
+            }
+        </style>
+        <div class="cards-grid">
+            <% cards.forEach(function(card) { %>
+            <div class="question"><%= card.question %></div>
+            <div class="answer"><%= card.answer %></div>
+            <% }) %>
+        </div>
+
+        <h2>Create a new card:</h2>
+        <form action="/cards" method="post">
+            <input
+                type="hidden"
+                id="deck"
+                name="deck"
+                value="<%= deck._id %>"
+            />
+
+            <label for="question">Question:</label>
+            <textarea id="question" name="question" required></textarea>
+
+            <label for="answer">Answer:</label>
+            <textarea id="answer" name="answer" required> </textarea>
+
+            <button type="submit">Create Deck</button>
+        </form>
+    </body>
+</html>
