@@ -5,22 +5,40 @@
         <h1><%= deck.name %></h1>
         <h2>Cards:</h2>
         <style>
-            .cards-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
+            .cards {
+                display: flex;
+                flex-direction: column;
                 max-width: 600px;
-                row-gap: 1rem;
+                gap: 1rem;
+            }
+            .card {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 1rem;
+                padding: 1rem;
+                border-radius: 0.5rem;
+            }
+            .card:hover {
+                background-color: lightgray;
+            }
+            .question,
+            .answer {
+                flex-grow: 1;
+                max-width: 50%;
             }
         </style>
-        <div class="cards-grid">
+        <div class="cards">
             <% cards.forEach(function(card) { %>
-            <div class="question"><%= card.question %></div>
-            <div class="answer"><%= card.answer %></div>
+            <a class="card" href="/cards/<%= card._id %>">
+                <div class="question"><%= card.question %></div>
+                <div class="answer"><%= card.answer %></div>
+            </a>
             <% }) %>
         </div>
 
         <h2>Create a new card:</h2>
-        <form action="/cards" method="post">
+        <form class="card-form" action="/cards" method="post">
             <input
                 type="hidden"
                 id="deck"
@@ -34,7 +52,7 @@
             <label for="answer">Answer:</label>
             <textarea id="answer" name="answer" required> </textarea>
 
-            <button type="submit">Create Deck</button>
+            <button type="submit">Create</button>
         </form>
     </body>
 </html>
