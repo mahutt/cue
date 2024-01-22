@@ -5,7 +5,9 @@ const asyncHandler = require('express-async-handler');
 
 // Create a card.
 exports.create_card = asyncHandler(async (req, res, next) => {
-    const { deck, question, answer } = req.body;
+    const deck = req.body.deck;
+    const question = req.body.question.trim();
+    const answer = req.body.answer.trim();
     const index = await Card.countDocuments({
         deck: deck,
     });
@@ -23,7 +25,9 @@ exports.read_card = asyncHandler(async (req, res, next) => {
 
 // Uppdate a card.
 exports.update_card = asyncHandler(async (req, res, next) => {
-    const { id, question, answer } = req.body;
+    const id = req.body.id;
+    const question = req.body.question.trim();
+    const answer = req.body.answer.trim();
     const updatedCard = await Card.findOneAndUpdate(
         { _id: id },
         { $set: { question: question, answer: answer } },

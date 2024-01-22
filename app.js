@@ -12,10 +12,10 @@ const cardsRouter = require('./routes/cards');
 var app = express();
 
 // mongoose connection setup
+const config = require('./config');
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
-const mongoDB =
-    'mongodb+srv://ozoneblue:ozonebluefunkblanktrain@cluster0.ol7ldvl.mongodb.net/?retryWrites=true&w=majority';
+const mongoDB = config.mongoDB;
 
 main().catch((err) => console.log(err));
 async function main() {
