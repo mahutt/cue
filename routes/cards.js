@@ -13,4 +13,7 @@ router.get('/:id', card_controller.read_card);
 // Updating a card.
 router.post('/update', card_controller.update_card);
 
+// Deleting a card.
+router.delete('/:id', card_controller.delete_card);
+
 module.exports = router;

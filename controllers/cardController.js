@@ -13,7 +13,7 @@ exports.create_card = asyncHandler(async (req, res, next) => {
     });
     const newCard = new Card({ deck, index, question, answer });
     const savedCard = await newCard.save();
-    res.redirect(`/decks/${deck}`);
+    res.render('card/preview', { card: savedCard });
 });
 
 // Read a card.
@@ -37,5 +37,16 @@ exports.update_card = asyncHandler(async (req, res, next) => {
         res.redirect(`/decks/${updatedCard.deck}`);
     } else {
         throw new Error('Could not update card.');
+    }
+});
+
+// Delete a card.
+exports.delete_card = asyncHandler(async (req, res, next) => {
+    const id = req.params.id;
+    const deletedCard = await Card.findOneAndDelete({ _id: id });
+    if (deletedCard) {
+        res.status(200).send('');
+    } else {
+        throw new Error('Could not delete card.');
     }
 });
