@@ -12,12 +12,6 @@ const cardsRouter = require('./routes/cards');
 
 var app = express();
 
-// mongoose connection setup
-const config = require('./config');
-const mongoose = require('mongoose');
-mongoose.set('strictQuery', false);
-const mongoDB = config.mongoDB;
-
 main().catch((err) => console.log(err));
 async function main() {
     await mongoose.connect(mongoDB);
