@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <%- include('./partials/head', {title: user.name}) %>
+    <body>
+        <h1><%= user.name %></h1>
+        <h2>Courses</h2>
+        <div class="courses">
+            <% courses.forEach(function(course) { %> <%- include('./course/preview', { course: course }) %> <% }) %>
+        </div>
+        <h2>Add New Course</h2>
+        <form
+            hx-post="/courses"
+            hx-trigger="submit"
+            hx-target=".courses"
+            hx-swap="beforeend"
+            hx-on::after-request="this.reset()"
+        >
+            <label for="name">Course Name:</label>
+            <input type="text" id="name" name="name" required maxlength="100" />
+            <br />
+
+            <label for="department">Department:</label>
+            <input type="text" id="department" name="department" required maxlength="4" />
+            <br />
+
+            <label for="number">Course Number:</label>
+            <input type="number" id="number" name="number" required />
+            <br />
+
+            <input type="hidden" id="user_id" name="user_id" value="<%= user.id %>" />
+
+            <button type="submit">Create Course</button>
+        </form>
+    </body>
+</html>

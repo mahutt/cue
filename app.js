@@ -4,8 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var coursesRouter = require('./routes/courses');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const coursesRouter = require('./routes/courses');
 const decksRouter = require('./routes/decks');
 const cardsRouter = require('./routes/cards');
 
@@ -22,6 +23,8 @@ async function main() {
     await mongoose.connect(mongoDB);
 }
 
+require('./database/database');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -33,6 +36,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/', usersRouter);
 app.use('/courses', coursesRouter);
 app.use('/decks', decksRouter);
 app.use('/cards', cardsRouter);

@@ -10,7 +10,10 @@ router.get('/', course_controller.course_list);
 // Creating a course.
 router.post('/', course_controller.create_course);
 
-// Viewing a course.
-router.get('/:id', course_controller.show_course);
+// Updating a course.
+router.patch('/:id', course_controller.update_course);
+
+// deleting a course.
+router.delete('/:id', course_controller.delete_course);
 
 module.exports = router;

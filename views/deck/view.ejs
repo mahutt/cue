@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <%- include('../partials/head', {title: deck.name}) %>
+    <body>
+        <style>
+            .cards {
+                display: flex;
+                flex-direction: column;
+                max-width: 600px;
+                gap: 1rem;
+            }
+            .card {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: 1rem;
+                padding: 1rem;
+                border-radius: 0.5rem;
+            }
+            .card:hover {
+                background-color: lightgray;
+            }
+            .question,
+            .answer {
+                flex: 1;
+                /* max-width: 50%; */
+            }
+        </style>
+        <%- include('./title', {deck: deck}) %>
+        <h2>Cards:</h2>
+        <div class="cards">
+            <% cards.forEach(function(card) { %> <%- include('../card/preview', { card: card }) %> <% }) %>
+        </div>
+
+        <h2>Create a new card:</h2>
+        <form
+            hx-post="/cards"
+            hx-trigger="submit"
+            hx-target=".cards"
+            hx-swap="beforeend"
+            hx-on::after-request="this.reset()"
+        >
+            <label for="name">Question</label>
+            <input type="text" id="question" name="question" required />
+            <br />
+
+            <label for="name">Answer</label>
+            <input type="text" id="answer" name="answer" required />
+            <br />
+
+            <input type="hidden" id="deck_id" name="deck_id" value="<%= deck.id %>" />
+
+            <button type="submit">Create Card</button>
+        </form>
+        <h2>Danger</h2>
+        <button
+            hx-delete="/decks/<%= deck.id %>"
+            hx-confirm="Delete this deck?"
+            hx-on::after-request="window.location.href = window.location.href.replace(/[^/]*$/, '');"
+        >
+            Delete Deck
+        </button>
+        <script type="module" src="/javascripts/components/clipboardLink.component.js"></script>
+    </body>
+</html>

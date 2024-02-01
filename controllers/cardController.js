@@ -1,52 +1,62 @@
+const User = require('../models/user');
+const Course = require('../models/course');
 const Deck = require('../models/deck');
 const Card = require('../models/card');
-
 const asyncHandler = require('express-async-handler');
 
-// Create a card.
+// Display list of all decks.
+exports.course_list = asyncHandler(async (req, res, next) => {
+    const allDecks = await Deck.allByCourseId();
+    res.render('course/index', { course_list: allCourses });
+});
+
+// Create a card
 exports.create_card = asyncHandler(async (req, res, next) => {
-    const deck = req.body.deck;
-    const question = req.body.question.trim();
-    const answer = req.body.answer.trim();
-    const index = await Card.countDocuments({
-        deck: deck,
-    });
-    const newCard = new Card({ deck, index, question, answer });
-    const savedCard = await newCard.save();
-    res.render('card/preview', { card: savedCard });
+    try {
+        const { question, answer, deck_id } = req.body;
+        const savedDeck = await Card.save({ question, answer, deck_id });
+        console.log(savedDeck);
+        res.render('card/preview', { card: savedDeck });
+    } catch (error) {
+        console.log(error);
+    }
 });
 
-// Read a card.
-exports.read_card = asyncHandler(async (req, res, next) => {
-    const id = req.params.id;
-    const card = await Card.findById(id);
-    res.render('card/show', { card: card });
+// Read a deck
+exports.view_deck = asyncHandler(async (req, res, next) => {
+    const { userName, courseCode, deckPosition } = req.params;
+
+    const department = courseCode.substring(0, 4);
+    const number = courseCode.substring(4);
+
+    const user = await User.findByName(userName);
+    console.log(user);
+    const course = await Course.find({ department, number, user_id: user.id });
+    console.log(course);
+    const deck = await Deck.find({ position: deckPosition, course_id: course.id });
+    console.log(deckPosition);
+    console.log(deck);
+    res.render('deck/view', { deck: deck, cards: [] });
 });
 
-// Uppdate a card.
+// Update a course
 exports.update_card = asyncHandler(async (req, res, next) => {
-    const id = req.body.id;
-    const question = req.body.question.trim();
-    const answer = req.body.answer.trim();
-    const updatedCard = await Card.findOneAndUpdate(
-        { _id: id },
-        { $set: { question: question, answer: answer } },
-        { new: true }
-    );
-    if (updatedCard) {
-        res.redirect(`/decks/${updatedCard.deck}`);
+    const id = req.params.id;
+    const column = req.body.column;
+    const value = req.body.value.trim();
+
+    if (!['question', 'answer'].includes(column)) {
+        res.sendStatus(400);
     } else {
-        throw new Error('Could not update card.');
+        await Card.updateById({ id, column, value });
+        res.sendStatus(200);
     }
 });
 
-// Delete a card.
+// Delete a course
 exports.delete_card = asyncHandler(async (req, res, next) => {
+    console.log('here');
     const id = req.params.id;
-    const deletedCard = await Card.findOneAndDelete({ _id: id });
-    if (deletedCard) {
-        res.status(200).send('');
-    } else {
-        throw new Error('Could not delete card.');
-    }
+    await Card.deleteById(id);
+    res.sendStatus(200);
 });

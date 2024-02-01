@@ -1,13 +1,21 @@
 class CardEditor extends HTMLElement {
+    // @here tryna make update work! (patch request)
     connectedCallback() {
         this.innerHTML = `
+            <style>
+                .question, .answer {
+                    border: none;
+                    outline: none;
+                    margin: 0;
+                    padding: 0;
+                    font: inherit;
+                    color: inherit;
+                    background-color: transparent;
+                }
+            </style>
             <div class="card">
-                <clipboard-link class="question">
-                    ${this.getAttribute('question')}
-                </clipboard-link>
-                <clipboard-link class="answer">
-                    ${this.getAttribute('answer')}
-                </clipboard-link>
+                <input type="text" name="question" class="question" value="${this.getAttribute('question')}" />
+                <input type="text" name="answer" class="answer" value="${this.getAttribute('answer')}" />
                 <a
                     href="/cards/${this.getAttribute('id')}"
                     style="width: 16px; height: 16px"
@@ -29,9 +37,40 @@ class CardEditor extends HTMLElement {
                 </button>
             </div>
         `;
+        this.querySelectorAll('input').forEach((field) => {
+            field.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    this.updateCard(field);
+                }
+            });
+        });
         this.querySelector('button').addEventListener('click', (event) => {
             this.deleteCard();
         });
+    }
+
+    updateCard(field) {
+        fetch(`/cards/${this.getAttribute('id')}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                column: field.name,
+                value: field.value,
+            }),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    field.blur();
+                    customElements.get('notification-banner').instance.notify('Card updated!');
+                } else {
+                    customElements.get('notification-banner').instance.notify('Could not update card.');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     // Deleting this card.

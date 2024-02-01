@@ -1,4 +1,5 @@
 :root {
+    font-size: 18px;
     font-family: Inter, sans-serif;
     font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
 }
@@ -37,4 +38,16 @@ button {
 }
 .card-form textarea {
     height: 6rem;
+}
+
+/* course styling */
+course-title .course-name,
+deck-title .deck-name {
+    font-size: 2rem;
+    font-weight: 700;
+}
+course-title .course-code {
+    color: gray;
+    font-size: 1rem;
+    font-weight: 400;
 }

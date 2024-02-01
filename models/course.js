@@ -1,27 +1,93 @@
-const mongoose = require('mongoose');
+const db = require('../database/database');
 
-const Schema = mongoose.Schema;
+// Find courses by user_id
+exports.allByUserId = function (user_id) {
+    return new Promise((resolve, reject) => {
+        db.all(
+            `SELECT *, department || number AS code
+            FROM courses WHERE user_id = ?`,
+            [user_id],
+            (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            }
+        );
+    });
+};
 
-const CourseSchema = new Schema({
-    name: { type: String, required: true, maxLength: 100 },
-    department: { type: String, required: true, maxLength: 4 },
-    number: { type: Number, required: true },
-});
+// Find course by department, number, and user_id
+exports.find = function ({ department, number, user_id }) {
+    return new Promise((resolve, reject) => {
+        db.get(
+            `SELECT *, department || number AS code
+            FROM courses WHERE department = ? AND number = ? AND user_id = ?`,
+            [department, number, user_id],
+            (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            }
+        );
+    });
+};
 
-// Converts department to lower case prior to saving.
-CourseSchema.pre('save', function (next) {
-    if (this.department && typeof this.department === 'string') {
-        this.department = this.department.toLowerCase();
-    }
-    next();
-});
+// Save a course
+exports.save = function ({ name, department, number, user_id }) {
+    return new Promise((resolve, reject) => {
+        return db.run(
+            `
+                INSERT INTO courses (name, department, number, user_id)
+                VALUES (?, ?, ?, ?);
+            `,
+            [name, department, number, user_id],
+            (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            }
+        );
+    });
+};
 
-// Returns course code.
-CourseSchema.virtual('code').get(function () {
-    return `${this.department}${this.number}`;
-});
+exports.updateById = function (id, { name, department, number }) {
+    name = name.trim();
+    department = department.trim().toLowerCase();
+    number = parseInt(number.trim(), 10);
 
-// Enforces course code uniqueness.
-CourseSchema.index({ department: 1, number: 1 }, { unique: true });
+    return new Promise((resolve, reject) => {
+        return db.run(
+            `
+                UPDATE courses
+                SET name = ?, department = ?, number = ?
+                WHERE id = ?
+            `,
+            [name, department, number, id],
+            (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            }
+        );
+    });
+};
 
-module.exports = mongoose.model('Course', CourseSchema);
+exports.deleteById = function (id) {
+    return new Promise((resolve, reject) => {
+        return db.run(`DELETE from courses WHERE id = ?`, [id], (err, rows) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(rows);
+            }
+        });
+    });
+};

@@ -1,23 +1,48 @@
+const User = require('../models/user');
 const Course = require('../models/course');
 const Deck = require('../models/deck');
 const Card = require('../models/card');
-
 const asyncHandler = require('express-async-handler');
+
+// Display list of all decks.
+exports.course_list = asyncHandler(async (req, res, next) => {
+    const allDecks = await Deck.allByCourseId();
+    res.render('course/index', { course_list: allCourses });
+});
 
 // Create a deck.
 exports.create_deck = asyncHandler(async (req, res, next) => {
-    const { course, name } = req.body;
-    const newDeck = new Deck({ course, name });
-    const savedDeck = await newDeck.save();
-    res.redirect(`/courses/${course}`);
+    const { name, course_id } = req.body;
+    const savedDeck = await Deck.save({ name, course_id });
+    res.render('deck/preview', { deck: savedDeck });
 });
 
-// Display a deck.
-exports.show_deck = asyncHandler(async (req, res, next) => {
+// Read a deck
+exports.view_deck = asyncHandler(async (req, res, next) => {
+    const { userName, courseCode, deckPosition } = req.params;
+
+    const department = courseCode.substring(0, 4);
+    const number = courseCode.substring(4);
+
+    const user = await User.findByName(userName);
+    const course = await Course.find({ department, number, user_id: user.id });
+    const deck = await Deck.find({ position: deckPosition, course_id: course.id });
+    const cards = await Card.allByDeckId(deck.id);
+
+    res.render('deck/view', { deck: deck, cards: cards });
+});
+
+// Update a course
+exports.update_deck = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
+    const name = req.body.name.trim();
+    await Deck.updateById(id, { name });
+    res.sendStatus(200);
+});
 
-    const deck = await Deck.findById(id);
-    const deckCards = await Card.find({ deck: id });
-
-    res.render('deck/show', { deck: deck, cards: deckCards });
+// Delete a course
+exports.delete_deck = asyncHandler(async (req, res, next) => {
+    const id = req.params.id;
+    await Deck.deleteById(id);
+    res.sendStatus(200);
 });

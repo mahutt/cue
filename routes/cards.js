@@ -7,13 +7,10 @@ const card_controller = require('../controllers/cardController');
 // Creating a card.
 router.post('/', card_controller.create_card);
 
-// Reading a card.
-router.get('/:id', card_controller.read_card);
-
 // Updating a card.
-router.post('/update', card_controller.update_card);
+router.patch('/:id', card_controller.update_card);
 
-// Deleting a card.
+// deleting a card.
 router.delete('/:id', card_controller.delete_card);
 
 module.exports = router;
