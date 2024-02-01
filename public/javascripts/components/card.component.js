@@ -1,5 +1,4 @@
 class CardEditor extends HTMLElement {
-    // @here tryna make update work! (patch request)
     connectedCallback() {
         this.innerHTML = `
             <style>
@@ -11,21 +10,12 @@ class CardEditor extends HTMLElement {
                     font: inherit;
                     color: inherit;
                     background-color: transparent;
+                    resize: none;
                 }
             </style>
             <div class="card">
-                <input type="text" name="question" class="question" value="${this.getAttribute('question')}" />
-                <input type="text" name="answer" class="answer" value="${this.getAttribute('answer')}" />
-                <a
-                    href="/cards/${this.getAttribute('id')}"
-                    style="width: 16px; height: 16px"
-                >
-                    <img
-                        src="/icons/edit.svg"
-                        alt="Edit"
-                        style="width: 100%; height: 100%"
-                    />
-                </a>
+                <textarea type="text" name="question" class="question">${this.getAttribute('question')}</textarea>
+                <textarea type="text" name="answer" class="answer">${this.getAttribute('answer')}</textarea>
                 <button
                     style="width: 16px; height: 16px"
                 >
@@ -37,7 +27,18 @@ class CardEditor extends HTMLElement {
                 </button>
             </div>
         `;
-        this.querySelectorAll('input').forEach((field) => {
+        this.querySelectorAll('textarea').forEach((field) => {
+            // 0 second timeout defers execution so that resize applies correctly
+            setTimeout(() => {
+                this.resize(field);
+            }, 0);
+            field.addEventListener(
+                'input',
+                (e) => {
+                    this.resize(field);
+                },
+                false
+            );
             field.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     this.updateCard(field);
@@ -47,6 +48,11 @@ class CardEditor extends HTMLElement {
         this.querySelector('button').addEventListener('click', (event) => {
             this.deleteCard();
         });
+    }
+
+    resize(field) {
+        field.style.height = 'fit-content';
+        field.style.height = field.scrollHeight + 'px';
     }
 
     updateCard(field) {
