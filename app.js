@@ -12,11 +12,6 @@ const cardsRouter = require('./routes/cards');
 
 var app = express();
 
-main().catch((err) => console.log(err));
-async function main() {
-    await mongoose.connect(mongoDB);
-}
-
 require('./database/database');
 
 // view engine setup
