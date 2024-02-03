@@ -15,7 +15,6 @@ exports.create_card = asyncHandler(async (req, res, next) => {
     try {
         const { question, answer, deck_id } = req.body;
         const savedDeck = await Card.save({ question, answer, deck_id });
-        console.log(savedDeck);
         res.render('card/preview', { card: savedDeck });
     } catch (error) {
         console.log(error);
@@ -55,7 +54,6 @@ exports.update_card = asyncHandler(async (req, res, next) => {
 
 // Delete a course
 exports.delete_card = asyncHandler(async (req, res, next) => {
-    console.log('here');
     const id = req.params.id;
     await Card.deleteById(id);
     res.sendStatus(200);
