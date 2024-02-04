@@ -12,13 +12,9 @@ exports.course_list = asyncHandler(async (req, res, next) => {
 
 // Create a card
 exports.create_card = asyncHandler(async (req, res, next) => {
-    try {
-        const { question, answer, deck_id } = req.body;
-        const savedDeck = await Card.save({ question, answer, deck_id });
-        res.render('card/preview', { card: savedDeck });
-    } catch (error) {
-        console.log(error);
-    }
+    const { question, answer, deck_id } = req.body;
+    const savedDeck = await Card.save({ question, answer, deck_id });
+    res.render('card/preview', { card: savedDeck });
 });
 
 // Read a deck
@@ -41,15 +37,11 @@ exports.view_deck = asyncHandler(async (req, res, next) => {
 // Update a course
 exports.update_card = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
-    const column = req.body.column;
-    const value = req.body.value.trim();
+    const question = req.body.question.trim();
+    const answer = req.body.answer.trim();
 
-    if (!['question', 'answer'].includes(column)) {
-        res.sendStatus(400);
-    } else {
-        await Card.updateById({ id, column, value });
-        res.sendStatus(200);
-    }
+    await Card.updateById({ id, question, answer });
+    res.sendStatus(200);
 });
 
 // Delete a course

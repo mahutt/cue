@@ -42,9 +42,9 @@ exports.save = function ({ question, answer, deck_id }) {
     });
 };
 
-exports.updateById = function ({ id, column, value }) {
+exports.updateById = function ({ id, question, answer }) {
     return new Promise((resolve, reject) => {
-        return db.run(`UPDATE cards SET ${column} = ? WHERE id = ?`, [value, id], (err, rows) => {
+        return db.run(`UPDATE cards SET question = ?, answer = ? WHERE id = ?`, [question, answer, id], (err, rows) => {
             if (err) {
                 reject(err);
             } else {
