@@ -10,7 +10,14 @@ class CardForm extends HTMLElement {
 
         this.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
-                this.createCard();
+                e.preventDefault();
+                if (this.question.value.trim() === '') {
+                    this.question.textarea.focus();
+                } else if (this.answer.value.trim() === '') {
+                    this.answer.textarea.focus();
+                } else {
+                    this.createCard();
+                }
             }
         });
     }
