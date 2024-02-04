@@ -1,10 +1,16 @@
 class CardFace extends HTMLElement {
+    get value() {
+        return this.textarea.value;
+    }
+    set value(value) {
+        this.textarea.value = value;
+    }
     connectedCallback() {
-        this.innerHTML = `
-            <textarea type="text" class="${this.getAttribute('type')}">${this.getAttribute('value')}</textarea>
-        `;
-        this.field = this.querySelector('textarea');
-        this.field.style = `
+        this.textarea = document.createElement('textarea');
+        this.textarea.classList.add(this.getAttribute('side'));
+        this.textarea.textContent = this.getAttribute('value') || '';
+
+        this.textarea.style = `
             border: none;
             outline: none;
             margin: 0;
@@ -14,27 +20,32 @@ class CardFace extends HTMLElement {
             background-color: transparent;
             resize: none;
         `;
+        this.appendChild(this.textarea);
+
         // 0 second timeout defers execution so that resize applies correctly
         setTimeout(() => {
             this.resize();
         }, 0);
-        this.field.addEventListener(
+        this.textarea.addEventListener(
             'input',
             (e) => {
                 this.resize();
             },
             false
         );
-        this.field.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                this.updateFace();
-            }
-        });
+        // If id is not set, this face component is being used in a form.
+        if (this.getAttribute('id') !== null) {
+            this.textarea.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    this.updateFace();
+                }
+            });
+        }
     }
 
     resize() {
-        this.field.style.height = 'fit-content';
-        this.field.style.height = this.field.scrollHeight + 'px';
+        this.textarea.style.height = 'fit-content';
+        this.textarea.style.height = this.textarea.scrollHeight + 'px';
     }
 
     updateFace() {
@@ -45,12 +56,12 @@ class CardFace extends HTMLElement {
             },
             body: JSON.stringify({
                 column: this.getAttribute('type'),
-                value: this.field.value,
+                value: this.textarea.value,
             }),
         })
             .then((response) => {
                 if (response.ok) {
-                    this.field.blur();
+                    this.textarea.blur();
                     customElements.get('notification-banner').instance.notify('Card updated!');
                 } else {
                     customElements.get('notification-banner').instance.notify('Could not update card.');
