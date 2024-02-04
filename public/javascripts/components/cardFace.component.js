@@ -37,6 +37,7 @@ class CardFace extends HTMLElement {
         if (this.getAttribute('id') !== null) {
             this.textarea.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
+                    e.preventDefault();
                     this.updateFace();
                 }
             });
