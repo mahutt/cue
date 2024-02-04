@@ -2,31 +2,6 @@
 <html>
     <%- include('../partials/head', {title: deck.name}) %>
     <body>
-        <style>
-            .cards {
-                display: flex;
-                flex-direction: column;
-                max-width: 600px;
-                gap: 1rem;
-            }
-            card-editor,
-            card-form {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: nowrap;
-                gap: 1rem;
-                padding: 1rem;
-                border-radius: 0.5rem;
-            }
-            .card:hover {
-                background-color: lightgray;
-            }
-            .question,
-            .answer {
-                flex: 1;
-                /* max-width: 50%; */
-            }
-        </style>
         <%- include('./title', {deck: deck}) %>
         <h2>Cards:</h2>
         <div class="cards">
@@ -34,7 +9,7 @@
         </div>
 
         <h2>Create a new card:</h2>
-        <card-form deck_id="<%= deck.id %>"></card-form>
+        <card-form class="card" deck_id="<%= deck.id %>"></card-form>
         <h2>Danger</h2>
         <button
             hx-delete="/decks/<%= deck.id %>"

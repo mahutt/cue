@@ -11,6 +11,7 @@ class CardFace extends HTMLElement {
         this.textarea.textContent = this.content || '';
 
         this.textarea.style = `
+            width: 100%;
             border: none;
             outline: none;
             margin: 0;
