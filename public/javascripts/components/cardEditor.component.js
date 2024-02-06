@@ -1,14 +1,14 @@
 class CardEditor extends HTMLElement {
     connectedCallback() {
-        this.question = document.createElement('card-face');
-        this.question.side = 'question';
-        this.question.content = this.getAttribute('question');
-        this.appendChild(this.question);
+        this.front = document.createElement('card-face');
+        this.front.side = 'front';
+        this.front.content = this.getAttribute('front');
+        this.appendChild(this.front);
 
-        this.answer = document.createElement('card-face');
-        this.answer.side = 'answer';
-        this.answer.content = this.getAttribute('answer');
-        this.appendChild(this.answer);
+        this.back = document.createElement('card-face');
+        this.back.side = 'back';
+        this.back.content = this.getAttribute('back');
+        this.appendChild(this.back);
 
         this.deleteButton = document.createElement('button');
         this.deleteButton.style = 'width: 16px; height: 16px';
@@ -40,14 +40,14 @@ class CardEditor extends HTMLElement {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                question: this.question.value,
-                answer: this.answer.value,
+                front: this.front.value,
+                back: this.back.value,
             }),
         })
             .then((response) => {
                 if (response.ok) {
-                    this.question.textarea.blur();
-                    this.answer.textarea.blur();
+                    this.front.textarea.blur();
+                    this.back.textarea.blur();
                     customElements.get('notification-banner').instance.notify('Card updated!');
                 } else {
                     customElements.get('notification-banner').instance.notify('Could not update card.');

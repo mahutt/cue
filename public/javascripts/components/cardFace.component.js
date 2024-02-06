@@ -9,6 +9,7 @@ class CardFace extends HTMLElement {
         this.textarea = document.createElement('textarea');
         this.textarea.classList.add(this.side);
         this.textarea.textContent = this.content || '';
+        this.textarea.placeholder = this.placeholder || '';
 
         this.textarea.style = `
             width: 100%;

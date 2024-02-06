@@ -14,7 +14,7 @@ exports.allByDeckId = function (deck_id) {
 };
 
 // // Save a deck
-exports.save = function ({ question, answer, deck_id }) {
+exports.save = function ({ front, back, deck_id }) {
     return new Promise((resolve, reject) => {
         db.serialize(() => {
             db.get(`SELECT COUNT(*) as count FROM cards WHERE deck_id = ?`, [deck_id], (err, row) => {
@@ -24,15 +24,15 @@ exports.save = function ({ question, answer, deck_id }) {
                     let position = row.count + 1;
                     db.run(
                         `
-                            INSERT INTO cards (position, question, answer, deck_id)
+                            INSERT INTO cards (position, front, back, deck_id)
                             VALUES (?, ?, ?, ?);
                         `,
-                        [position, question, answer, deck_id],
+                        [position, front, back, deck_id],
                         function (err) {
                             if (err) {
                                 reject(err);
                             } else {
-                                resolve({ id: this.lastID, position, question, answer, deck_id });
+                                resolve({ id: this.lastID, position, front, back, deck_id });
                             }
                         }
                     );
@@ -42,9 +42,9 @@ exports.save = function ({ question, answer, deck_id }) {
     });
 };
 
-exports.updateById = function ({ id, question, answer }) {
+exports.updateById = function ({ id, front, back }) {
     return new Promise((resolve, reject) => {
-        return db.run(`UPDATE cards SET question = ?, answer = ? WHERE id = ?`, [question, answer, id], (err, rows) => {
+        return db.run(`UPDATE cards SET front = ?, back = ? WHERE id = ?`, [front, back, id], (err, rows) => {
             if (err) {
                 reject(err);
             } else {

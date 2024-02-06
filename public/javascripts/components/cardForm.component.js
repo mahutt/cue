@@ -1,20 +1,22 @@
 class CardForm extends HTMLElement {
     connectedCallback() {
-        this.question = document.createElement('card-face');
-        this.question.side = 'question';
-        this.appendChild(this.question);
+        this.front = document.createElement('card-face');
+        this.front.side = 'front';
+        this.front.placeholder = 'front';
+        this.appendChild(this.front);
 
-        this.answer = document.createElement('card-face');
-        this.answer.side = 'answer';
-        this.appendChild(this.answer);
+        this.back = document.createElement('card-face');
+        this.back.side = 'back';
+        this.back.placeholder = 'back';
+        this.appendChild(this.back);
 
         this.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                if (this.question.value.trim() === '') {
-                    this.question.textarea.focus();
-                } else if (this.answer.value.trim() === '') {
-                    this.answer.textarea.focus();
+                if (this.front.value.trim() === '') {
+                    this.front.textarea.focus();
+                } else if (this.back.value.trim() === '') {
+                    this.back.textarea.focus();
                 } else {
                     this.createCard();
                 }
@@ -30,16 +32,16 @@ class CardForm extends HTMLElement {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                question: this.question.value,
-                answer: this.answer.value,
+                front: this.front.value,
+                back: this.back.value,
                 deck_id: this.getAttribute('deck_id'),
             }),
         })
             .then((response) => {
                 if (response.ok) {
-                    this.question.value = '';
-                    this.answer.value = '';
-                    this.question.textarea.focus();
+                    this.front.value = '';
+                    this.back.value = '';
+                    this.front.textarea.focus();
 
                     response.text().then((html) => {
                         const template = document.createElement('template');

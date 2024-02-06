@@ -44,8 +44,8 @@ db.serialize(function () {
         `CREATE TABLE IF NOT EXISTS cards (
             id INTEGER PRIMARY KEY,
             position INTEGER NOT NULL,
-            question TEXT NOT NULL,
-            answer TEXT NOT NULL,
+            front TEXT NOT NULL,
+            back TEXT NOT NULL,
             score INTEGER NOT NULL DEFAULT 0 CHECK(score IN (0, 1, 2)),
             deck_id INTEGER NOT NULL,
             UNIQUE (position, deck_id),
