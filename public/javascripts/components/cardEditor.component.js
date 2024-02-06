@@ -11,6 +11,7 @@ class CardEditor extends HTMLElement {
         this.appendChild(this.back);
 
         this.deleteButton = document.createElement('button');
+        this.deleteButton.classList.add('trash');
         this.deleteButton.style = 'width: 16px; height: 16px';
         this.deleteButton.innerHTML = `
             <img

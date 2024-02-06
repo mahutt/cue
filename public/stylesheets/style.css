@@ -53,11 +53,13 @@ course-title .course-code {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: center;
 
     gap: 1rem;
     padding: 1rem;
     border-radius: 0.5rem;
+}
+.trash {
+    align-self: center;
 }
 @media (max-width: 750px) {
     .card {
