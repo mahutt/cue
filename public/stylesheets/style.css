@@ -9,8 +9,14 @@
     }
 }
 
+* {
+    box-sizing: border-box;
+    min-width: 0;
+}
+
 body {
-    padding: 50px;
+    min-height: 100dvh;
+    margin: 0;
     font-size: 16px;
 }
 
@@ -32,6 +38,7 @@ button {
 /* course styling */
 course-title .course-name,
 deck-title .deck-name {
+    width: 100%;
     font-size: 2rem;
     font-weight: 700;
 }
@@ -45,31 +52,34 @@ course-title .course-code {
 .cards {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
+    align-items: center;
 }
 .card {
     max-width: 1000px;
 
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
 
     gap: 1rem;
-    padding: 1rem;
     border-radius: 0.5rem;
 }
 .trash {
     align-self: center;
 }
-@media (max-width: 750px) {
-    .card {
-        flex-direction: column;
-    }
-}
 card-face {
+    min-width: 200px;
     flex: 1;
     padding: 1rem;
     border: 1px solid rgb(228, 228, 231);
     border-radius: 0.5rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+card-editor {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto auto;
+    align-items: start;
+    gap: 0.5rem;
 }

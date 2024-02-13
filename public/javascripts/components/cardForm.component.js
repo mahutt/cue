@@ -47,7 +47,10 @@ class CardForm extends HTMLElement {
                         const template = document.createElement('template');
                         template.innerHTML = html.trim();
                         const fragment = template.content;
-                        document.querySelector('.cards').appendChild(fragment);
+
+                        const cards = document.querySelector('.cards');
+                        cards.appendChild(fragment);
+                        cards.scrollTop = cards.scrollHeight;
                     });
 
                     customElements.get('notification-banner').instance.notify('Card created!');
