@@ -52,6 +52,26 @@ exports.findByDeckId = function (id) {
     });
 };
 
+exports.findByCardId = function (id) {
+    return new Promise((resolve, reject) => {
+        db.get(
+            `SELECT users.* FROM users
+            JOIN courses ON users.id = courses.user_id
+            JOIN decks ON courses.id = decks.course_id
+            JOIN cards ON decks.id = cards.deck_id
+            WHERE cards.id = ?`,
+            [id],
+            (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            }
+        );
+    });
+};
+
 // register a new user
 exports.register = function ({ name, hash }) {
     console.log({ name, hash });
