@@ -8,7 +8,7 @@ const course_controller = require('../controllers/courseController');
 const deck_controller = require('../controllers/deckController');
 
 // Reading a user.
-router.get('/:name', user_controller.view_profile);
+router.get('/:name', auth_controller.authenticate, user_controller.view_profile);
 
 // Reading a course.
 router.get('/:userName/:courseCode', auth_controller.authenticate, course_controller.view_course);

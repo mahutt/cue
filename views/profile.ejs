@@ -7,6 +7,7 @@
         <div class="courses">
             <% courses.forEach(function(course) { %> <%- include('./course/preview', { course: course }) %> <% }) %>
         </div>
+        <% if (belongs) { %>
         <h2>Add New Course</h2>
         <form
             hx-post="/courses"
@@ -29,5 +30,6 @@
 
             <button type="submit">Create Course</button>
         </form>
+        <% } %>
     </body>
 </html>
