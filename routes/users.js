@@ -14,6 +14,6 @@ router.get('/:name', auth_controller.authenticate, user_controller.view_profile)
 router.get('/:userName/:courseCode', auth_controller.authenticate, course_controller.view_course);
 
 // Reading a deck.
-router.get('/:userName/:courseCode/:deckPosition', deck_controller.view_deck);
+router.get('/:userName/:courseCode/:deckPosition', auth_controller.authenticate, deck_controller.view_deck);
 
 module.exports = router;

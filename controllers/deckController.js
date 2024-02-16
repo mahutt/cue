@@ -4,15 +4,15 @@ const Deck = require('../models/deck');
 const Card = require('../models/card');
 const asyncHandler = require('express-async-handler');
 
-// Display list of all decks.
-exports.course_list = asyncHandler(async (req, res, next) => {
-    const allDecks = await Deck.allByCourseId();
-    res.render('course/index', { course_list: allCourses });
-});
-
 // Create a deck.
 exports.create_deck = asyncHandler(async (req, res, next) => {
     const { name, course_id } = req.body;
+
+    const owner = await User.findByCourseId(course_id);
+    if (!req.user || req.user.name !== owner.name) {
+        return res.sendStatus(401);
+    }
+
     const savedDeck = await Deck.save({ name, course_id });
     res.render('deck/preview', { deck: savedDeck });
 });
@@ -29,12 +29,18 @@ exports.view_deck = asyncHandler(async (req, res, next) => {
     const deck = await Deck.find({ position: deckPosition, course_id: course.id });
     const cards = await Card.allByDeckId(deck.id);
 
-    res.render('deck/view', { deck: deck, cards: cards });
+    const belongs = Boolean(req.user) && req.user.name === user.name;
+    res.render('deck/view', { deck: deck, cards: cards, belongs: belongs });
 });
 
-// Update a course
+// Update a deck
 exports.update_deck = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
+    const owner = await User.findByDeckId(id);
+    if (!req.user || req.user.name !== owner.name) {
+        return res.sendStatus(401);
+    }
+
     const name = req.body.name.trim();
     await Deck.updateById(id, { name });
     res.sendStatus(200);
@@ -43,6 +49,11 @@ exports.update_deck = asyncHandler(async (req, res, next) => {
 // Delete a course
 exports.delete_deck = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
+    const owner = await User.findByDeckId(id);
+    if (!req.user || req.user.name !== owner.name) {
+        return res.sendStatus(401);
+    }
+
     await Deck.deleteById(id);
     res.sendStatus(200);
 });

@@ -32,20 +32,16 @@
                 include('../card/preview', { card: card }) %> <% }) %>
             </div>
 
+            <% if (belongs) { %>
             <div class="card-form-wrapper">
                 <div class="card-form">
                     <h2>Create a new card:</h2>
                     <card-form class="card" deck_id="<%= deck.id %>"></card-form>
                     <h2>Danger</h2>
-                    <button
-                        hx-delete="/decks/<%= deck.id %>"
-                        hx-confirm="Delete this deck?"
-                        hx-on::after-request="window.location.href = window.location.href.replace(/[^/]*$/, '');"
-                    >
-                        Delete Deck
-                    </button>
+                    <delete-resource resource="decks" id="<%= deck.id %>">Delete Deck</delete-resource>
                 </div>
             </div>
+            <% } %>
         </div>
 
         <script type="module" src="/javascripts/components/clipboardLink.component.js"></script>
