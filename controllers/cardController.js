@@ -13,8 +13,8 @@ exports.course_list = asyncHandler(async (req, res, next) => {
 // Create a card
 exports.create_card = asyncHandler(async (req, res, next) => {
     const { front, back, deck_id } = req.body;
-    const savedDeck = await Card.save({ front, back, deck_id });
-    res.render('card/preview', { card: savedDeck });
+    const savedCard = await Card.save({ front, back, deck_id });
+    res.render('card/preview', { card: savedCard });
 });
 
 // Read a deck

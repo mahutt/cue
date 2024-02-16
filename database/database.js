@@ -13,7 +13,8 @@ db.serialize(function () {
     db.run(
         `CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY,
-            name TEXT NOT NULL UNIQUE
+            name TEXT NOT NULL UNIQUE,
+            hash TEXT NOT NULL
         );`
     );
 

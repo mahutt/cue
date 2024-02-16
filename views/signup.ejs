@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <%- include('./partials/head', {title: 'sign up'}) %>
+    <body style="padding: 1rem">
+        <h2>Sign Up:</h2>
+        <% if (typeof error !== 'undefined') { %>
+        <h3 style="color: red"><%- error %></h3>
+        <% } %>
+        <form action="/signup" method="post">
+            <label for="name">name:</label>
+            <input type="text" id="name" name="name" required />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+
+            <button type="submit">Sign Up</button>
+        </form>
+    </body>
+</html>

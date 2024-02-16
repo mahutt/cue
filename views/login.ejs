@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <%- include('./partials/head', {title: 'log in'}) %>
+    <body style="padding: 1rem">
+        <h2>Log in:</h2>
+        <h3 id="error" style="color: red"></h3>
+        <form id="login" action="/login" method="post">
+            <label for="name">name:</label>
+            <input type="text" id="name" name="name" required />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+
+            <button type="submit">Sign Up</button>
+        </form>
+        <script>
+            document.querySelector('form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const formData = {
+                    name: document.getElementById('name').value,
+                    password: document.getElementById('password').value,
+                };
+
+                fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.error !== undefined) {
+                            document.querySelector('#error').innerHTML = data.error;
+                        } else {
+                            const currentDomain = window.location.origin;
+                            window.location.href = window.location.origin + `/${formData.name}`;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+
+                return false;
+            });
+        </script>
+    </body>
+</html>

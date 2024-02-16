@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const authRouter = require('./routes/auth');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const coursesRouter = require('./routes/courses');
@@ -12,6 +13,7 @@ const cardsRouter = require('./routes/cards');
 
 var app = express();
 
+require('dotenv').config();
 require('./database/database');
 
 // view engine setup
@@ -24,6 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/', authRouter);
 app.use('/', indexRouter);
 app.use('/', usersRouter);
 app.use('/courses', coursesRouter);

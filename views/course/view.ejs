@@ -7,7 +7,7 @@
         <div class="decks">
             <% decks.forEach(function(deck) { %> <%- include('../deck/preview', { deck: deck }) %> <% }) %>
         </div>
-
+        <% if (belongs) { %>
         <h2>Create a new deck:</h2>
         <form
             hx-post="/decks"
@@ -25,12 +25,7 @@
             <button type="submit">Create Deck</button>
         </form>
         <h2>Danger</h2>
-        <button
-            hx-delete="/courses/<%= course.id %>"
-            hx-confirm="Delete course <%= course.code %>?"
-            hx-on::after-request="window.location.href = window.location.href.replace(/[^/]*$/, '');"
-        >
-            Delete Course
-        </button>
+        <delete-resource resource="courses" id="<%= course.id %>">Delete Course</delete-resource>
+        <% } %>
     </body>
 </html>
