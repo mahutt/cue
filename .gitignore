@@ -1,5 +1,5 @@
 node_modules/
 backups/
-config.js
+.env
 todo.txt
 database/cue.db
