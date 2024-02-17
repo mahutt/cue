@@ -69,7 +69,7 @@ exports.study = asyncHandler(async (req, res, next) => {
     const course = await Course.find({ department, number, user_id: user.id });
     const deck = await Deck.find({ position: deckPosition, course_id: course.id });
     console.log(deck);
-    const cards = await Card.findWeakestByDeckId({ deck_id: deck.id, limit: 2 });
+    const cards = await Card.findWeakestByDeckId({ deck_id: deck.id, limit: 10 });
 
     console.log(cards.length);
 

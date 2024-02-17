@@ -3,3 +3,4 @@ backups/
 .env
 todo.txt
 database/cue.db
+.ssh

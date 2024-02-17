@@ -37,7 +37,7 @@ exports.login = asyncHandler(async (req, res, next) => {
         const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
         res.cookie('jwt', token, {
             httpOnly: true,
-            secure: true,
+            secure: false, // @todo: obtain ssl certificate, serve over https, and set this to true
             sameSite: 'Strict',
             expires: new Date(Date.now() + 3600000),
         });
