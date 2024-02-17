@@ -16,4 +16,7 @@ router.get('/:userName/:courseCode', auth_controller.authenticate, course_contro
 // Reading a deck.
 router.get('/:userName/:courseCode/:deckPosition', auth_controller.authenticate, deck_controller.view_deck);
 
+// Studying a deck.
+router.get('/:userName/:courseCode/:deckPosition/study', auth_controller.authenticate, deck_controller.study);
+
 module.exports = router;

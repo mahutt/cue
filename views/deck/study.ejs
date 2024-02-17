@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <%- include('../partials/head', {title: deck.name}) %>
+    <style></style>
+    <body style="padding: 1rem">
+        <div class="flippers">
+            <% cards.forEach(function(card) { %>
+            <card-flipper front="<%= card.front %>" back="<%= card.back %>" id="<%= card.id %>"></card-flipper>
+            <% }) %>
+        </div>
+    </body>
+    <script>
+        function displayScore() {
+            fetch(`/decks/<%- deck.id %>/score`, {
+                method: 'GET',
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        customElements.get('notification-banner').instance.notify('Could not fetch score.');
+                    }
+                })
+                .then((data) => {
+                    if (!data || !data.percentage) {
+                        customElements.get('notification-banner').instance.notify('Could not parse score.');
+                        return;
+                    }
+                    const percentage = Math.round(data.percentage);
+                    const flippers = document.querySelector('.flippers');
+                    const scoreboard = document.createElement('div');
+                    scoreboard.classList.add('scoreboard');
+                    scoreboard.innerHTML = `
+                        <div class="percentage">${percentage}%</div>
+                        <a class="black button" href="">again</a>
+                        <a class="black button return" href="">return to deck</a>
+                    `;
+                    scoreboard.querySelector('.return').addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const segments = window.location.pathname.split('/');
+                        if (segments[segments.length - 1] !== '') {
+                            segments.pop();
+                        }
+                        window.location.pathname = segments.join('/');
+                    });
+                    flippers.appendChild(scoreboard);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+        function checkIfFlippersIsEmpty() {
+            const flippersDiv = document.querySelector('.flippers');
+            if (flippersDiv.childElementCount === 0) {
+                displayScore();
+            }
+        }
+        const observer = new MutationObserver((mutationsList, observer) => {
+            for (let mutation of mutationsList) {
+                if (mutation.removedNodes.length > 0) {
+                    checkIfFlippersIsEmpty();
+                }
+            }
+        });
+        const flippersDiv = document.querySelector('.flippers');
+        observer.observe(flippersDiv, { childList: true });
+        checkIfFlippersIsEmpty();
+    </script>
+</html>

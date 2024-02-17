@@ -6,7 +6,6 @@
             .deck-body {
                 height: 100dvh;
                 display: grid;
-                grid-template-rows: 2fr 1fr;
             }
             .cards {
                 overflow-y: auto;
@@ -25,11 +24,20 @@
                 align-items: flex-start;
             }
         </style>
-
+        <% if (belongs) { %>
+        <style>
+            .deck-body {
+                grid-template-rows: 2fr 1fr;
+            }
+        </style>
+        <% } %>
         <div class="deck-body">
             <div class="cards">
-                <%- include('./title', {deck: deck}) %> <% cards.forEach(function(card) { %> <%-
-                include('../card/preview', { card: card }) %> <% }) %>
+                <div class="title">
+                    <%- include('./title', {deck: deck}) %>
+                    <relative-link href="study">study</relative-link>
+                </div>
+                <% cards.forEach(function(card) { %> <%- include('../card/preview', { card: card }) %> <% }) %>
             </div>
 
             <% if (belongs) { %>

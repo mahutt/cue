@@ -1,6 +1,6 @@
 const db = require('../database/database');
 
-// // Find courses by user_id
+// Find courses by user_id
 exports.allByDeckId = function (deck_id) {
     return new Promise((resolve, reject) => {
         db.all(`SELECT * FROM cards WHERE deck_id = ?`, [deck_id], (err, rows) => {
@@ -13,7 +13,7 @@ exports.allByDeckId = function (deck_id) {
     });
 };
 
-// // Save a deck
+// Save a deck
 exports.save = function ({ front, back, deck_id }) {
     return new Promise((resolve, reject) => {
         db.serialize(() => {
@@ -54,6 +54,18 @@ exports.updateById = function ({ id, front, back }) {
     });
 };
 
+exports.scoreById = function ({ id, score }) {
+    return new Promise((resolve, reject) => {
+        return db.run(`UPDATE cards SET score = ? WHERE id = ?`, [score, id], (err, rows) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(rows);
+            }
+        });
+    });
+};
+
 exports.deleteById = function (id) {
     return new Promise((resolve, reject) => {
         return db.run(`DELETE from cards WHERE id = ?`, [id], (err, rows) => {
@@ -63,5 +75,22 @@ exports.deleteById = function (id) {
                 resolve(rows);
             }
         });
+    });
+};
+
+// Find 10 weakest, ordered randomly within their score categories.
+exports.findWeakestByDeckId = function ({ deck_id, limit }) {
+    return new Promise((resolve, reject) => {
+        db.all(
+            `SELECT * FROM cards WHERE deck_id = ? ORDER BY score ASC, RANDOM() LIMIT ${limit};`,
+            [deck_id],
+            (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            }
+        );
     });
 };

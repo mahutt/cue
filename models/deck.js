@@ -84,3 +84,21 @@ exports.deleteById = function (id) {
         });
     });
 };
+
+exports.getScoreById = function (id) {
+    return new Promise((resolve, reject) => {
+        return db.get(
+            `SELECT AVG(score) as average
+            FROM cards
+            WHERE deck_id = ?;`,
+            [id],
+            (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows.average);
+                }
+            }
+        );
+    });
+};

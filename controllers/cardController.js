@@ -32,6 +32,19 @@ exports.update_card = asyncHandler(async (req, res, next) => {
     res.sendStatus(200);
 });
 
+// @todo: make it possible for all users to have their own score of a card / deck
+exports.update_score = asyncHandler(async (req, res, next) => {
+    const id = req.params.id;
+    const owner = await User.findByCardId(id);
+    if (!req.user || req.user.name !== owner.name) {
+        return res.sendStatus(401);
+    }
+
+    const score = req.body.score - 1; // temp
+    await Card.scoreById({ id, score });
+    res.sendStatus(200);
+});
+
 // Delete a course
 exports.delete_card = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
