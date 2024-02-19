@@ -32,7 +32,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     if (user === undefined) {
         return res.send({ error: 'Cannot find user.' });
     }
-    console.log(req.body);
+
     if (await bcrypt.compare(req.body.password, user.hash)) {
         const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
         res.cookie('jwt', token, {

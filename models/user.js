@@ -85,3 +85,15 @@ exports.register = function ({ name, hash }) {
         });
     });
 };
+
+exports.allExcept = function (name) {
+    return new Promise((resolve, reject) => {
+        db.all('SELECT * FROM users WHERE name != ?', [name], (err, rows) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(rows);
+            }
+        });
+    });
+};

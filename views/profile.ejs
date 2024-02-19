@@ -31,5 +31,9 @@
             <button type="submit">Create Course</button>
         </form>
         <% } %>
+        <h2>Other Users</h2>
+        <div class="users">
+            <% users.forEach(function(user) { %> <%- include('./user/preview', { user: user }) %> <% }) %>
+        </div>
     </body>
 </html>

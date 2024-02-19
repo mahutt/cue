@@ -9,5 +9,6 @@ exports.view_profile = asyncHandler(async (req, res, next) => {
     const courses = await Course.allByUserId(user.id);
 
     const belongs = Boolean(req.user) && req.user.name === user.name;
-    res.render('profile', { user: user, courses: courses, belongs: belongs });
+    const otherUsers = await User.allExcept(name);
+    res.render('profile', { user: user, courses: courses, belongs: belongs, users: otherUsers });
 });
