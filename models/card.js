@@ -112,7 +112,7 @@ exports.findWeakestByUserIdAndDeckId = function ({ user_id, deck_id, limit }) {
             WHERE  
                 c.deck_id = ?
             ORDER BY 
-                score DESC, RANDOM()
+                score ASC, RANDOM()
             LIMIT  ${limit}
             `,
             [user_id, deck_id],
