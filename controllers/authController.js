@@ -39,7 +39,7 @@ exports.login = asyncHandler(async (req, res, next) => {
             httpOnly: true,
             secure: true,
             sameSite: 'Strict',
-            expires: new Date(Date.now() + 3600000),
+            expires: new Date(Date.now() + 6 * 3600000),
         });
         return res.send({ token: token });
     } else {
