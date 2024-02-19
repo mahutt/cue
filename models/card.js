@@ -94,3 +94,35 @@ exports.findWeakestByDeckId = function ({ deck_id, limit }) {
         );
     });
 };
+
+exports.findWeakestByUserIdAndDeckId = function ({ user_id, deck_id, limit }) {
+    return new Promise((resolve, reject) => {
+        db.all(
+            `
+            SELECT  
+                c.id,
+                c.position,
+                c.front,
+                c.back,
+                COALESCE(s.score,  0) AS score
+            FROM  
+                cards c
+            LEFT JOIN  
+                scores s ON c.id = s.card_id AND s.user_id = ?
+            WHERE  
+                c.deck_id = ?
+            ORDER BY 
+                score DESC, RANDOM()
+            LIMIT  ${limit}
+            `,
+            [user_id, deck_id],
+            (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            }
+        );
+    });
+};

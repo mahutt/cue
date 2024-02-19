@@ -22,7 +22,7 @@
                     }
                 })
                 .then((data) => {
-                    if (!data || !data.percentage) {
+                    if (!data || data.percentage === undefined) {
                         customElements.get('notification-banner').instance.notify('Could not parse score.');
                         return;
                     }

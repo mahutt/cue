@@ -85,13 +85,16 @@ exports.deleteById = function (id) {
     });
 };
 
-exports.getScoreById = function (id) {
+exports.getScoreByUserIdAndDeckId = function ({ user_id, deck_id }) {
     return new Promise((resolve, reject) => {
         return db.get(
-            `SELECT AVG(score) as average
-            FROM cards
-            WHERE deck_id = ?;`,
-            [id],
+            `
+            SELECT AVG(COALESCE(s.score,  0)) AS average
+            FROM cards c
+            LEFT JOIN scores s ON c.id = s.card_id AND s.user_id = ?
+            WHERE c.deck_id = ?
+            `,
+            [user_id, deck_id],
             (err, rows) => {
                 if (err) {
                     reject(err);

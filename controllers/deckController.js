@@ -58,28 +58,35 @@ exports.delete_deck = asyncHandler(async (req, res, next) => {
     res.sendStatus(200);
 });
 
-// @todo: serve different cards based on logged in user
 exports.study = asyncHandler(async (req, res, next) => {
-    const { userName, courseCode, deckPosition } = req.params;
+    if (!req.user) {
+        return res.sendStatus(401);
+    }
 
+    const { userName, courseCode, deckPosition } = req.params;
     const department = courseCode.substring(0, 4);
     const number = courseCode.substring(4);
 
     const user = await User.findByName(userName);
     const course = await Course.find({ department, number, user_id: user.id });
     const deck = await Deck.find({ position: deckPosition, course_id: course.id });
-    console.log(deck);
-    const cards = await Card.findWeakestByDeckId({ deck_id: deck.id, limit: 10 });
+    const criteria = { user_id: req.user.id, deck_id: deck.id, limit: 10 }; // Hardcoded 10
 
-    console.log(cards.length);
-
+    const cards = await Card.findWeakestByUserIdAndDeckId(criteria);
     res.render('deck/study', { deck, cards });
 });
 
-// @todo:should only get score of currently signed in user
 exports.get_score = asyncHandler(async (req, res, next) => {
-    const id = req.params.id;
-    const score = await Deck.getScoreById(id);
-    const percentage = (score / 2) * 100;
-    res.send({ percentage });
+    try {
+        if (!req.user) {
+            return res.sendStatus(401);
+        }
+        const user_id = req.user.id;
+        const deck_id = req.params.id;
+        const score = await Deck.getScoreByUserIdAndDeckId({ user_id, deck_id });
+        const percentage = (score / 2) * 100; // hardcoded
+        res.send({ percentage });
+    } catch (e) {
+        console.log(e);
+    }
 });

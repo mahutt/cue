@@ -47,10 +47,20 @@ db.serialize(function () {
             position INTEGER NOT NULL,
             front TEXT NOT NULL,
             back TEXT NOT NULL,
-            score INTEGER NOT NULL DEFAULT 0 CHECK(score IN (0, 1, 2)),
             deck_id INTEGER NOT NULL,
             UNIQUE (position, deck_id),
             FOREIGN KEY (deck_id) REFERENCES decks(id) ON DELETE CASCADE
+        )`
+    );
+
+    db.run(
+        `CREATE TABLE IF NOT EXISTS scores (
+            score INTEGER NOT NULL DEFAULT 0 CHECK(score IN (0,  1,  2)),
+            user_id INTEGER NOT NULL,
+            card_id INTEGER NOT NULL,
+            PRIMARY KEY (user_id, card_id),
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE CASCADE
         )`
     );
 
