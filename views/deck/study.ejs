@@ -65,5 +65,15 @@
         const flippersDiv = document.querySelector('.flippers');
         observer.observe(flippersDiv, { childList: true });
         checkIfFlippersIsEmpty();
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                const flippersDiv = document.querySelector('.flippers');
+                const flipper = flippersDiv.querySelector('card-flipper:last-child');
+                if (flipper) {
+                    flipper.flip();
+                }
+            }
+        });
     </script>
 </html>

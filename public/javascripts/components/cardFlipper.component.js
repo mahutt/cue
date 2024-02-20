@@ -25,11 +25,12 @@ class CardFlipper extends HTMLElement {
         });
         this.appendChild(this.scores);
 
-        this.addEventListener('click', () => {
-            this.front.style.display = this.back.style.display;
-            this.back.style.display = this.back.style.display === 'none' ? 'block' : 'none';
-            this.scores.style.display = 'flex';
-        });
+        this.addEventListener('click', this.flip);
+    }
+    flip() {
+        this.front.style.display = this.back.style.display;
+        this.back.style.display = this.back.style.display === 'none' ? 'block' : 'none';
+        this.scores.style.display = 'flex';
     }
     updateScore(score) {
         fetch(`/cards/${this.getAttribute('id')}`, {
