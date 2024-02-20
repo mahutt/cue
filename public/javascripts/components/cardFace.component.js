@@ -35,6 +35,18 @@ class CardFace extends HTMLElement {
             },
             false
         );
+        this.textarea.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.stopPropagation();
+                var cursorPos = this.textarea.selectionStart;
+                var textBeforeCursor = this.textarea.value.substring(0, cursorPos);
+                var textAfterCursor = this.textarea.value.substring(cursorPos);
+                this.textarea.value = textBeforeCursor + '\n' + textAfterCursor;
+                this.textarea.selectionStart = cursorPos + 1;
+                this.textarea.selectionEnd = cursorPos + 1;
+                this.resize();
+            }
+        });
     }
 
     resize() {
