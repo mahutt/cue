@@ -85,7 +85,7 @@ exports.deleteById = function (id) {
     });
 };
 
-exports.getScoreByUserIdAndDeckId = function ({ user_id, deck_id }) {
+exports.getPercentageByUserIdAndDeckId = function ({ user_id, deck_id }) {
     return new Promise((resolve, reject) => {
         return db.get(
             `
@@ -99,7 +99,9 @@ exports.getScoreByUserIdAndDeckId = function ({ user_id, deck_id }) {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(rows.average);
+                    const average = rows.average;
+                    const percentage = average !== null ? Math.round((average / 2) * 100) : null;
+                    resolve(percentage);
                 }
             }
         );

@@ -1,1 +1,4 @@
-<relative-link href="<%= deck.position %>" class="deck"><%= deck.name %></relative-link><br />
+<relative-link href="<%= deck.position %>" class="deck"
+    ><%= deck.name %><% if (deck.percentage !== undefined && deck.percentage !== null) { %> (<%= deck.percentage %>%) <%
+    } %></relative-link
+><br />

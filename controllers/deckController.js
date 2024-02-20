@@ -77,16 +77,11 @@ exports.study = asyncHandler(async (req, res, next) => {
 });
 
 exports.get_score = asyncHandler(async (req, res, next) => {
-    try {
-        if (!req.user) {
-            return res.sendStatus(401);
-        }
-        const user_id = req.user.id;
-        const deck_id = req.params.id;
-        const score = await Deck.getScoreByUserIdAndDeckId({ user_id, deck_id });
-        const percentage = (score / 2) * 100; // hardcoded
-        res.send({ percentage });
-    } catch (e) {
-        console.log(e);
+    if (!req.user) {
+        return res.sendStatus(401);
     }
+    const user_id = req.user.id;
+    const deck_id = req.params.id;
+    const percentage = await Deck.getPercentageByUserIdAndDeckId({ user_id, deck_id });
+    res.send({ percentage });
 });
