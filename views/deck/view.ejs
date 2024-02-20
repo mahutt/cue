@@ -19,6 +19,8 @@
                 padding: 1rem;
             }
             .card-form {
+                width: 100%;
+                max-width: 750px;
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
@@ -33,7 +35,7 @@
         <% } %>
         <div class="deck-body">
             <div class="cards">
-                <div class="title">
+                <div style="width: 100%">
                     <%- include('./title', {deck: deck}) %>
                     <relative-link href="study">study</relative-link>
                 </div>

@@ -65,7 +65,8 @@ course-title .course-code {
     align-items: center;
 }
 .card {
-    max-width: 1000px;
+    width: 100%;
+    max-width: 750px;
 
     display: flex;
     flex-direction: row;
