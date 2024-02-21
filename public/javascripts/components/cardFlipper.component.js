@@ -1,5 +1,6 @@
 class CardFlipper extends HTMLElement {
     connectedCallback() {
+        this.isFlipped = false;
         this.front = document.createElement('div');
         this.front.innerHTML = this.getAttribute('front');
         this.appendChild(this.front);
@@ -28,6 +29,7 @@ class CardFlipper extends HTMLElement {
         this.addEventListener('click', this.flip);
     }
     flip() {
+        this.isFlipped = true;
         this.front.style.display = this.back.style.display;
         this.back.style.display = this.back.style.display === 'none' ? 'block' : 'none';
         this.scores.style.display = 'flex';

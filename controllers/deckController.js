@@ -73,7 +73,7 @@ exports.study = asyncHandler(async (req, res, next) => {
     const criteria = { user_id: req.user.id, deck_id: deck.id, limit: 10 }; // Hardcoded 10
 
     const cards = await Card.findWeakestByUserIdAndDeckId(criteria);
-    res.render('deck/study', { deck, cards });
+    res.render('study', { deck, cards });
 });
 
 exports.get_score = asyncHandler(async (req, res, next) => {
