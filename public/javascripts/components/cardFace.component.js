@@ -60,5 +60,10 @@ class CardFace extends HTMLElement {
         this.textarea.style.height = 'fit-content';
         this.textarea.style.height = this.textarea.scrollHeight + 'px';
     }
+
+    clear() {
+        this.value = '';
+        this.resize();
+    }
 }
 customElements.define('card-face', CardFace);

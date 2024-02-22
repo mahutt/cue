@@ -39,8 +39,8 @@ class CardForm extends HTMLElement {
         })
             .then((response) => {
                 if (response.ok) {
-                    this.front.value = '';
-                    this.back.value = '';
+                    this.front.clear();
+                    this.back.clear();
                     this.front.textarea.focus();
 
                     response.text().then((html) => {
@@ -50,7 +50,10 @@ class CardForm extends HTMLElement {
 
                         const cards = document.querySelector('.cards');
                         cards.appendChild(fragment);
-                        cards.scrollTop = cards.scrollHeight;
+                        // 0 second timeout defers execution
+                        setTimeout(() => {
+                            cards.scrollTop = cards.scrollHeight;
+                        }, 0);
                     });
 
                     customElements.get('notification-banner').instance.notify('Card created!');
