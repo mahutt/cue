@@ -54,6 +54,17 @@ db.serialize(function () {
     );
 
     db.run(
+        `CREATE TRIGGER IF NOT EXISTS reset_card_positions
+        AFTER DELETE ON cards
+        BEGIN
+            UPDATE cards
+            SET position = position -  1
+            WHERE deck_id = OLD.deck_id AND id > OLD.id;
+        END;
+        `
+    );
+
+    db.run(
         `CREATE TABLE IF NOT EXISTS scores (
             score INTEGER NOT NULL DEFAULT 0 CHECK(score IN (0,  1,  2)),
             user_id INTEGER NOT NULL,
