@@ -40,6 +40,20 @@ class CardFace extends HTMLElement {
                 e.stopPropagation();
             }
         });
+        this.addEventListener('click', (e) => {
+            if (e.metaKey || e.ctrlKey) {
+                this.fillFormField();
+            }
+        });
+    }
+
+    fillFormField() {
+        const cardForm = document.querySelector('card-form');
+        if (cardForm) {
+            cardForm[this.side].value = this.value;
+            cardForm[this.side].resize();
+            cardForm[this.side].textarea.focus();
+        }
     }
 
     resize() {
