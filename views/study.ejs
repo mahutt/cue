@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <%- include('./partials/head', {title: deck.name}) %>
-    <style></style>
-    <body style="padding: 1rem">
-        <study-stack class="flippers" deck_id="<%- deck.id %>">
-            <% cards.forEach(function(card) { %>
-            <card-flipper front="<%= card.front %>" back="<%= card.back %>" id="<%= card.id %>"></card-flipper>
-            <% }) %>
-        </study-stack>
-    </body>
-</html>
+<study-stack class="flippers" deck_id="<%- deck.id %>">
+    <% cards.forEach(function(card) { %>
+    <card-flipper front="<%= card.front %>" back="<%= card.back %>" id="<%= card.id %>"></card-flipper>
+    <% }) %>
+</study-stack>

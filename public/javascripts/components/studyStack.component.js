@@ -31,6 +31,10 @@ class StudyStack extends HTMLElement {
     displayScore() {
         fetch(`/decks/${this.deck_id}/score`, {
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cue-App-Request': 'true',
+            },
         })
             .then((response) => {
                 if (response.ok) {
@@ -50,17 +54,9 @@ class StudyStack extends HTMLElement {
                 scoreboard.classList.add('scoreboard');
                 scoreboard.innerHTML = `
                     <div class="percentage">${percentage}%</div>
-                    <a class="black button" href="">again</a>
-                    <a class="black button return" href="">return to deck</a>
+                    <get-link action="" target="#content" class="black button">again</get-link>
+                    <get-link action="../" target="#content" class="black button return">return to deck</get-link>
                 `;
-                scoreboard.querySelector('.return').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const segments = window.location.pathname.split('/');
-                    if (segments[segments.length - 1] !== '') {
-                        segments.pop();
-                    }
-                    window.location.pathname = segments.join('/');
-                });
                 flippers.appendChild(scoreboard);
             })
             .catch((error) => {

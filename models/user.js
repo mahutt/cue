@@ -1,5 +1,18 @@
 const db = require('../database/database');
 
+// find all usernames
+exports.allNames = function () {
+    return new Promise((resolve, reject) => {
+        db.all('SELECT name FROM users', [], (err, rows) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(rows);
+            }
+        });
+    });
+};
+
 // find user by name
 exports.findByName = function (name) {
     return new Promise((resolve, reject) => {

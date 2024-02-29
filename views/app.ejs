@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <%- include('./partials/head', {title: 'cue'}) %>
+    <body id="app">
+        <collapsible-column toggler=".toggle" width="260px">
+            <div id="navigation">
+                <% if (navbar.name !== undefined) { %>
+                <div class="row">
+                    <get-link action="/<%= navbar.name %>" target="#content" class="title"><%= navbar.name %></get-link>
+                    <div class="mobile toggle">=</div>
+                </div>
+                <div class="courses">
+                    <div class="subtitle">Courses</div>
+                    <% navbar.courses.forEach(function(course) { %> <%- include('./course/preview', { username:
+                    navbar.name, course: course }) %> <% }) %>
+                </div>
+                <div class="users">
+                    <div class="subtitle">Other Users</div>
+                    <% navbar.otherUsers.forEach(function(user) { %> <%- include('./user/preview', { user: user }) %> <%
+                    }) %>
+                </div>
+                <% } else { %>
+                <div>
+                    <div class="row">
+                        <div class="subtitle">Login</div>
+                        <div class="mobile toggle">=</div>
+                    </div>
+                    <%- include('./login') %>
+                </div>
+                <div class="users">
+                    <div class="subtitle">All Users</div>
+                    <% navbar.allUsers.forEach(function(user) { %> <%- include('./user/preview', { user: user }) %> <%
+                    }) %>
+                </div>
+                <% } %>
+            </div>
+        </collapsible-column>
+        <main>
+            <div class="toggle menu">=</div>
+            <div id="content">
+                <get-link bootstrap action="<%= url %>" target="#content"></get-link>
+            </div>
+        </main>
+    </body>
+</html>

@@ -1,59 +1,54 @@
-<!DOCTYPE html>
-<html>
-    <%- include('../partials/head', {title: deck.name}) %>
-    <body>
-        <style>
-            .deck-body {
-                height: 100dvh;
-                display: grid;
-            }
-            .cards {
-                overflow-y: auto;
-                padding: 1rem;
-            }
-            .card-form-wrapper {
-                box-shadow: 0 2px 45px rgba(0, 0, 0, 0.1);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 1rem;
-            }
-            .card-form {
-                width: 100%;
-                max-width: 750px;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        </style>
-        <% if (belongs) { %>
-        <style>
-            .deck-body {
-                grid-template-rows: 2fr 1fr;
-            }
-        </style>
-        <% } %>
-        <div class="deck-body">
-            <div class="cards">
-                <div style="width: 100%">
-                    <%- include('./title', {deck: deck}) %>
-                    <relative-link href="study">study</relative-link>
-                </div>
-                <% cards.forEach(function(card) { %> <%- include('../card/preview', { card: card }) %> <% }) %>
-            </div>
-
-            <% if (belongs) { %>
-            <div class="card-form-wrapper">
-                <div class="card-form">
-                    <h2>Create a new card:</h2>
-                    <card-form class="card" deck_id="<%= deck.id %>"></card-form>
-                    <h2>Danger</h2>
-                    <delete-resource resource="decks" id="<%= deck.id %>">Delete Deck</delete-resource>
-                </div>
-            </div>
-            <% } %>
+<style>
+    .deck-body {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .cards {
+        overflow-y: auto;
+        padding: 1rem;
+    }
+    .card-form-wrapper {
+        box-shadow: 0 2px 45px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+    }
+    .card-form {
+        width: 100%;
+        max-width: 750px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+</style>
+<% if (belongs) { %>
+<style>
+    .deck-body {
+        grid-template-rows: 2fr 1fr;
+    }
+</style>
+<% } %>
+<div class="deck-body">
+    <div class="cards">
+        <div style="width: 100%">
+            <%- include('./title', {deck: deck}) %>
+            <get-link action="study" target="#content">study</get-link>
         </div>
+        <% cards.forEach(function(card) { %> <%- include('../card/preview', { card: card }) %> <% }) %>
+    </div>
 
-        <script type="module" src="/javascripts/components/clipboardLink.component.js"></script>
-    </body>
-</html>
+    <% if (belongs) { %>
+    <div class="card-form-wrapper">
+        <div class="card-form">
+            <h2>Create a new card:</h2>
+            <card-form class="card" deck_id="<%= deck.id %>"></card-form>
+            <h2>Danger</h2>
+            <delete-resource resource="decks" id="<%= deck.id %>">Delete Deck</delete-resource>
+        </div>
+    </div>
+    <% } %>
+</div>
+
+<script type="module" src="/javascripts/components/clipboardLink.component.js"></script>
