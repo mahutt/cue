@@ -12,6 +12,15 @@ class CollapsibleColumn extends HTMLElement {
                 this.toggle();
             });
         });
+
+        this.querySelectorAll('get-link').forEach((link) => {
+            link.addEventListener('click', () => {
+                const style = window.getComputedStyle(this);
+                if (style.position === 'absolute') {
+                    this.toggle();
+                }
+            });
+        });
     }
     toggle() {
         this.style.width = this.isOpen ? '0' : '';
