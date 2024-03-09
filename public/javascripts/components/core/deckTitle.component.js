@@ -1,24 +1,44 @@
 class deckTitle extends HTMLElement {
     connectedCallback() {
-        this.innerHTML = `
-            <style>
-                .deck-name {
-                    border: none;
-                    outline: none;
-                    margin: 0;
-                    padding: 0;
-                    font: inherit;
-                    color: inherit;
-                    background-color: transparent;
-                }
-            </style>
-            <form
-                hx-patch="/decks/${this.getAttribute('id')}"
-                hx-swap="none"
-            >
-                <input type="text" name="name" class="deck-name" value="${this.getAttribute('name')}" />
-            </form>
+        this.input = document.createElement('input');
+        this.input.classList.add('deck-name');
+        this.input.type = 'text';
+        this.input.name = 'name';
+        this.input.value = this.getAttribute('name');
+        this.input.style = `
+            border: none;
+            outline: none;
+            margin: 0;
+            padding: 0;
+            color: inherit;
+            background-color: transparent;
         `;
+
+        this.appendChild(this.input);
+        this.input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.patch();
+            }
+        });
+    }
+
+    async patch() {
+        const response = await fetch(`/decks/${this.getAttribute('id')}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: this.input.value,
+            }),
+        });
+        if (response.ok) {
+            this.input.blur();
+            customElements.get('notification-banner').instance.notify('Deck renamed!');
+        } else {
+            customElements.get('notification-banner').instance.notify('Could not rename deck.');
+        }
     }
 }
 customElements.define('deck-title', deckTitle);
