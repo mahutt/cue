@@ -14,11 +14,7 @@ class CardEditor extends HTMLElement {
         this.deleteButton.classList.add('trash');
         this.deleteButton.style = 'width: 16px; height: 16px';
         this.deleteButton.innerHTML = `
-            <img
-                src="/icons/trash.svg"
-                alt="Trash"
-                style="width: 100%; height: 100%"
-            />
+            <i class="bi bi-trash3"></i>
         `;
         this.appendChild(this.deleteButton);
 
