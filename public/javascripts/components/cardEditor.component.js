@@ -45,6 +45,7 @@ class CardEditor extends HTMLElement {
                 if (response.ok) {
                     this.front.textarea.blur();
                     this.back.textarea.blur();
+                    document.querySelector('card-form').setCursor();
                     customElements.get('notification-banner').instance.notify('Card updated!');
                 } else {
                     customElements.get('notification-banner').instance.notify('Could not update card.');

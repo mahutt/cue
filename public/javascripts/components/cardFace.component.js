@@ -52,7 +52,7 @@ class CardFace extends HTMLElement {
         if (cardForm) {
             cardForm[this.side].value = this.value;
             cardForm[this.side].resize();
-            cardForm[this.side].textarea.focus();
+            cardForm.focus(this.side);
         }
     }
 

@@ -14,9 +14,9 @@ class CardForm extends HTMLElement {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 if (this.front.value.trim() === '') {
-                    this.front.textarea.focus();
+                    this.setCursor('front');
                 } else if (this.back.value.trim() === '') {
-                    this.back.textarea.focus();
+                    this.setCursor('back');
                 } else {
                     this.createCard();
                 }
@@ -41,7 +41,7 @@ class CardForm extends HTMLElement {
                 if (response.ok) {
                     this.front.clear();
                     this.back.clear();
-                    this.front.textarea.focus();
+                    this.setCursor('front');
 
                     response.text().then((html) => {
                         const template = document.createElement('template');
@@ -64,6 +64,10 @@ class CardForm extends HTMLElement {
             .catch((error) => {
                 console.error('Error:', error);
             });
+    }
+
+    setCursor(side = 'front') {
+        this[side].textarea.focus();
     }
 }
 customElements.define('card-form', CardForm);
