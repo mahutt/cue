@@ -14,14 +14,14 @@ class CardFlipper extends HTMLElement {
         this.scores.classList.add('scores');
         this.scores.style.display = 'none';
         this.scores.innerHTML = `
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
+            <div score="0"><i class="bi bi-hand-thumbs-down-fill"></i></div>
+            <div score="1"><i class="bi bi-arrow-repeat"></i></div>
+            <div score="2"><i class="bi bi-hand-thumbs-up-fill"></i></div>
         `;
         this.scores.querySelectorAll('div').forEach((div) => {
             div.addEventListener('click', (e) => {
                 e.stopPropagation();
-                this.updateScore(parseInt(e.target.innerHTML, 10));
+                this.updateScore(parseInt(div.getAttribute('score'), 10));
             });
         });
         this.appendChild(this.scores);
