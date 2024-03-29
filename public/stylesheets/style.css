@@ -185,18 +185,21 @@ card-flipper {
 
     padding: 1rem;
     background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border: 2px solid black;
+    border-radius: 1rem;
 }
 
 card-flipper[score='0'] {
-    box-shadow: 0 2px 6px rgba(255, 0, 0, 0.5);
+    border-color: #ff686b;
 }
 
 card-flipper[score='1'] {
-    box-shadow: 0 2px 6px rgba(255, 200, 0, 0.5);
+    border-color: #ffd97d;
 }
 
 card-flipper[score='2'] {
-    box-shadow: 0 2px 6px rgba(0, 255, 0, 0.5);
+    border-color: #60d394;
 }
 
 .scores {
