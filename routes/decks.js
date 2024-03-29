@@ -17,4 +17,7 @@ router.delete('/:id', deck_controller.delete_deck);
 // getting a deck score.
 router.get('/:id/score', deck_controller.get_score);
 
+// getting cards from a deck to study
+router.get('/:id/study', deck_controller.getStudyCards);
+
 module.exports = router;

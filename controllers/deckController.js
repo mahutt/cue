@@ -58,7 +58,7 @@ exports.delete_deck = asyncHandler(async (req, res, next) => {
     res.sendStatus(200);
 });
 
-exports.study = asyncHandler(async (req, res, next) => {
+exports.getStudyStack = asyncHandler(async (req, res, next) => {
     if (!req.user) {
         return res.sendStatus(401);
     }
@@ -70,10 +70,20 @@ exports.study = asyncHandler(async (req, res, next) => {
     const user = await User.findByName(userName);
     const course = await Course.find({ department, number, user_id: user.id });
     const deck = await Deck.find({ position: deckPosition, course_id: course.id });
-    const criteria = { user_id: req.user.id, deck_id: deck.id, limit: 10 }; // Hardcoded 10
 
+    res.render('study', { deckId: deck.id });
+});
+
+exports.getStudyCards = asyncHandler(async (req, res, next) => {
+    if (!req.user) {
+        return res.sendStatus(401);
+    }
+
+    const { id } = req.params;
+    const criteria = { user_id: req.user.id, deck_id: id, limit: 10 }; // Hardcoded 10
     const cards = await Card.findWeakestByUserIdAndDeckId(criteria);
-    res.render('study', { deck, cards });
+
+    res.send({ cards });
 });
 
 exports.get_score = asyncHandler(async (req, res, next) => {

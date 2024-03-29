@@ -17,6 +17,6 @@ router.get('/:userName/:courseCode', course_controller.view_course);
 router.get('/:userName/:courseCode/:deckPosition', deck_controller.view_deck);
 
 // Studying a deck.
-router.get('/:userName/:courseCode/:deckPosition/study', deck_controller.study);
+router.get('/:userName/:courseCode/:deckPosition/study', deck_controller.getStudyStack);
 
 module.exports = router;

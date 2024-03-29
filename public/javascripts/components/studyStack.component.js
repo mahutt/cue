@@ -1,10 +1,12 @@
 class StudyStack extends HTMLElement {
     connectedCallback() {
-        this.deck_id = this.getAttribute('deck_id');
+        this.fetchCards().then(() => {
+            this.displayTopCard();
+        });
         const observer = new MutationObserver((mutationsList, observer) => {
             for (let mutation of mutationsList) {
                 if (mutation.removedNodes.length > 0) {
-                    this.checkIfFlippersIsEmpty();
+                    this.displayTopCard();
                 }
             }
         });
@@ -23,13 +25,36 @@ class StudyStack extends HTMLElement {
             }
         });
     }
-    checkIfFlippersIsEmpty() {
-        if (this.childElementCount === 0) {
+
+    async fetchCards() {
+        const response = await fetch(`/decks/${this.deckId}/study`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cue-App-Request': 'true',
+            },
+        });
+
+        if (response.ok) {
+            this.cards = (await response.json()).cards;
+        } else {
+            customElements.get('notification-banner').instance.notify('Failed to fetch cards to study.');
+        }
+    }
+
+    displayTopCard() {
+        const topCard = this.cards.shift();
+        if (topCard) {
+            const flipper = document.createElement('card-flipper');
+            flipper.init(topCard);
+            this.appendChild(flipper);
+        } else {
             this.displayScore();
         }
     }
+
     displayScore() {
-        fetch(`/decks/${this.deck_id}/score`, {
+        fetch(`/decks/${this.deckId}/score`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,6 +87,10 @@ class StudyStack extends HTMLElement {
             .catch((error) => {
                 console.error('Error:', error);
             });
+    }
+
+    get deckId() {
+        return this.getAttribute('deck-id');
     }
 }
 

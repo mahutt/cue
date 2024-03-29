@@ -185,8 +185,20 @@ card-flipper {
 
     padding: 1rem;
     background-color: white;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+
+card-flipper[score='0'] {
+    box-shadow: 0 2px 6px rgba(255, 0, 0, 0.5);
+}
+
+card-flipper[score='1'] {
+    box-shadow: 0 2px 6px rgba(255, 200, 0, 0.5);
+}
+
+card-flipper[score='2'] {
+    box-shadow: 0 2px 6px rgba(0, 255, 0, 0.5);
+}
+
 .scores {
     flex-direction: row;
     gap: 0.5rem;

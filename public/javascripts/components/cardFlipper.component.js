@@ -25,8 +25,8 @@ class CardFlipper extends HTMLElement {
             });
         });
         this.appendChild(this.scores);
-
         this.addEventListener('click', this.flip);
+        this.classList.add('rounded');
     }
     flip() {
         this.isFlipped = true;
@@ -35,7 +35,7 @@ class CardFlipper extends HTMLElement {
         this.scores.style.display = 'flex';
     }
     updateScore(score) {
-        fetch(`/cards/${this.getAttribute('id')}`, {
+        fetch(`/cards/${this.getAttribute('card-id')}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -54,6 +54,17 @@ class CardFlipper extends HTMLElement {
             .catch((error) => {
                 console.error('Error:', error);
             });
+    }
+
+    init({ id, front, back, score }) {
+        this.setAttribute('card-id', id);
+        this.setAttribute('front', front);
+        this.setAttribute('back', back);
+        this.setAttribute('score', score);
+    }
+
+    get score() {
+        return this.getAttribute('score');
     }
 }
 customElements.define('card-flipper', CardFlipper);
