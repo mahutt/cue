@@ -7,7 +7,7 @@
                 <% if (navbar.name !== undefined) { %>
                 <div class="row">
                     <get-link action="/<%= navbar.name %>" target="#content" class="title"><%= navbar.name %></get-link>
-                    <div class="mobile toggle">=</div>
+                    <div class="mobile toggle"><i class="bi bi-list"></i></div>
                 </div>
                 <div class="courses">
                     <div class="subtitle">Courses</div>
@@ -22,8 +22,8 @@
                 <% } else { %>
                 <div>
                     <div class="row">
-                        <div class="subtitle">Login</div>
-                        <div class="mobile toggle">=</div>
+                        <div class="subtitle"><i class="bi bi-list"></i></div>
+                        <div class="mobile toggle"><i class="bi bi-list"></i></div>
                     </div>
                     <%- include('./login') %>
                 </div>
@@ -36,7 +36,12 @@
             </div>
         </collapsible-column>
         <main>
-            <div class="toggle menu">=</div>
+            <menu-bar class="d-flex">
+                <button class="btn btn-light toggle" type="button">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div id="dynamic" class="d-flex justify-content-end w-100"></div>
+            </menu-bar>
             <div id="content">
                 <get-link bootstrap action="<%= url %>" target="#content"></get-link>
             </div>

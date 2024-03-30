@@ -30,12 +30,16 @@
     }
 </style>
 <% } %>
+<menu-options style="display: none">
+    <div>
+        <get-link action="study" target="#content">
+            <button class="btn btn-light toggle" type="button"><i class="bi bi-eyeglasses"></i></button>
+        </get-link>
+    </div>
+</menu-options>
 <div class="deck-body">
     <div class="cards">
-        <div style="width: 100%">
-            <%- include('./title', {deck: deck}) %>
-            <get-link action="study" target="#content">study</get-link>
-        </div>
+        <div style="width: 100%"><%- include('./title', {deck: deck}) %></div>
         <% cards.forEach(function(card) { %> <%- include('../card/preview', { card: card }) %> <% }) %>
     </div>
 
@@ -43,7 +47,7 @@
     <div class="card-form-wrapper">
         <div class="card-form">
             <h2>Create a new card:</h2>
-            <card-form class="card" deck_id="<%= deck.id %>"></card-form>
+            <card-form class="cue-card" deck_id="<%= deck.id %>"></card-form>
             <h2>Danger</h2>
             <delete-resource resource="decks" id="<%= deck.id %>">Delete Deck</delete-resource>
         </div>

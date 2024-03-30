@@ -3,6 +3,7 @@
         padding: 0 1rem 1rem 1rem;
     }
 </style>
+<menu-options></menu-options>
 <div class="title"><%= user.name %></div>
 <h2>Courses</h2>
 <div class="courses">
@@ -10,7 +11,7 @@
     <% }) %>
 </div>
 <% if (belongs) { %>
-<h2>Add New Course</h2>
+<div class="title">Add New Course</div>
 <form
     hx-post="/courses"
     hx-trigger="submit"

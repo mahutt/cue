@@ -3,8 +3,9 @@
         padding: 0 1rem 1rem 1rem;
     }
 </style>
+<menu-options></menu-options>
 <%- include('./title', {course: course}) %>
-<h2>Decks:</h2>
+<div class="title">Decks:</div>
 <div class="decks"><% decks.forEach(function(deck) { %> <%- include('../deck/preview', { deck: deck }) %> <% }) %></div>
 <% if (belongs) { %>
 <h2>Create a new deck:</h2>
