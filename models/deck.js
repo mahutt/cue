@@ -107,3 +107,28 @@ exports.getPercentageByUserIdAndDeckId = function ({ user_id, deck_id }) {
         );
     });
 };
+
+exports.resetProgress = function ({ userId, deckId }) {
+    return new Promise((resolve, reject) => {
+        return db.get(
+            `
+            DELETE FROM scores
+            WHERE user_id = ?
+            AND card_id IN (
+                SELECT cards.id
+                FROM cards
+                JOIN decks ON cards.deck_id = decks.id
+                WHERE decks.id = ?
+            )
+            `,
+            [userId, deckId],
+            (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            }
+        );
+    });
+};

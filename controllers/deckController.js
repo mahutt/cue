@@ -58,6 +58,16 @@ exports.delete_deck = asyncHandler(async (req, res, next) => {
     res.sendStatus(200);
 });
 
+exports.delete_deck_progress = asyncHandler(async (req, res, next) => {
+    const deckId = req.params.id;
+    if (!req.user) {
+        return res.sendStatus(401);
+    }
+
+    await Deck.resetProgress({ userId: req.user.id, deckId });
+    res.sendStatus(200);
+});
+
 exports.getStudyStack = asyncHandler(async (req, res, next) => {
     if (!req.user) {
         return res.sendStatus(401);
