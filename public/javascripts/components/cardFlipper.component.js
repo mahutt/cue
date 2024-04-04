@@ -14,9 +14,9 @@ class CardFlipper extends HTMLElement {
         this.scores.classList.add('scores');
         this.scores.style.display = 'none';
         this.scores.innerHTML = `
-            <div score="0"><i class="bi bi-hand-thumbs-down-fill"></i></div>
-            <div score="1"><i class="bi bi-arrow-repeat"></i></div>
-            <div score="2"><i class="bi bi-hand-thumbs-up-fill"></i></div>
+            <div score="0"><i class="bi bi-emoji-tear-fill"></i></div>
+            <div score="1"><i class="bi bi-emoji-neutral-fill"></i></div>
+            <div score="2"><i class="bi bi-emoji-sunglasses-fill"></i></i></div>
         `;
         this.scores.querySelectorAll('div').forEach((div) => {
             div.addEventListener('click', (e) => {
