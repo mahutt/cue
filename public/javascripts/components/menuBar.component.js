@@ -9,7 +9,6 @@ class MenuBar extends HTMLElement {
             div.removeChild(div.firstChild);
         }
         for (const node of nodeList) {
-            console.log(node);
             div.appendChild(node);
         }
     }

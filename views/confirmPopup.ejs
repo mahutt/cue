@@ -1,0 +1,29 @@
+<confirm-popup
+    class="modal fade"
+    id="confirmPopupModal"
+    tabindex="-1"
+    aria-labelledby="confirmPopupModal"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-between">
+                    <h1 id="modalTitle" class="fs-5"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="modalMessage" class="text-secondary my-2"></div>
+                <div class="d-flex gap-1">
+                    <button
+                        id="cancelButton"
+                        type="button"
+                        class="btn btn-light w-100"
+                        data-bs-dismiss="modal"
+                    ></button>
+                    <button id="confirmButton" type="button" class="btn btn-danger w-100"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</confirm-popup>
+<script type="module" src="/javascripts/components/confirmPopup.component.js"></script>
