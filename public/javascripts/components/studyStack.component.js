@@ -20,7 +20,7 @@ class StudyStack extends HTMLElement {
             } else if (e.key === '1' || e.key === '2' || e.key === '3') {
                 const flipper = this.querySelector('card-flipper:last-child');
                 if (flipper && flipper.isFlipped) {
-                    flipper.updateScore(parseInt(e.key, 10));
+                    flipper.updateScore(parseInt(e.key, 10) - 1);
                 }
             }
         });
