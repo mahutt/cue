@@ -1,6 +1,6 @@
 class CollapsibleColumn extends HTMLElement {
     connectedCallback() {
-        this.isOpen = false;
+        this.isOpen = true;
         this.togglers = document.querySelectorAll(this.getAttribute('toggler'));
         this.width = this.getAttribute('width');
 

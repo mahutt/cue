@@ -7,12 +7,10 @@ body {
     min-height: 100dvh;
     margin: 0;
     font-size: 16px;
+    position: relative;
 }
 
 /* Start App Structure */
-#app {
-    position: relative;
-}
 collapsible-column {
     z-index: 1;
     position: absolute;
