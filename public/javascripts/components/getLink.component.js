@@ -6,30 +6,12 @@ class getLink extends HTMLElement {
         this.style.cursor = 'pointer';
         this.addEventListener('click', this.get);
     }
-    get() {
+    async get() {
         const route = this.getRoute();
-        fetch(route, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Cue-App-Request': 'true',
-            },
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.text();
-            })
-            .then((html) => {
-                const query = this.getAttribute('target');
-                const target = document.querySelector(query);
-                target.innerHTML = html;
-                history.pushState({ internal: true }, 'New Page Title', `${route}`);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        const html = await document.querySelector('cue-app').fetchContent(route);
+        const query = this.getAttribute('target');
+        const target = document.querySelector(query);
+        target.innerHTML = html;
     }
     getRoute() {
         let route = this.getAttribute('action');

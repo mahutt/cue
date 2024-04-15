@@ -41,9 +41,12 @@
                 </div>
             </collapsible-column>
             <main>
-                <menu-bar class="d-flex">
+                <menu-bar class="d-flex gap-2">
                     <button class="btn btn-light toggle" type="button">
                         <i class="bi bi-list"></i>
+                    </button>
+                    <button id="navigateBack" class="btn btn-light" type="button">
+                        <i class="bi bi-arrow-90deg-left"></i>
                     </button>
                     <div id="dynamic" class="d-flex justify-content-end w-100"></div>
                 </menu-bar>
@@ -53,6 +56,5 @@
             </main>
             <%- include('./confirmPopup') %>
         </cue-app>
-        <script type="module" src="/javascripts/components/cueApp.component.js"></script>
     </body>
 </html>

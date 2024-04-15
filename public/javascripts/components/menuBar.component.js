@@ -1,5 +1,9 @@
 class MenuBar extends HTMLElement {
     connectedCallback() {
+        this.navigateBackButton = this.querySelector('#navigateBack');
+        this.navigateBackButton.addEventListener('click', () => {
+            document.querySelector('cue-app').navigateBack();
+        });
         this.dynamicDiv = this.querySelector('#dynamic');
     }
 
