@@ -6,11 +6,13 @@
             <collapsible-column toggler=".toggle" width="260px">
                 <div id="navigation">
                     <% if (navbar.name !== undefined) { %>
-                    <div class="row">
+                    <div class="d-flex flex-row justify-content-between">
                         <get-link action="/<%= navbar.name %>" target="#content" class="title"
                             ><%= navbar.name %></get-link
                         >
-                        <div class="mobile toggle"><i class="bi bi-list"></i></div>
+                        <div>
+                            <div class="mobile btn btn-light toggle"><i class="bi bi-list"></i></div>
+                        </div>
                     </div>
                     <div class="courses">
                         <div class="subtitle">Courses</div>
