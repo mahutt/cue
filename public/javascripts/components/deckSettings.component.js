@@ -58,8 +58,6 @@ class DeckSettings extends HTMLElement {
         } else {
             customElements.get('notification-banner').instance.notify('Could not delete deck.');
         }
-
-        this.modal.show();
     }
 
     get deckId() {
