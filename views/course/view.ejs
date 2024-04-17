@@ -3,7 +3,7 @@
         padding: 0 1rem 1rem 1rem;
     }
 </style>
-<menu-options></menu-options>
+<menu-options><%- include('./settings', { belongs, course }) %></menu-options>
 <%- include('./title', {course: course}) %>
 <div class="title">Decks:</div>
 <div class="decks"><% decks.forEach(function(deck) { %> <%- include('../deck/preview', { deck: deck }) %> <% }) %></div>
@@ -18,6 +18,4 @@
 
     <button type="submit">Create Deck</button>
 </deck-form>
-<h2>Danger</h2>
-<delete-resource resource="courses" id="<%= course.id %>">Delete Course</delete-resource>
 <% } %>

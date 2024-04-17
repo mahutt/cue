@@ -12,13 +12,7 @@
 </div>
 <% if (belongs) { %>
 <div class="title">Add New Course</div>
-<form
-    hx-post="/courses"
-    hx-trigger="submit"
-    hx-target=".courses"
-    hx-swap="beforeend"
-    hx-on::after-request="this.reset()"
->
+<form action="/courses" method="post" class="form" hx-post="true" hx-target="#content">
     <label for="name">Course Name:</label>
     <input type="text" id="name" name="name" required maxlength="100" />
     <br />

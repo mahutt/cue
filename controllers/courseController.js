@@ -18,7 +18,7 @@ exports.create_course = asyncHandler(async (req, res, next) => {
     await Course.save(course);
 
     course.code = `${department}${number}`;
-    res.render('course/preview', { course: course });
+    res.render('course/preview', { username: req.user.name, course: course });
 });
 
 exports.view_course = asyncHandler(async (req, res, next) => {

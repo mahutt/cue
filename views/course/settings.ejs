@@ -1,0 +1,19 @@
+<button id="courseSettingsButton" class="btn btn-light toggle" type="button"><i class="bi bi-gear-fill"></i></button>
+<course-settings class="modal fade" tabindex="-1" aria-hidden="true" course-id="<%= course.id %>">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Course Settings</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="modal-body d-flex flex-column gap-2">
+                    <a id="deleteCourseButton" class="btn btn-danger w-100">Delete Course</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</course-settings>
