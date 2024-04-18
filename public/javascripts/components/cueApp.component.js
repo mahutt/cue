@@ -8,6 +8,9 @@ class CueApp extends HTMLElement {
     async navigateBack() {
         const url = new URL(document.location.href);
         const segments = url.pathname.split('/');
+        if (segments[segments.length - 1] === '') {
+            segments.pop();
+        }
         segments.pop();
         url.pathname = segments.join('/');
 
