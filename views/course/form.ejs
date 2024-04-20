@@ -1,0 +1,58 @@
+<button id="newCourseFormButton" class="btn btn-light toggle" type="button"><i class="bi bi-plus-lg"></i></button>
+<course-form class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">New Course</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Course Name:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="form-control"
+                            required
+                            maxlength="100"
+                            placeholder="Data Structures & Algorithms"
+                        />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="department" class="form-label">Department:</label>
+                            <input
+                                type="text"
+                                id="department"
+                                name="department"
+                                class="form-control"
+                                required
+                                minlength="4"
+                                maxlength="4"
+                                placeholder="COMP"
+                            />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="number" class="form-label">Course Number:</label>
+                            <input
+                                type="number"
+                                id="number"
+                                name="number"
+                                class="form-control"
+                                required
+                                placeholder="352"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="createCourseButton" type="button" class="btn btn-dark">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</course-form>
