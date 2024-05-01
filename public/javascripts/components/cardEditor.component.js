@@ -2,12 +2,12 @@ class CardEditor extends HTMLElement {
     connectedCallback() {
         this.front = document.createElement('card-face');
         this.front.side = 'front';
-        this.front.content = this.getAttribute('front');
+        this.front.value = this.getAttribute('front');
         this.appendChild(this.front);
 
         this.back = document.createElement('card-face');
         this.back.side = 'back';
-        this.back.content = this.getAttribute('back');
+        this.back.value = this.getAttribute('back');
         this.appendChild(this.back);
 
         this.deleteButton = document.createElement('button');
