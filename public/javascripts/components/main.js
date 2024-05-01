@@ -3,7 +3,6 @@ import './cardEditor.component.js';
 import './cardForm.component.js';
 import './cardFace.component.js';
 import './relativeLink.component.js';
-import './core/deleteResource.component.js';
 import './cardFlipper.component.js';
 import './studyStack.component.js';
 import './collapsibleColumn.component.js';
