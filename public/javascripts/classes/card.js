@@ -1,8 +1,13 @@
 export class Card {
-    constructor({ id, front, back, deckId }) {
+    constructor({ id, front, back, score, deckId }) {
+        this.setAttributes({ id, front, back, score, deckId });
+    }
+
+    setAttributes({ id, front, back, score, deckId }) {
         this.id = id;
         this.front = front;
         this.back = back;
+        this.score = score;
         this.deckId = deckId;
     }
 
@@ -30,6 +35,19 @@ export class Card {
             body: JSON.stringify({
                 front: this.front,
                 back: this.back,
+            }),
+        });
+        return response;
+    }
+
+    async updateScore() {
+        const response = await fetch(`/cards/${this.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                score: this.score,
             }),
         });
         return response;

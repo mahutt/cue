@@ -1,6 +1,12 @@
-import { NotificationBanner } from "./notificationBanner.component.js";
+import { Card } from '../classes/card.js';
+import { NotificationBanner } from './notificationBanner.component.js';
 
 class CardFlipper extends HTMLElement {
+    constructor() {
+        super();
+        this.card = new Card({});
+    }
+
     connectedCallback() {
         this.isFlipped = false;
         this.hasBeenFlipped = false;
@@ -60,8 +66,8 @@ class CardFlipper extends HTMLElement {
             e.stopPropagation();
             const updateSuccessful = await this.updateCard();
             if (updateSuccessful) {
-                this.setAttribute('front', this.front.value);
-                this.setAttribute('back', this.back.value);
+                this.card.front = this.front.value;
+                this.card.back = this.back.value;
             }
             this.setFaceContent();
             this.stopEditing();
@@ -89,46 +95,25 @@ class CardFlipper extends HTMLElement {
         this.hasBeenFlipped = true;
         this.scores.style.display = 'flex';
     }
-    updateScore(score) {
-        fetch(`/cards/${this.getAttribute('card-id')}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                score: score,
-            }),
-        })
-            .then((response) => {
-                if (response.ok) {
-                    this.remove();
-                } else {
-                    NotificationBanner.instance.notify('Could not update score.');
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+    async updateScore(score) {
+        this.card.score = score;
+        const response = await this.card.updateScore();
+        if (response.ok) {
+            this.remove();
+        } else {
+            NotificationBanner.instance.notify('Could not update score.');
+        }
     }
 
     init({ id, front, back, score }) {
-        this.setAttribute('card-id', id);
-        this.setAttribute('front', front);
-        this.setAttribute('back', back);
+        this.card.setAttributes({ id, front, back, score });
         this.setAttribute('score', score);
     }
 
     async updateCard() {
-        const response = await fetch(`/cards/${this.getAttribute('card-id')}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                front: this.front.value,
-                back: this.back.value,
-            }),
-        });
+        this.card.front = this.front.value;
+        this.card.back = this.back.value;
+        const response = await this.card.update();
         if (response.ok) {
             NotificationBanner.instance.notify('Card updated!');
             return true;
@@ -169,12 +154,12 @@ class CardFlipper extends HTMLElement {
     }
 
     setFaceContent() {
-        this.front.value = this.getAttribute('front');
-        this.back.value = this.getAttribute('back');
+        this.front.value = this.card.front;
+        this.back.value = this.card.back;
     }
 
     get score() {
-        return this.getAttribute('score');
+        return this.card.score;
     }
 }
 customElements.define('card-flipper', CardFlipper);
