@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "start": "node ./bin/www",
-        "devstart": "nodemon ./bin/www",
+        "dev": "nodemon ./bin/www",
         "backup": "cp ./database/cue.db ./backups/cue-$(date +%Y-%m-%d-%H-%M-%S).db"
     },
     "dependencies": {
