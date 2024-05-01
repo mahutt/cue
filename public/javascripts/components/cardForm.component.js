@@ -1,3 +1,4 @@
+import { Card } from '../classes/card.js';
 import { NotificationBanner } from './notificationBanner.component.js';
 
 class CardForm extends HTMLElement {
@@ -27,45 +28,35 @@ class CardForm extends HTMLElement {
     }
 
     // Create this card.
-    createCard() {
-        fetch('/cards', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                front: this.front.value,
-                back: this.back.value,
-                deck_id: this.getAttribute('deck_id'),
-            }),
-        })
-            .then((response) => {
-                if (response.ok) {
-                    this.front.clear();
-                    this.back.clear();
-                    this.setCursor('front');
+    async createCard() {
+        const response = await new Card({
+            front: this.front.value,
+            back: this.back.value,
+            deckId: this.getAttribute('deck_id'),
+        }).save();
 
-                    response.text().then((html) => {
-                        const template = document.createElement('template');
-                        template.innerHTML = html.trim();
-                        const fragment = template.content;
+        if (response.ok) {
+            this.front.clear();
+            this.back.clear();
+            this.setCursor('front');
 
-                        const cards = document.querySelector('.cards');
-                        cards.appendChild(fragment);
-                        // 0 second timeout defers execution
-                        setTimeout(() => {
-                            cards.scrollTop = cards.scrollHeight;
-                        }, 0);
-                    });
+            response.text().then((html) => {
+                const template = document.createElement('template');
+                template.innerHTML = html.trim();
+                const fragment = template.content;
 
-                    NotificationBanner.instance.notify('Card created!');
-                } else {
-                    NotificationBanner.instance.notify('Could not create card.');
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+                const cards = document.querySelector('.cards');
+                cards.appendChild(fragment);
+                // 0 second timeout defers execution
+                setTimeout(() => {
+                    cards.scrollTop = cards.scrollHeight;
+                }, 0);
             });
+
+            NotificationBanner.instance.notify('Card created!');
+        } else {
+            NotificationBanner.instance.notify('Could not create card.');
+        }
     }
 
     setCursor(side = 'front') {
