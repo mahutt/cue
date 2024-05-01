@@ -1,3 +1,5 @@
+import { NotificationBanner } from '../notificationBanner.component.js';
+
 class DeleteResource extends HTMLElement {
     connectedCallback() {
         this.style.cursor = 'pointer';
@@ -15,7 +17,7 @@ class DeleteResource extends HTMLElement {
                 if (response.ok) {
                     window.location.href = window.location.href.replace(/[^/]*$/, '');
                 } else {
-                    customElements.get('notification-banner').instance.notify('Could not delete resource.');
+                    NotificationBanner.instance.notify('Could not delete resource.');
                 }
             })
             .catch((error) => {

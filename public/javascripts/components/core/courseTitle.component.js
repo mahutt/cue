@@ -1,3 +1,5 @@
+import { NotificationBanner } from '../notificationBanner.component.js';
+
 class CourseTitle extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
@@ -50,7 +52,7 @@ class CourseTitle extends HTMLElement {
                 if (response.ok) {
                     return response.text();
                 } else {
-                    customElements.get('notification-banner').instance.notify('Could not update course.');
+                    NotificationBanner.instance.notify('Could not update course.');
                 }
             })
             .then((code) => {

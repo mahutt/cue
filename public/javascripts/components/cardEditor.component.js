@@ -1,3 +1,4 @@
+import { NotificationBanner } from './notificationBanner.component.js';
 class CardEditor extends HTMLElement {
     connectedCallback() {
         this.front = document.createElement('card-face');
@@ -46,9 +47,9 @@ class CardEditor extends HTMLElement {
                     this.front.textarea.blur();
                     this.back.textarea.blur();
                     document.querySelector('card-form').setCursor();
-                    customElements.get('notification-banner').instance.notify('Card updated!');
+                    NotificationBanner.instance.notify('Card updated!');
                 } else {
-                    customElements.get('notification-banner').instance.notify('Could not update card.');
+                    NotificationBanner.instance.notify('Could not update card.');
                 }
             })
             .catch((error) => {
@@ -64,9 +65,9 @@ class CardEditor extends HTMLElement {
             .then((response) => {
                 if (response.ok) {
                     this.remove();
-                    customElements.get('notification-banner').instance.notify('Card deleted!');
+                    NotificationBanner.instance.notify('Card deleted!');
                 } else {
-                    customElements.get('notification-banner').instance.notify('Could not delete card.');
+                    NotificationBanner.instance.notify('Could not delete card.');
                 }
             })
             .catch((error) => {

@@ -1,3 +1,5 @@
+import { NotificationBanner } from './notificationBanner.component.js';
+
 class StudyStack extends HTMLElement {
     connectedCallback() {
         this.fetchCards().then(() => {
@@ -39,7 +41,7 @@ class StudyStack extends HTMLElement {
         if (response.ok) {
             this.cards = (await response.json()).cards;
         } else {
-            customElements.get('notification-banner').instance.notify('Failed to fetch cards to study.');
+            NotificationBanner.instance.notify('Failed to fetch cards to study.');
         }
     }
 
@@ -66,12 +68,12 @@ class StudyStack extends HTMLElement {
                 if (response.ok) {
                     return response.json();
                 } else {
-                    customElements.get('notification-banner').instance.notify('Could not fetch score.');
+                    NotificationBanner.instance.notify('Could not fetch score.');
                 }
             })
             .then((data) => {
                 if (!data || data.percentage === undefined) {
-                    customElements.get('notification-banner').instance.notify('Could not parse score.');
+                    NotificationBanner.instance.notify('Could not parse score.');
                     return;
                 }
                 const percentage = Math.round(data.percentage);

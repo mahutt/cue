@@ -1,3 +1,5 @@
+import { NotificationBanner } from "./notificationBanner.component.js";
+
 class DeckForm extends HTMLElement {
     connectedCallback() {
         this.courseId = this.querySelector('#course-id');
@@ -37,9 +39,9 @@ class DeckForm extends HTMLElement {
             const decks = document.querySelector('.decks');
             decks.appendChild(deck);
 
-            customElements.get('notification-banner').instance.notify('Deck created!');
+            NotificationBanner.instance.notify('Deck created!');
         } else {
-            customElements.get('notification-banner').instance.notify('Could not create deck.');
+            NotificationBanner.instance.notify('Could not create deck.');
         }
     }
 }

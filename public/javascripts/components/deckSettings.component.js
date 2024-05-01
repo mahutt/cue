@@ -1,3 +1,5 @@
+import { NotificationBanner } from './notificationBanner.component.js';
+
 class DeckSettings extends HTMLElement {
     connectedCallback() {
         this.modal = new bootstrap.Modal(this);
@@ -20,9 +22,9 @@ class DeckSettings extends HTMLElement {
             });
             this.modal.hide();
             if (response.ok) {
-                customElements.get('notification-banner').instance.notify('Progress reset.');
+                NotificationBanner.instance.notify('Progress reset.');
             } else {
-                customElements.get('notification-banner').instance.notify('Could not reset progress.');
+                NotificationBanner.instance.notify('Could not reset progress.');
             }
         });
     }
@@ -53,10 +55,10 @@ class DeckSettings extends HTMLElement {
         });
 
         if (response.ok) {
-            customElements.get('notification-banner').instance.notify('Deck deleted.');
+            NotificationBanner.instance.notify('Deck deleted.');
             document.querySelector('cue-app').navigateBack();
         } else {
-            customElements.get('notification-banner').instance.notify('Could not delete deck.');
+            NotificationBanner.instance.notify('Could not delete deck.');
         }
     }
 

@@ -1,3 +1,5 @@
+import { NotificationBanner } from './notificationBanner.component.js';
+
 class CourseForm extends HTMLElement {
     connectedCallback() {
         this.modal = new bootstrap.Modal(this);
@@ -29,10 +31,10 @@ class CourseForm extends HTMLElement {
                 div.insertAdjacentHTML('beforeend', html);
             });
             this.modal.hide();
-            customElements.get('notification-banner').instance.notify('Course created.');
+            NotificationBanner.instance.notify('Course created.');
         } else {
             this.modal.hide();
-            customElements.get('notification-banner').instance.notify('Could not create course.');
+            NotificationBanner.instance.notify('Could not create course.');
         }
     }
 }

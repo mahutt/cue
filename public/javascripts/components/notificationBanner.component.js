@@ -1,4 +1,4 @@
-class NotificationBanner extends HTMLElement {
+export class NotificationBanner extends HTMLElement {
     static get instance() {
         let notificationBanner = document.querySelector('notification-banner');
         if (notificationBanner === null) {

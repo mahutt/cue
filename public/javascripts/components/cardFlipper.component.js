@@ -1,3 +1,5 @@
+import { NotificationBanner } from "./notificationBanner.component.js";
+
 class CardFlipper extends HTMLElement {
     connectedCallback() {
         this.isFlipped = false;
@@ -101,7 +103,7 @@ class CardFlipper extends HTMLElement {
                 if (response.ok) {
                     this.remove();
                 } else {
-                    customElements.get('notification-banner').instance.notify('Could not update score.');
+                    NotificationBanner.instance.notify('Could not update score.');
                 }
             })
             .catch((error) => {
@@ -128,10 +130,10 @@ class CardFlipper extends HTMLElement {
             }),
         });
         if (response.ok) {
-            customElements.get('notification-banner').instance.notify('Card updated!');
+            NotificationBanner.instance.notify('Card updated!');
             return true;
         } else {
-            customElements.get('notification-banner').instance.notify('Could not update card.');
+            NotificationBanner.instance.notify('Could not update card.');
             return false;
         }
     }

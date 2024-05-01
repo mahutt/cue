@@ -1,3 +1,5 @@
+import { NotificationBanner } from './notificationBanner.component.js';
+
 class CardForm extends HTMLElement {
     connectedCallback() {
         this.front = document.createElement('card-face');
@@ -56,9 +58,9 @@ class CardForm extends HTMLElement {
                         }, 0);
                     });
 
-                    customElements.get('notification-banner').instance.notify('Card created!');
+                    NotificationBanner.instance.notify('Card created!');
                 } else {
-                    customElements.get('notification-banner').instance.notify('Could not create card.');
+                    NotificationBanner.instance.notify('Could not create card.');
                 }
             })
             .catch((error) => {

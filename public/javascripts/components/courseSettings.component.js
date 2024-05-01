@@ -1,3 +1,5 @@
+import { NotificationBanner } from "./notificationBanner.component.js";
+
 class CourseSettings extends HTMLElement {
     connectedCallback() {
         this.modal = new bootstrap.Modal(this);
@@ -33,10 +35,10 @@ class CourseSettings extends HTMLElement {
         });
 
         if (response.ok) {
-            customElements.get('notification-banner').instance.notify('Course deleted.');
+            NotificationBanner.instance.notify('Course deleted.');
             document.querySelector('cue-app').navigateBack();
         } else {
-            customElements.get('notification-banner').instance.notify('Could not delete course.');
+            NotificationBanner.instance.notify('Could not delete course.');
         }
     }
 

@@ -1,3 +1,5 @@
+import { NotificationBanner } from '../notificationBanner.component.js';
+
 class deckTitle extends HTMLElement {
     connectedCallback() {
         this.input = document.createElement('input');
@@ -35,9 +37,9 @@ class deckTitle extends HTMLElement {
         });
         if (response.ok) {
             this.input.blur();
-            customElements.get('notification-banner').instance.notify('Deck renamed!');
+            NotificationBanner.instance.notify('Deck renamed!');
         } else {
-            customElements.get('notification-banner').instance.notify('Could not rename deck.');
+            NotificationBanner.instance.notify('Could not rename deck.');
         }
     }
 }
