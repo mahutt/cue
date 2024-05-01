@@ -1,6 +1,5 @@
 * {
     box-sizing: border-box;
-    min-width: 0;
 }
 
 body {
@@ -137,7 +136,12 @@ course-title .course-code {
 .trash {
     align-self: center;
 }
-card-face {
+card-flipper card-face {
+    width: 100%;
+    text-align: center;
+}
+card-editor card-face,
+card-form card-face {
     min-width: 200px;
     flex: 1;
     padding: 1rem;
@@ -186,7 +190,20 @@ card-flipper[score='2'] {
     border-color: #60d394;
 }
 
-.scores {
+card-flipper[score='0'] .divider {
+    background-color: #ff686b;
+}
+
+card-flipper[score='1'] .divider {
+    background-color: #ffd97d;
+}
+
+card-flipper[score='2'] .divider {
+    background-color: #60d394;
+}
+
+.scores,
+.editButtonsDiv {
     flex-direction: row;
     gap: 0.5rem;
 }

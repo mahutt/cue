@@ -19,11 +19,12 @@ class StudyStack extends HTMLElement {
                 }
             } else if (e.key === '1' || e.key === '2' || e.key === '3') {
                 const flipper = this.querySelector('card-flipper:last-child');
-                if (flipper && flipper.isFlipped) {
+                if (flipper && flipper.hasBeenFlipped) {
                     flipper.updateScore(parseInt(e.key, 10) - 1);
                 }
             }
         });
+        this.initializeEditCardButton();
     }
 
     async fetchCards() {
@@ -89,8 +90,19 @@ class StudyStack extends HTMLElement {
             });
     }
 
+    initializeEditCardButton() {
+        this.editCardButton = document.getElementById('editCardButton');
+        this.editCardButton.addEventListener('click', () => {
+            this.currentCard.edit();
+        });
+    }
+
     get deckId() {
         return this.getAttribute('deck-id');
+    }
+
+    get currentCard() {
+        return this.querySelector('card-flipper');
     }
 }
 

@@ -3,13 +3,18 @@ class CardFace extends HTMLElement {
         return this.textarea.value;
     }
     set value(value) {
-        this.textarea.value = value;
+        if (this.textarea) {
+            this.textarea.value = value;
+        } else {
+            this.content = value;
+        }
     }
     connectedCallback() {
         this.textarea = document.createElement('textarea');
         this.textarea.classList.add(this.side);
         this.textarea.textContent = this.content || '';
         this.textarea.placeholder = this.placeholder || '';
+        this.textarea.readOnly = this.readOnly || false;
 
         this.textarea.style = `
             width: 100%;
@@ -21,6 +26,8 @@ class CardFace extends HTMLElement {
             color: inherit;
             background-color: transparent;
             resize: none;
+            text-align: inherit;
+            overflow: hidden;
         `;
         this.appendChild(this.textarea);
 
@@ -64,6 +71,19 @@ class CardFace extends HTMLElement {
     clear() {
         this.value = '';
         this.resize();
+    }
+
+    show() {
+        this.style.display = 'block';
+    }
+
+    hide() {
+        this.style.display = 'none';
+    }
+
+    setReadOnly(value) {
+        const target = this.textarea ?? this;
+        target.readOnly = value;
     }
 }
 customElements.define('card-face', CardFace);
