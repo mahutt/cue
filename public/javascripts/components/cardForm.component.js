@@ -33,7 +33,7 @@ class CardForm extends HTMLElement {
             front: this.front.value,
             back: this.back.value,
             deckId: this.getAttribute('deck_id'),
-        }).save();
+        }).create();
 
         if (response.ok) {
             this.front.clear();

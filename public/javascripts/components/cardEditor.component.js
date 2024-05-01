@@ -1,14 +1,24 @@
+import { Card } from '../classes/card.js';
 import { NotificationBanner } from './notificationBanner.component.js';
 class CardEditor extends HTMLElement {
+    constructor() {
+        super();
+        this.card = new Card({
+            id: this.getAttribute('id'),
+            front: this.getAttribute('front'),
+            back: this.getAttribute('back'),
+        });
+    }
+
     connectedCallback() {
         this.front = document.createElement('card-face');
         this.front.side = 'front';
-        this.front.value = this.getAttribute('front');
+        this.front.value = this.card.front;
         this.appendChild(this.front);
 
         this.back = document.createElement('card-face');
         this.back.side = 'back';
-        this.back.value = this.getAttribute('back');
+        this.back.value = this.card.back;
         this.appendChild(this.back);
 
         this.deleteButton = document.createElement('button');
@@ -31,48 +41,30 @@ class CardEditor extends HTMLElement {
     }
 
     // Updating this card.
-    updateCard() {
-        fetch(`/cards/${this.getAttribute('id')}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                front: this.front.value,
-                back: this.back.value,
-            }),
-        })
-            .then((response) => {
-                if (response.ok) {
-                    this.front.textarea.blur();
-                    this.back.textarea.blur();
-                    document.querySelector('card-form').setCursor();
-                    NotificationBanner.instance.notify('Card updated!');
-                } else {
-                    NotificationBanner.instance.notify('Could not update card.');
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+    async updateCard() {
+        this.card.front = this.front.value;
+        this.card.back = this.back.value;
+        const response = await this.card.update();
+
+        if (response.ok) {
+            this.front.textarea.blur();
+            this.back.textarea.blur();
+            document.querySelector('card-form').setCursor();
+            NotificationBanner.instance.notify('Card updated!');
+        } else {
+            NotificationBanner.instance.notify('Could not update card.');
+        }
     }
 
     // Deleting this card.
-    deleteCard() {
-        fetch(`/cards/${this.getAttribute('id')}`, {
-            method: 'DELETE',
-        })
-            .then((response) => {
-                if (response.ok) {
-                    this.remove();
-                    NotificationBanner.instance.notify('Card deleted!');
-                } else {
-                    NotificationBanner.instance.notify('Could not delete card.');
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+    async deleteCard() {
+        const response = await this.card.delete();
+        if (response.ok) {
+            this.remove();
+            NotificationBanner.instance.notify('Card deleted!');
+        } else {
+            NotificationBanner.instance.notify('Could not delete card.');
+        }
     }
 }
 customElements.define('card-editor', CardEditor);

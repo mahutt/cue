@@ -1,10 +1,12 @@
 export class Card {
-    constructor({front, back, deckId}) {
+    constructor({ id, front, back, deckId }) {
+        this.id = id;
         this.front = front;
         this.back = back;
         this.deckId = deckId;
     }
-    async save() {
+
+    async create() {
         const response = await fetch('/cards', {
             method: 'POST',
             headers: {
@@ -16,6 +18,27 @@ export class Card {
                 deck_id: this.deckId,
             }),
         });
-       return response;
+        return response;
+    }
+
+    async update() {
+        const response = await fetch(`/cards/${this.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                front: this.front,
+                back: this.back,
+            }),
+        });
+        return response;
+    }
+
+    async delete() {
+        const response = await fetch(`/cards/${this.id}`, {
+            method: 'DELETE',
+        });
+        return response;
     }
 }
