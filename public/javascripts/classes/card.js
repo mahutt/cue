@@ -1,13 +1,14 @@
 export class Card {
-    constructor({ id, front, back, score, deckId }) {
-        this.setAttributes({ id, front, back, score, deckId });
+    constructor({ id, front, back, score, position, deckId }) {
+        this.setAttributes({ id, front, back, score, position, deckId });
     }
 
-    setAttributes({ id, front, back, score, deckId }) {
+    setAttributes({ id, front, back, score, position, deckId }) {
         this.id = id;
         this.front = front;
         this.back = back;
         this.score = score;
+        this.position = position;
         this.deckId = deckId;
     }
 
