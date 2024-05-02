@@ -12,22 +12,31 @@ class CardEditor extends HTMLElement {
     }
 
     connectedCallback() {
-        this.renderHeader();
-
-        this.body = document.createElement('div');
-        this.body.classList.add('body');
-
-        this.front = document.createElement('card-face');
+        this.innerHTML = ` 
+            <div class="header">
+                <div>
+                    <span class="card-position">${this.card.position}</span>.
+                </div>
+                <button class="delete">
+                    <i class="bi bi-trash3"></i>
+                </button>
+            </div>
+            <div class="body">
+                <card-face></card-face>
+                <card-face></card-face>
+            </div>
+        `;
+        this.front = this.querySelector('card-face:first-child');
         this.front.side = 'front';
         this.front.value = this.card.front;
-        this.body.appendChild(this.front);
 
-        this.back = document.createElement('card-face');
+        this.back = this.querySelector('card-face:last-child');
         this.back.side = 'back';
         this.back.value = this.card.back;
-        this.body.appendChild(this.back);
 
-        this.appendChild(this.body);
+        this.querySelector('.delete').addEventListener('click', () => {
+            this.deleteCard();
+        });
 
         this.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
@@ -35,24 +44,6 @@ class CardEditor extends HTMLElement {
                 this.updateCard();
             }
         });
-    }
-
-    renderHeader() {
-        const header = document.createElement('div');
-        header.classList.add('header');
-        header.innerHTML = `
-            <div class="card-position">
-                ${this.card.position}
-            </div>
-            <button class="delete">
-                <i class="bi bi-trash3"></i>
-            </button>
-        
-        `;
-        header.querySelector('.delete').addEventListener('click', () => {
-            this.deleteCard();
-        });
-        this.appendChild(header);
     }
 
     // Updating this card.
