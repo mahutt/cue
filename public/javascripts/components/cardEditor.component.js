@@ -22,8 +22,16 @@ class CardEditor extends HTMLElement {
                 </button>
             </div>
             <div class="body">
-                <card-face></card-face>
-                <card-face></card-face>
+                <card-face>
+                    <a role="button" class="undo-button">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                    </a>
+                </card-face>
+                <card-face>
+                    <a role="button" class="undo-button">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                    </a>
+                </card-face>
             </div>
         `;
         this.front = this.querySelector('card-face:first-child');
@@ -44,6 +52,20 @@ class CardEditor extends HTMLElement {
                 this.updateCard();
             }
         });
+
+        for (const face of [this.front, this.back]) {
+            face.addEventListener('input', () => {
+                this.setEditState([face]);
+            });
+        }
+
+        for (const button of this.querySelectorAll('.undo-button')) {
+            button.addEventListener('click', (e) => {
+                const face = e.target.closest('card-face');
+                this.resetFace([face]);
+                face.textarea.focus();
+            });
+        }
     }
 
     // Updating this card.
@@ -53,6 +75,7 @@ class CardEditor extends HTMLElement {
         const response = await this.card.update();
 
         if (response.ok) {
+            this.setEditState([this.front, this.back]);
             this.front.textarea.blur();
             this.back.textarea.blur();
             document.querySelector('card-form').setCursor();
@@ -80,6 +103,23 @@ class CardEditor extends HTMLElement {
             editor.card.position = index + 1;
             editor.querySelector('.card-position').textContent = editor.card.position;
         });
+    }
+
+    resetFace(faces = []) {
+        for (const face of faces) {
+            face.value = this.card[face.side];
+        }
+        this.setEditState(faces);
+    }
+
+    setEditState(faces = []) {
+        for (const face of faces) {
+            if (face.value === this.card[face.side]) {
+                face.classList.remove('edited');
+            } else {
+                face.classList.add('edited');
+            }
+        }
     }
 }
 customElements.define('card-editor', CardEditor);

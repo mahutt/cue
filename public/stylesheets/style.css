@@ -1,3 +1,10 @@
+:root {
+    --red: #ff686b;
+    --yellow: #ffd97d;
+    --green: #60d394;
+    --edited: #ffd6a5;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -133,6 +140,20 @@ course-title .course-code {
     gap: 1rem;
     border-radius: 0.5rem;
 }
+card-face {
+    position: relative;
+}
+card-face .undo-button {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.4rem;
+    opacity: 0;
+    pointer-events: none;
+}
+card-face .undo-button:hover {
+    color: var(--red);
+    transition: color 0.2s linear;
+}
 card-flipper card-face {
     width: 100%;
     text-align: center;
@@ -152,6 +173,16 @@ card-editor {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+}
+card-editor .edited {
+    box-shadow: 0 2px 6px var(--edited);
+    border-color: var(--edited);
+    transition: border-color 0.2s linear;
+}
+card-editor .edited .undo-button {
+    opacity: 1;
+    transition: opacity 0.2s linear;
+    pointer-events: all;
 }
 card-editor .header {
     display: flex;
@@ -188,27 +219,27 @@ card-flipper {
 }
 
 card-flipper[score='0'] {
-    border-color: #ff686b;
+    border-color: var(--red);
 }
 
 card-flipper[score='1'] {
-    border-color: #ffd97d;
+    border-color: var(--yellow);
 }
 
 card-flipper[score='2'] {
-    border-color: #60d394;
+    border-color: var(--green);
 }
 
 card-flipper[score='0'] .divider {
-    background-color: #ff686b;
+    background-color: var(--red);
 }
 
 card-flipper[score='1'] .divider {
-    background-color: #ffd97d;
+    background-color: var(--yellow);
 }
 
 card-flipper[score='2'] .divider {
-    background-color: #60d394;
+    background-color: var(--green);
 }
 
 .scores,
