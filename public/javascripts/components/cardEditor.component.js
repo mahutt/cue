@@ -12,17 +12,7 @@ class CardEditor extends HTMLElement {
     }
 
     connectedCallback() {
-        this.deleteButton = document.createElement('button');
-        this.deleteButton.classList.add('trash');
-        this.deleteButton.innerHTML = `
-            <i class="bi-trash3"></i>
-        `;
-
-        this.header = document.createElement('div');
-        this.header.classList.add('header');
-        this.header.innerHTML = `<div class="card-position">${this.card.position}</div>`;
-        this.header.appendChild(this.deleteButton);
-        this.appendChild(this.header);
+        this.renderHeader();
 
         this.body = document.createElement('div');
         this.body.classList.add('body');
@@ -45,9 +35,24 @@ class CardEditor extends HTMLElement {
                 this.updateCard();
             }
         });
-        this.deleteButton.addEventListener('click', (event) => {
+    }
+
+    renderHeader() {
+        const header = document.createElement('div');
+        header.classList.add('header');
+        header.innerHTML = `
+            <div class="card-position">
+                ${this.card.position}
+            </div>
+            <button class="delete">
+                <i class="bi bi-trash3"></i>
+            </button>
+        
+        `;
+        header.querySelector('.delete').addEventListener('click', () => {
             this.deleteCard();
         });
+        this.appendChild(header);
     }
 
     // Updating this card.
@@ -79,10 +84,10 @@ class CardEditor extends HTMLElement {
     }
 
     setCardPositions() {
-        const cards = document.querySelectorAll('card-editor');
-        cards.forEach((card, index) => {
-            card.card.position = index + 1;
-            card.header.querySelector('.card-position').textContent = card.card.position;
+        const editors = document.querySelectorAll('card-editor');
+        editors.forEach((editor, index) => {
+            editor.card.position = index + 1;
+            editor.querySelector('.card-position').textContent = editor.card.position;
         });
     }
 }
