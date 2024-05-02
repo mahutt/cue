@@ -81,6 +81,11 @@ class CardFace extends HTMLElement {
         this.style.display = 'none';
     }
 
+    trim() {
+        this.value = this.value.trim();
+        this.resize();
+    }
+
     setReadOnly(value) {
         const target = this.textarea ?? this;
         target.readOnly = value;

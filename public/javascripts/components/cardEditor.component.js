@@ -70,6 +70,12 @@ class CardEditor extends HTMLElement {
 
     // Updating this card.
     async updateCard() {
+        if (this.card.front === this.front.value && this.card.back === this.back.value) {
+            document.querySelector('card-form').setCursor();
+            return;
+        }
+        this.front.trim();
+        this.back.trim();
         this.card.front = this.front.value;
         this.card.back = this.back.value;
         const response = await this.card.update();
