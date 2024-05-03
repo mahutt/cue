@@ -16,3 +16,4 @@ import './menuBar.component.js';
 import './courseForm.component.js';
 import './courseSettings.component.js';
 import './deckSettings.component.js';
+import './deckRating.component.js';

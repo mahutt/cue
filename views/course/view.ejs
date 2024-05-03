@@ -4,18 +4,24 @@
     }
 </style>
 <menu-options><%- include('./settings', { belongs, course }) %></menu-options>
-<%- include('./title', {course: course}) %>
-<div class="title">Decks:</div>
-<div class="decks"><% decks.forEach(function(deck) { %> <%- include('../deck/preview', { deck: deck }) %> <% }) %></div>
-<% if (belongs) { %>
-<h2>Create a new deck:</h2>
-<deck-form>
-    <label for="name">Deck Name:</label>
-    <input type="text" id="name" required maxlength="100" />
-    <br />
+<div class="container d-flex flex-column gap-2">
+    <%- include('./title', {course: course}) %>
+    <div class="text-secondary ms-1">Decks:</div>
+    <div class="decks d-flex flex-column gap-1">
+        <% decks.forEach(function(deck) { %> <%- include('../deck/preview', { deck: deck }) %> <% }) %>
+    </div>
+    <% if (belongs) { %>
+    <div class="ms-1">
+        <div class="text-secondary">Create a new deck:</div>
+        <deck-form>
+            <label for="name">Deck Name:</label>
+            <input type="text" id="name" required maxlength="100" />
+            <br />
 
-    <input type="hidden" id="course-id" value="<%= course.id %>" />
+            <input type="hidden" id="course-id" value="<%= course.id %>" />
 
-    <button type="submit">Create Deck</button>
-</deck-form>
-<% } %>
+            <button type="submit">Create Deck</button>
+        </deck-form>
+    </div>
+    <% } %>
+</div>
