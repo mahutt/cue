@@ -33,7 +33,6 @@ collapsible-column {
 
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
 }
 menu-bar {
     padding: 1rem;

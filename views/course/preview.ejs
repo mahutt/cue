@@ -1,1 +1,6 @@
-<get-link action="/<%= username %>/<%= course.code %>" target="#content" class="course"><%= course.name %></get-link>
+<get-link action="/<%= username %>/<%= course.code %>" target="#content" class="course">
+    <button class="btn btn-light text-start w-100">
+        <div class="bold text-truncate"><%= course.name %></div>
+        <div class="small text-secondary"><%= `${course.department.toUpperCase()} ${course.number}` %></div>
+    </button>
+</get-link>

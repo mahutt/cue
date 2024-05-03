@@ -4,11 +4,13 @@
     }
 </style>
 <menu-options> <% if (belongs) { %> <%- include('./course/form') %> <% } %> </menu-options>
-<div class="title"><%= user.name %></div>
-<h2>Courses</h2>
-<div class="courses">
-    <% courses.forEach(function(course) { %> <%- include('./course/preview', { username: user.name, course: course }) %>
-    <% }) %>
+<div class="container">
+    <div class="title mb-2"><%= user.name %></div>
+    <div>
+        <div class="text-secondary mb-2 ms-1">Courses</div>
+        <div class="courses">
+            <% courses.forEach(function(course) { %> <%- include('./course/preview', { username: user.name, course:
+            course }) %> <% }) %>
+        </div>
+    </div>
 </div>
-<h2>Other Users</h2>
-<div class="users"><% users.forEach(function(user) { %> <%- include('./user/preview', { user: user }) %> <% }) %></div>

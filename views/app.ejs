@@ -6,7 +6,7 @@
             <collapsible-column toggler=".toggle" width="260px">
                 <div id="navigation">
                     <% if (navbar.name !== undefined) { %>
-                    <div class="d-flex flex-row justify-content-between">
+                    <div class="d-flex flex-row justify-content-between mb-2">
                         <get-link action="/<%= navbar.name %>" target="#content" class="title"
                             ><%= navbar.name %></get-link
                         >
@@ -14,12 +14,12 @@
                             <div class="mobile btn btn-light toggle"><i class="bi bi-list"></i></div>
                         </div>
                     </div>
-                    <div class="courses">
-                        <div class="subtitle">Courses</div>
+                    <div class="courses mb-4">
+                        <div class="subtitle ms-1">Courses</div>
                         <% navbar.courses.forEach(function(course) { %> <%- include('./course/preview', { username:
                         navbar.name, course: course }) %> <% }) %>
                     </div>
-                    <div class="users">
+                    <div class="users ms-1">
                         <div class="subtitle">Other Users</div>
                         <% navbar.otherUsers.forEach(function(user) { %> <%- include('./user/preview', { user: user })
                         %> <% }) %>
