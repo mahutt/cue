@@ -27,10 +27,9 @@
                     <% } else { %>
                     <div>
                         <div class="row">
-                            <div class="subtitle"><i class="bi bi-list"></i></div>
                             <div class="mobile toggle"><i class="bi bi-list"></i></div>
                         </div>
-                        <%- include('./login') %>
+                        <get-link action="/login" target="#content" class="btn btn-light mb-3 w-100">Log in</get-link>
                     </div>
                     <div class="users">
                         <div class="subtitle">All Users</div>

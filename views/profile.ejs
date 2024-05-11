@@ -4,7 +4,9 @@
     }
 </style>
 <menu-options>
+    <% if (belongs) { %>
     <logout-button class="btn btn-light">Logout</logout-button>
+    <% } %>
 </menu-options>
 <div class="container">
     <div class="title mb-2"><%= user.name %></div>
