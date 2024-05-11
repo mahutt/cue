@@ -17,3 +17,4 @@ import './courseForm.component.js';
 import './courseSettings.component.js';
 import './deckSettings.component.js';
 import './deckRating.component.js';
+import './logoutButton.component.js';

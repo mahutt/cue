@@ -47,6 +47,11 @@ exports.login = asyncHandler(async (req, res, next) => {
     }
 });
 
+exports.logout = asyncHandler(async (req, res, next) => {
+    res.clearCookie('jwt');
+    res.sendStatus(200);
+});
+
 exports.authenticate = asyncHandler(async (req, res, next) => {
     if (!req.cookies || !req.cookies.jwt) {
         req.user = null;
