@@ -33,6 +33,16 @@ class LoginForm extends HTMLElement {
         this.password = this.querySelector('#password');
         this.submit = this.querySelector('#submit');
         this.spinner = this.querySelector('.spinner-border');
+        this.username.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                this.password.focus();
+            }
+        });
+        this.password.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                this.login();
+            }
+        });
         this.querySelector('#submit').addEventListener('click', this.login.bind(this));
     }
 
