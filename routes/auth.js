@@ -5,10 +5,10 @@ var router = express.Router();
 const auth_controller = require('../controllers/authController');
 
 // Get signup page
-// router.get('/signup', auth_controller.view_signup);
+router.get('/signup', auth_controller.view_signup);
 
 // Register
-// router.post('/signup', auth_controller.register);
+router.post('/signup', auth_controller.register);
 
 // Get login page
 router.get('/login', auth_controller.view_login);
