@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 import { X } from 'lucide-react';
 
@@ -7,6 +8,7 @@ export default function Navigation() {
     const [open, setOpen] = useState(true);
     const [previousClientX, setPreviousClientX] = useState(0);
     const [mobile, setMobile] = useState(false);
+    const { user } = useAuth();
 
     useEffect(() => {
         const handleResize = () => {
@@ -48,7 +50,7 @@ export default function Navigation() {
             <div className="p-4 flex flex-col gap-4 w-[260px]">
                 <div className="flex justify-between">
                     <Link to="profile" className="text-3xl font-bold truncate">
-                        mahutt
+                        {user?.name}
                     </Link>
                     <button className="" onClick={() => setOpen(false)}>
                         <X />
