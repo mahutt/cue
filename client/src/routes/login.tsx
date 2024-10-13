@@ -9,6 +9,9 @@ import { ArrowUpRight } from 'lucide-react';
 export default function Login() {
     const [name, setName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setName(e.target.value.toLowerCase().trim());
+    };
     return (
         <div className="h-screen flex justify-center items-center">
             <Card className="w-[350px]">
@@ -18,7 +21,7 @@ export default function Login() {
                 </CardHeader>
                 <CardContent>
                     <div className="flex flex-col gap-4">
-                        <Input id="name" placeholder="name" value={name} onChange={(e) => setName(e.target.value)} />
+                        <Input id="name" placeholder="name" value={name} onChange={handleNameChange} />
                         <Input
                             type="password"
                             id="password"
