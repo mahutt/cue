@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import { X } from 'lucide-react';
+
 export default function Navigation() {
     const [open, setOpen] = useState(true);
     const [previousClientX, setPreviousClientX] = useState(0);
@@ -49,7 +51,7 @@ export default function Navigation() {
                         mahutt
                     </Link>
                     <button className="" onClick={() => setOpen(false)}>
-                        x
+                        <X />
                     </button>
                 </div>
                 <div className="flex flex-col gap-2">
