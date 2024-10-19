@@ -42,7 +42,7 @@ export default function Navigation() {
 
     return (
         <nav
-            className={`left-0 h-full bg-white shadow-lg overflow-hidden transition-all ${
+            className={`left-0 h-full bg-white shadow-lg overflow-hidden transition-all z-10 ${
                 open ? 'w-[260px]' : 'w-[0px]'
             } ${mobile ? 'absolute' : 'static'}`}
             onMouseEnter={() => setOpen(true)}

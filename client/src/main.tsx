@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Root from './routes/root.tsx';
 import Login from './routes/login.tsx';
+import Profile from './routes/profile.tsx';
 import ErrorPage from './error-page.tsx';
 import App from './App.tsx';
 import './index.css';
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login />,
+            },
+            {
+                path: '/profile',
+                element: <Profile />,
             },
         ],
     },
