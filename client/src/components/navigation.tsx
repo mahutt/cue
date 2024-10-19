@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useAuth } from '../context/AuthContext';
 
 import { X } from 'lucide-react';
@@ -8,7 +9,7 @@ export default function Navigation() {
     const [open, setOpen] = useState(true);
     const [previousClientX, setPreviousClientX] = useState(0);
     const [mobile, setMobile] = useState(false);
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
 
     useEffect(() => {
         const handleResize = () => {
@@ -25,14 +26,6 @@ export default function Navigation() {
         };
     }, []);
 
-    // temporarily hard coded
-    const courses = [
-        { id: 1, name: 'Introduction to Computer Science', department: 'CSC', number: 101 },
-        { id: 2, name: 'Data Structures', department: 'CSC', number: 201 },
-        { id: 3, name: 'Algorithms', department: 'CSC', number: 202 },
-        { id: 4, name: 'Computer Organization', department: 'CSC', number: 301 },
-    ];
-
     window.addEventListener('mousemove', (event) => {
         if (!open && event.clientX < 100 && event.clientX < previousClientX) {
             setOpen(true);
@@ -47,29 +40,41 @@ export default function Navigation() {
             } ${mobile ? 'absolute' : 'static'}`}
             onMouseEnter={() => setOpen(true)}
         >
-            <div className="p-4 flex flex-col gap-4 w-[260px]">
-                <div className="flex justify-between">
-                    <Link to="profile" className="text-3xl font-bold truncate">
-                        {user?.name}
-                    </Link>
+            <div className="h-full flex flex-col gap-4 w-[260px]">
+                <div className="flex justify-between m-4">
+                    <div>
+                        {loading && <Skeleton className="h-9 w-40" />}
+                        <Link to="profile" className="text-3xl font-bold truncate">
+                            {user?.name}
+                        </Link>
+                    </div>
                     <button className="" onClick={() => setOpen(false)}>
                         <X />
                     </button>
                 </div>
-                <div className="flex flex-col gap-2">
-                    <p className="text-slate-500">Courses</p>
-                    {courses.map((course) => (
-                        <Link
-                            key={course.id}
-                            to={`courses/${course.id}`}
-                            className="rounded-lg p-3 bg-slate-100 hover:bg-slate-200 transition-colors"
-                        >
-                            <div className="truncate">{course.name}</div>
-                            <div className="text-sm text-slate-500">
-                                {course.department} {course.number}
-                            </div>
-                        </Link>
-                    ))}
+                <div className="overflow-y-auto pb-4">
+                    <div className="flex flex-col gap-2 px-4">
+                        <p className="text-slate-500">Courses</p>
+                        {loading && (
+                            <>
+                                <Skeleton className="h-16 rounded-xl" />
+                                <Skeleton className="h-16 rounded-xl" />
+                                <Skeleton className="h-16 rounded-xl" />
+                            </>
+                        )}
+                        {user?.courses.map((course) => (
+                            <Link
+                                key={course.id}
+                                to={`courses/${course.id}`}
+                                className="rounded-lg p-3 bg-slate-100 hover:bg-slate-200 transition-colors"
+                            >
+                                <div className="truncate">{course.name}</div>
+                                <div className="text-sm text-slate-500">
+                                    {course.department} {course.number}
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
                 </div>
             </div>
         </nav>
