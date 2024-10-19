@@ -2,6 +2,7 @@ const User = require('../models/user');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Course = require('../models/course');
 
 exports.register = asyncHandler(async (req, res, next) => {
     const hash = await bcrypt.hash(req.body.password, 10);
@@ -65,5 +66,6 @@ exports.getCurrentUser = asyncHandler(async (req, res, next) => {
     if (!req.user) {
         return res.status(401).json({ error: 'Not authenticated' });
     }
-    res.json({ user: { id: req.user.id, name: req.user.name } });
+    const courses = await Course.allByUserId(req.user.id);
+    res.json({ user: { id: req.user.id, name: req.user.name, courses } });
 });

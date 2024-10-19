@@ -1,7 +1,7 @@
 export interface User {
     id: number;
     name: string;
-    hash: string;
+    courses: Course[];
 }
 
 export interface Course {
