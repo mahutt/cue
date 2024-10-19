@@ -1,7 +1,5 @@
-import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import DeckCard from '@/components/deck-card';
 
 export default function Profile() {
     const { user } = useAuth();
@@ -22,17 +20,7 @@ export default function Profile() {
                     <div className="overflow-x-auto pb-4">
                         <div className="flex flex-row gap-2 min-w-min">
                             {decks.map((deck) => (
-                                <Card className="w-[250px] flex-shrink-0 flex flex-col justify-between" key={deck.id}>
-                                    <CardHeader>
-                                        <CardTitle>{deck.name}</CardTitle>
-                                        <CardDescription>COMP 344</CardDescription>
-                                    </CardHeader>
-                                    <CardFooter className="flex justify-end">
-                                        <Link to={`/study/${deck.id}`}>
-                                            <Button>Study</Button>
-                                        </Link>
-                                    </CardFooter>
-                                </Card>
+                                <DeckCard key={deck.id} deck={deck} />
                             ))}
                         </div>
                     </div>
