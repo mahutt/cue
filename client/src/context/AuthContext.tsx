@@ -23,8 +23,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     useEffect(() => {
         const checkLoggedIn = async () => {
             try {
-                const response = await api.get('/current-user');
-                setUser((response.data as { user: User }).user);
+                const { data } = await api.get<{ user: User }>('/current-user');
+                setUser(data.user);
             } catch (error) {
                 setUser(null);
             } finally {

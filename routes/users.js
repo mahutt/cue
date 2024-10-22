@@ -11,7 +11,7 @@ const deck_controller = require('../controllers/deckController');
 router.get('/:name', user_controller.view_profile);
 
 // Reading a course.
-router.get('/:userName/:courseCode', course_controller.view_course);
+router.get('/:userName/:courseId', course_controller.view_course);
 
 // Reading a deck.
 router.get('/:userName/:courseCode/:deckPosition', deck_controller.view_deck);

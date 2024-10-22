@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Root from './routes/root.tsx';
+import Course, { loader as courseLoader } from './routes/course.tsx';
 import Login from './routes/login.tsx';
 import Profile from './routes/profile.tsx';
 import ErrorPage from './error-page.tsx';
@@ -26,6 +27,11 @@ const router = createBrowserRouter([
             {
                 path: '/profile',
                 element: <Profile />,
+            },
+            {
+                path: '/courses/:courseId',
+                element: <Course />,
+                loader: courseLoader,
             },
         ],
     },

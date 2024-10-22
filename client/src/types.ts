@@ -10,6 +10,7 @@ export interface Course {
     department: string;
     number: number;
     user_id: number;
+    decks?: Deck[];
 }
 
 export interface Deck {
@@ -17,6 +18,7 @@ export interface Deck {
     position: number;
     name: string;
     course_id: number;
+    percentage: number | null;
 }
 
 export interface Card {

@@ -22,13 +22,8 @@ exports.create_course = asyncHandler(async (req, res, next) => {
 });
 
 exports.view_course = asyncHandler(async (req, res, next) => {
-    const { userName, courseCode } = req.params;
-
-    const department = courseCode.substring(0, 4);
-    const number = courseCode.substring(4);
-    const user = await User.findByName(userName);
-
-    const course = await Course.find({ department, number, user_id: user.id });
+    const { courseId } = req.params;
+    const course = await Course.findById(courseId);
     const decks = await Deck.allByCourseId(course.id);
 
     if (req.user) {
@@ -43,8 +38,8 @@ exports.view_course = asyncHandler(async (req, res, next) => {
         );
     }
 
-    const belongs = Boolean(req.user) && req.user.name === user.name;
-    res.render('course/view', { course: course, decks: decks, belongs: belongs });
+    course.decks = decks;
+    res.json({ course: course });
 });
 
 // Update a course

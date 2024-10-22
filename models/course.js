@@ -36,6 +36,23 @@ exports.find = function ({ department, number, user_id }) {
     });
 };
 
+exports.findById = function (courseId) {
+    return new Promise((resolve, reject) => {
+        db.get(
+            `SELECT *, department || number AS code
+            FROM courses WHERE id = ?`,
+            [courseId],
+            (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            }
+        );
+    });
+};
+
 // Save a course
 exports.save = function ({ name, department, number, user_id }) {
     return new Promise((resolve, reject) => {
