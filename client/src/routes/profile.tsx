@@ -14,7 +14,7 @@ export default function Profile() {
     ];
 
     return (
-        <div className="flex flex-col gap-5 px-5 my-10">
+        <div className="flex flex-col gap-5 px-10 my-10">
             <div>
                 {loading && <Skeleton className="h-10 w-60" />}
                 <h1 className="text-4xl tracking-tight font-bold">{user?.name}</h1>
