@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
 
 const authController = require('./controllers/authController');
 const appController = require('./controllers/appController');
@@ -17,6 +18,14 @@ var app = express();
 
 require('dotenv').config();
 require('./database/database');
+
+const corsOptions = {
+    origin: process.env.CLIENT_URL,
+    credentials: true, // Allow cookies to be sent
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'cue-app-request'],
+};
+app.use(cors(corsOptions));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
