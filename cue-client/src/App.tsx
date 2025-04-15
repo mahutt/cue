@@ -2,9 +2,11 @@ import { Outlet } from 'react-router';
 import CollapsibleColumn from './components/collapsible-column';
 import { useSidebar } from './hooks/sidebar-hook';
 import NotificationBanner from './components/notification-banner';
+import { useTool } from './hooks/tool-hook';
 
 function App() {
     const { toggleSidebar } = useSidebar();
+    const { tool } = useTool();
     const navigateBack = () => window.history.back(); // to be fixed
     return (
         <div id="app">
@@ -17,7 +19,9 @@ function App() {
                     <button id="navigateBack" className="btn btn-light" type="button" onClick={navigateBack}>
                         <i className="bi bi-arrow-90deg-left"></i>
                     </button>
-                    <div id="dynamic" className="d-flex justify-content-end w-100"></div>
+                    <div id="dynamic" className="d-flex justify-content-end w-100">
+                        {tool}
+                    </div>
                 </div>
                 <div id="content">
                     <Outlet />

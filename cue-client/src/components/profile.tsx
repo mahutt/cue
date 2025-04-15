@@ -5,11 +5,14 @@ import CoursePreview from './course-preview';
 import { api } from '../api';
 import { useAuth } from '../hooks/auth-hook';
 import CourseForm from './course-form';
+import { useTool } from '../hooks/tool-hook';
+import LogoutButton from './logout-button';
 
 export default function Profile() {
     const navigate = useNavigate();
     let { username } = useParams();
     const { user } = useAuth();
+    const { setTool } = useTool();
 
     if (username === undefined) {
         username = '';
@@ -20,6 +23,7 @@ export default function Profile() {
     const belongsTo = user && user.name === username;
 
     useEffect(() => {
+        setTool(belongsTo ? <LogoutButton /> : null);
         if (belongsTo) return;
         api(`/api/users/${username}/courses`, {
             method: 'GET',

@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { api } from '../api';
+import { useAuth } from '../hooks/auth-hook';
 
 export default function LoginForm() {
     const navigate = useNavigate();
+    const { setLoading: setAuthLoading } = useAuth();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [invalidUsername, setInvalidUsername] = useState(false);
@@ -51,8 +53,8 @@ export default function LoginForm() {
             setLoading(false);
         } else {
             const token = data.token;
-            console.log('token', token);
             document.cookie = `jwt=${token}; path=/; max-age=86400`;
+            setAuthLoading(true);
             navigate(`/${username}`);
         }
     };

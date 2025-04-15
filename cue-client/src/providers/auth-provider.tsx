@@ -11,6 +11,8 @@ export interface AuthState {
     user: User | null;
     allUserNames: string[];
     setUser: React.Dispatch<React.SetStateAction<User | null>>;
+    loading: boolean;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AuthContext = createContext<AuthState | undefined>(undefined);
@@ -22,10 +24,13 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [allUserNames, setAllUserNames] = useState<string[]>([]);
+    const [loading, setLoading] = useState(true);
     const value: AuthState = {
         user,
         allUserNames,
         setUser,
+        loading,
+        setLoading,
     };
 
     const checkUser = async () => {
@@ -40,7 +45,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             });
             const { name, courses } = await response.json();
             setUser({ name, courses });
-        } catch {}
+            setLoading(false);
+        } catch {
+            setUser(null);
+            setLoading(false);
+        }
     };
 
     const fetchAllUsers = async () => {
@@ -59,7 +68,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
     useEffect(() => {
+        if (!loading) return;
         checkUser();
+    }, [loading]);
+
+    useEffect(() => {
         fetchAllUsers();
     }, []);
 
