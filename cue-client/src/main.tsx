@@ -7,6 +7,7 @@ import './index.css';
 
 import App from './App.tsx';
 import LoginForm from './components/login-form.tsx';
+import Profile from './components/profile.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
@@ -17,7 +18,7 @@ createRoot(document.getElementById('root')!).render(
                         <Route element={<App />}>
                             <Route path="/" element={<div>Home</div>} />
                             <Route path="/login" element={<LoginForm />} />
-                            <Route path="/:username" element={<div>User Dashboard</div>} />
+                            <Route path="/:username" element={<Profile />} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

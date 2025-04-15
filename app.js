@@ -13,6 +13,7 @@ const usersRouter = require('./routes/users');
 const coursesRouter = require('./routes/courses');
 const decksRouter = require('./routes/decks');
 const cardsRouter = require('./routes/cards');
+const apiRouter = require('./routes/api');
 
 var app = express();
 
@@ -41,6 +42,7 @@ app.use(express.static(path.join(__dirname, 'node_modules/bootstrap-icons')));
 app.use(authController.authenticate);
 app.use(appController.serve);
 
+app.use('/api', apiRouter);
 app.use('/courses', coursesRouter);
 app.use('/decks', decksRouter);
 app.use('/cards', cardsRouter);

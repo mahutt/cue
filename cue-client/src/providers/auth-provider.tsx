@@ -1,13 +1,6 @@
 import React, { createContext, useState, ReactNode, useEffect } from 'react';
 import { api } from '../api';
-
-interface Course {
-    id: number;
-    name: string;
-    department: string;
-    number: number;
-    code: string;
-}
+import { Course } from '../types';
 
 interface User {
     name: string;
@@ -17,6 +10,7 @@ interface User {
 export interface AuthState {
     user: User | null;
     allUserNames: string[];
+    setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
 const AuthContext = createContext<AuthState | undefined>(undefined);
@@ -31,6 +25,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const value: AuthState = {
         user,
         allUserNames,
+        setUser,
     };
 
     const checkUser = async () => {

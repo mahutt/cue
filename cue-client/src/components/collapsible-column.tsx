@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { useAuth } from '../hooks/auth-hook';
 import { useSidebar } from '../hooks/sidebar-hook';
+import CoursePreview from './course-preview';
 
 export default function CollapsibleColumn() {
     const { user, allUserNames } = useAuth();
@@ -25,16 +26,7 @@ export default function CollapsibleColumn() {
                         </div>
                         <div className="courses mb-4">
                             <div className="subtitle ms-1">Courses</div>
-                            {user.courses.map((course) => (
-                                <Link key={course.id} to={`/${user.name}/${course.code}`} className="course">
-                                    <button className="btn btn-light text-start w-100">
-                                        <div className="text-truncate">{course.name}</div>
-                                        <div className="small text-secondary">
-                                            {course.department.toUpperCase()} {course.number}
-                                        </div>
-                                    </button>
-                                </Link>
-                            ))}
+                            {user.courses.map((course) => CoursePreview({ username: user.name, course }))}
                         </div>
                         <div className="users ms-1">
                             <div className="subtitle">Other Users</div>

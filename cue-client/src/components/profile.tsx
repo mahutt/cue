@@ -1,0 +1,62 @@
+import { useParams, useNavigate } from 'react-router';
+import { Course } from '../types';
+import { useEffect, useState } from 'react';
+import CoursePreview from './course-preview';
+import { api } from '../api';
+import { useAuth } from '../hooks/auth-hook';
+import CourseForm from './course-form';
+
+export default function Profile() {
+    const navigate = useNavigate();
+    let { username } = useParams();
+    const { user } = useAuth();
+
+    if (username === undefined) {
+        username = '';
+        navigate(-1);
+    }
+
+    let [courses, setCourses] = useState<Course[]>([]);
+    const belongsTo = user && user.name === username;
+
+    useEffect(() => {
+        if (belongsTo) return;
+        api(`/api/users/${username}/courses`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cue-App-Request': 'true',
+            },
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                setCourses(data);
+            })
+            .catch((error) => {
+                console.error('Error fetching courses:', error);
+            });
+    }, [username]);
+
+    return (
+        <>
+            <style>{`#content { padding: 0 1rem 1rem 1rem; }`}</style>
+            <div className="container">
+                <div className="title mb-2">{username}</div>
+                <div>
+                    <div className="mb-2 mx-1 d-flex flex-row justify-content-between align-items-center">
+                        <div className="text-secondary">Courses</div>
+                        <div>{belongsTo && <CourseForm />}</div>
+                    </div>
+                    <div className="courses">
+                        {(belongsTo ? user.courses : courses).map((course) => (
+                            <CoursePreview key={course.id} username={username} course={course} />
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
