@@ -12,3 +12,8 @@ exports.view_profile = asyncHandler(async (req, res, next) => {
     const otherUsers = await User.allExcept(name);
     res.render('profile', { user: user, courses: courses, belongs: belongs, users: otherUsers });
 });
+
+exports.allUsers = asyncHandler(async (req, res, next) => {
+    const users = await User.allNames();
+    res.send(users);
+});
