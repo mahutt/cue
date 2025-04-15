@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router';
 import CollapsibleColumn from './components/collapsible-column';
 import { useSidebar } from './hooks/sidebar-hook';
+import NotificationBanner from './components/notification-banner';
 
 function App() {
     const { toggleSidebar } = useSidebar();
@@ -22,6 +23,7 @@ function App() {
                     <Outlet />
                 </div>
             </main>
+            <NotificationBanner />
         </div>
     );
 }

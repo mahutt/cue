@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { api } from '../api';
 import { useAuth } from '../hooks/auth-hook';
+import { useNotification } from '../hooks/notification-hook';
 
 export default function CourseForm() {
     const { setUser } = useAuth();
+    const { setNotification } = useNotification();
     const modalDivRef = useRef<HTMLDivElement>(null);
     const [modal, setModal] = useState<any>(null);
 
@@ -43,10 +45,10 @@ export default function CourseForm() {
             });
 
             modal.hide();
-            // NotificationBanner.instance.notify('Course created.');
+            setNotification('Course created.');
         } catch {
             modal.hide();
-            // NotificationBanner.instance.notify('Could not create course.');
+            setNotification('Could not create course.');
         }
     };
 
