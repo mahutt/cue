@@ -120,13 +120,13 @@ button {
 /* End Navigation Styling */
 
 /* course styling */
-course-title .course-name,
+.course-title .course-name,
 deck-title .deck-name {
     width: 100%;
     font-size: 2rem;
     font-weight: 700;
 }
-course-title .course-code {
+.course-title .course-code {
     color: gray;
     font-size: 1rem;
     font-weight: 400;

@@ -67,6 +67,30 @@ exports.view_course = asyncHandler(async (req, res, next) => {
     res.render('course/view', { course: course, decks: decks, belongs: belongs });
 });
 
+// JSON API for viewing a course
+exports.getCourse = asyncHandler(async (req, res, next) => {
+    const { userName, courseCode } = req.params;
+    const department = courseCode.substring(0, 4);
+    const number = courseCode.substring(4);
+    const user = await User.findByName(userName);
+
+    const course = await Course.find({ department, number, user_id: user.id });
+    const decks = await Deck.allByCourseId(course.id);
+
+    if (req.user) {
+        await Promise.all(
+            decks.map(async (deck) => {
+                const percentage = await Deck.getPercentageByUserIdAndDeckId({
+                    user_id: req.user.id,
+                    deck_id: deck.id,
+                });
+                deck.percentage = percentage;
+            })
+        );
+    }
+    res.json({ course, decks });
+});
+
 // Update a course
 exports.update_course = asyncHandler(async (req, res, next) => {
     const id = req.params.id;

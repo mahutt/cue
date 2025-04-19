@@ -17,6 +17,19 @@ exports.create_deck = asyncHandler(async (req, res, next) => {
     res.render('deck/preview', { deck: savedDeck });
 });
 
+exports.createDeck = asyncHandler(async (req, res, next) => {
+    const { name, course_id } = req.body;
+
+    const owner = await User.findByCourseId(course_id);
+    if (!req.user || req.user.name !== owner.name) {
+        return res.sendStatus(401);
+    }
+
+    const savedDeck = await Deck.save({ name, course_id });
+    savedDeck.percentage = null;
+    res.json({ deck: savedDeck });
+});
+
 // Read a deck
 exports.view_deck = asyncHandler(async (req, res, next) => {
     const { userName, courseCode, deckPosition } = req.params;

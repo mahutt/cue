@@ -10,6 +10,7 @@ import './index.css';
 import App from './App.tsx';
 import LoginForm from './components/login-form.tsx';
 import Profile from './components/profile.tsx';
+import CoursePage from './components/course-page.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')!).render(
                                     <Route path="/" element={<div>Home</div>} />
                                     <Route path="/login" element={<LoginForm />} />
                                     <Route path="/:username" element={<Profile />} />
+                                    <Route path="/:username/:courseCode" element={<CoursePage />} />
                                 </Route>
                             </Routes>
                         </BrowserRouter>

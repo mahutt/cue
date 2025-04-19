@@ -13,3 +13,11 @@ export interface Course {
     number: number;
     code: string;
 }
+
+export interface Deck {
+    id: number;
+    position: number;
+    name: string;
+    course_id: number;
+    percentage: number | null;
+}
