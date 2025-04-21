@@ -43,7 +43,7 @@ class CardFace extends HTMLElement {
             false
         );
         this.textarea.addEventListener('keydown', (e) => {
-            if (e.shiftKey && e.key === 'Enter') {
+            if ((e.shiftKey && e.key === 'Enter') || /^[0-9]$/.test(e.key)) {
                 e.stopPropagation();
             }
         });
