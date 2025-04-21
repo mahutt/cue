@@ -14,4 +14,7 @@ router.get('/courses/:userName/:courseCode', course_controller.getCourse);
 // Create deck
 router.post('/decks', deck_controller.createDeck);
 
+// Get deck & cards
+router.get('/decks/:userName/:courseCode/:deckPosition', deck_controller.viewDeck);
+
 module.exports = router;

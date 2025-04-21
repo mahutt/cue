@@ -46,6 +46,21 @@ exports.view_deck = asyncHandler(async (req, res, next) => {
     res.render('deck/view', { deck: deck, cards: cards, belongs: belongs });
 });
 
+// JSON endpoint to read a deck
+exports.viewDeck = asyncHandler(async (req, res, next) => {
+    const { userName, courseCode, deckPosition } = req.params;
+
+    const department = courseCode.substring(0, 4);
+    const number = courseCode.substring(4);
+
+    const user = await User.findByName(userName);
+    const course = await Course.find({ department, number, user_id: user.id });
+    const deck = await Deck.find({ position: deckPosition, course_id: course.id });
+    const cards = await Card.allByDeckId(deck.id);
+
+    res.json({ deck: deck, cards: cards });
+});
+
 // Update a deck
 exports.update_deck = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
