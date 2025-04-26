@@ -121,7 +121,7 @@ button {
 
 /* course styling */
 .course-title .course-name,
-deck-title .deck-name {
+.deck-title .deck-name {
     width: 100%;
     font-size: 2rem;
     font-weight: 700;
