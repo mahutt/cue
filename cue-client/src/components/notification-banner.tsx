@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNotification } from '../hooks/notification-hook';
 
 export default function NotificationBanner() {
+    // @todo fix duplicate banner bug (doesn't show)
     const { notification } = useNotification();
     const [visible, setVisible] = useState(false);
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
