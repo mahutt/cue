@@ -19,5 +19,13 @@ export interface Deck {
     position: number;
     name: string;
     course_id: number;
-    percentage: number | null;
+    percentage?: number | null;
+}
+
+export interface Card {
+    id: number;
+    deck_id: number;
+    position: number;
+    front: string;
+    back: string;
 }
