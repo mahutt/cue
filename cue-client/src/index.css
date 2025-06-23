@@ -150,26 +150,26 @@ button {
     gap: 1rem;
     border-radius: 0.5rem;
 }
-card-face {
+.card-face {
     position: relative;
 }
-card-face .undo-button {
+.card-face .undo-button {
     position: absolute;
     top: 0.2rem;
     right: 0.4rem;
     opacity: 0;
     pointer-events: none;
 }
-card-face .undo-button:hover {
+.card-face .undo-button:hover {
     color: var(--red);
     transition: color 0.2s linear;
 }
-card-flipper card-face {
+card-flipper .card-face {
     width: 100%;
     text-align: center;
 }
-card-editor card-face,
-card-form card-face {
+.card-editor .card-face,
+.card-form .card-face {
     min-width: 200px;
     flex: 1;
     padding: 1rem;
@@ -177,30 +177,30 @@ card-form card-face {
     border-radius: 0.5rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
-card-editor {
+.card-editor {
     width: 100%;
     max-width: 750px;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
-card-editor .edited {
+.card-editor .edited {
     box-shadow: 0 2px 6px var(--edited);
     border-color: var(--edited);
     transition: border-color 0.2s linear;
 }
-card-editor .edited .undo-button {
+.card-editor .edited .undo-button {
     opacity: 1;
     transition: opacity 0.2s linear;
     pointer-events: all;
 }
-card-editor .header {
+.card-editor .header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
-card-editor .body {
+.card-editor .body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
