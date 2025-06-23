@@ -11,6 +11,7 @@ import App from './App.tsx';
 import LoginForm from './components/login-form.tsx';
 import Profile from './components/profile.tsx';
 import CoursePage from './components/course-page.tsx';
+import DeckPage from './components/deck-page.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
@@ -25,6 +26,7 @@ createRoot(document.getElementById('root')!).render(
                                     <Route path="/login" element={<LoginForm />} />
                                     <Route path="/:username" element={<Profile />} />
                                     <Route path="/:username/:courseCode" element={<CoursePage />} />
+                                    <Route path="/:username/:courseCode/:deckPosition" element={<DeckPage />} />
                                 </Route>
                             </Routes>
                         </BrowserRouter>
