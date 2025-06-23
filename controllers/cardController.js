@@ -33,7 +33,8 @@ exports.update_card = asyncHandler(async (req, res, next) => {
     const back = req.body.back.trim();
 
     await Card.updateById({ id, front, back });
-    res.sendStatus(200);
+    const updatedCard = await Card.findById(id);
+    res.json({ card: updatedCard });
 });
 
 exports.update_score = asyncHandler(async (req, res, next) => {
