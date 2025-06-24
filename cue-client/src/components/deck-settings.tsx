@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate, useLocation } from 'react-router';
 import { useNotification } from '../hooks/notification-hook';
 import { api } from '../api';
 
 export default function DeckSettings({ deckId, belongs }: { deckId: number; belongs: boolean }) {
     const navigate = useNavigate();
+    const location = useLocation();
     const { setNotification } = useNotification();
     const modalDivRef = useRef<HTMLDivElement>(null);
     const [modal, setModal] = useState<any>(null);
@@ -54,7 +55,7 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
 
     return (
         <div>
-            <Link to="study">
+            <Link to={`${location.pathname}/study`}>
                 <button className="btn btn-light toggle" type="button">
                     <i className="bi bi-eyeglasses"></i>
                 </button>
