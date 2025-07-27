@@ -111,8 +111,9 @@ exports.findWeakestByUserIdAndDeckId = function ({ user_id, deck_id, limit }) {
     return new Promise((resolve, reject) => {
         db.all(
             `
-            SELECT  
+            SELECT
                 c.id,
+                c.deck_id,
                 c.position,
                 c.front,
                 c.back,

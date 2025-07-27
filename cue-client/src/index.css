@@ -164,7 +164,7 @@ button {
     color: var(--red);
     transition: color 0.2s linear;
 }
-card-flipper .card-face {
+.card-flipper .card-face {
     width: 100%;
     text-align: center;
 }
@@ -206,7 +206,7 @@ card-flipper .card-face {
     flex-wrap: wrap;
     gap: 1rem;
 }
-card-flipper {
+.card-flipper {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -244,27 +244,27 @@ flash-card {
     border-radius: 1rem;
 }
 
-card-flipper[score='0'] {
+.card-flipper.score-0 {
     border-color: var(--red);
 }
 
-card-flipper[score='1'] {
+.card-flipper.score-1 {
     border-color: var(--yellow);
 }
 
-card-flipper[score='2'] {
+.card-flipper.score-2 {
     border-color: var(--green);
 }
 
-card-flipper[score='0'] .divider {
+.card-flipper.score-0 .divider {
     background-color: var(--red);
 }
 
-card-flipper[score='1'] .divider {
+.card-flipper.score-1 .divider {
     background-color: var(--yellow);
 }
 
-card-flipper[score='2'] .divider {
+.card-flipper.score-2 .divider {
     background-color: var(--green);
 }
 

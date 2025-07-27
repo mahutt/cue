@@ -124,6 +124,27 @@ exports.getStudyCards = asyncHandler(async (req, res, next) => {
     res.send({ cards });
 });
 
+exports.studyDeck = asyncHandler(async (req, res, next) => {
+    if (!req.user) {
+        return res.sendStatus(401);
+    }
+
+    const { userName, courseCode, deckPosition } = req.params;
+
+    const department = courseCode.substring(0, 4);
+    const number = courseCode.substring(4);
+
+    const user = await User.findByName(userName);
+    const course = await Course.find({ department, number, user_id: user.id });
+    const deck = await Deck.find({ position: deckPosition, course_id: course.id });
+
+    const { id } = deck;
+    const criteria = { user_id: req.user.id, deck_id: id, limit: 10 }; // Hardcoded 10
+    const cards = await Card.findWeakestByUserIdAndDeckId(criteria);
+
+    res.send({ cards, deckId: id });
+});
+
 exports.get_score = asyncHandler(async (req, res, next) => {
     if (!req.user) {
         return res.sendStatus(401);
