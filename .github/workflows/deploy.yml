@@ -52,7 +52,6 @@ jobs:
             cd "$REPO_DIR"
           fi
 
-          cd "$REPO_DIR/simple-web-server"
           npm install
 
           echo "Starting/restarting application..."
