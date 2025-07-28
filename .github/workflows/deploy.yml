@@ -22,6 +22,9 @@ jobs:
           echo "Listing home directory:"
           ls -la ~
 
+          echo "Installing Development Tools..."
+          sudo yum groupinstall "Development Tools"
+
           echo "Installing Git..."
           if ! command -v git &> /dev/null; then
             sudo yum install -y git
