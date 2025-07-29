@@ -23,7 +23,7 @@ jobs:
           ls -la ~
 
           echo "Installing Development Tools..."
-          sudo yum groupinstall "Development Tools"
+          sudo yum groupinstall "Development Tools" -y
 
           echo "Installing Git..."
           if ! command -v git &> /dev/null; then
