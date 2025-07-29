@@ -43,6 +43,54 @@ jobs:
           npm install -g pm2
           fi
 
+          echo "Installing nginx..."
+          sudo dnf install nginx -y
+
+          echo "Starting and enabling nginx..."
+          sudo systemctl start nginx
+          sudo systemctl enable nginx
+
+          echo "Creating nginx configuration for reverse proxy..."
+          sudo tee /etc/nginx/conf.d/express-proxy.conf > /dev/null <<'EOF'
+          server {
+              listen 80;
+              server_name _;
+
+              location / {
+                  proxy_pass http://localhost:3000;
+                  proxy_http_version 1.1;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection 'upgrade';
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header X-Forwarded-Proto $scheme;
+                  proxy_cache_bypass $http_upgrade;
+                  proxy_read_timeout 86400;
+              }
+          }
+          EOF
+
+          echo "Removing default nginx configuration..."
+          sudo rm -f /etc/nginx/conf.d/default.conf
+          sudo rm -f /etc/nginx/sites-enabled/default
+
+          echo "Testing nginx configuration..."
+          sudo nginx -t
+
+          if [ $? -eq 0 ]; then
+              echo "Configuration test passed. Reloading nginx..."
+              sudo systemctl reload nginx
+              echo "Nginx successfully configured as reverse proxy!"
+              echo "HTTP traffic on port 80 will now be forwarded to localhost:3000"
+          else
+              echo "Configuration test failed. Please check the nginx configuration."
+              exit 1
+          fi
+
+          echo "Checking nginx status..."
+          sudo systemctl status nginx --no-pager
+
           REPO_URL="https://github.com/mahutt/cue.git"
           BRANCH="release"
           REPO_DIR="$HOME/github-aws-ec2"
