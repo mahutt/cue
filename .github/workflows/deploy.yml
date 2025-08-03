@@ -54,7 +54,7 @@ jobs:
           sudo tee /etc/nginx/conf.d/express-proxy.conf > /dev/null <<'EOF'
           server {
               listen 80;
-              server_name _;
+              server_name cue.is;
 
               location / {
                   proxy_pass http://localhost:3000;
@@ -90,6 +90,22 @@ jobs:
 
           echo "Checking nginx status..."
           sudo systemctl status nginx --no-pager
+
+          # Install Certbot for Let's Encrypt
+          echo "Installing Certbot..."
+          sudo dnf install -y certbot python3-certbot-nginx
+
+          # Get SSL certificate
+          if [ ! -f /etc/letsencrypt/live/cue.is/fullchain.pem ]; then
+              echo "Getting SSL certificate for cue.is..."
+              sudo certbot --nginx -d cue.is --non-interactive --agree-tos --email tommy.mahut@gmail.com
+          else
+              echo "SSL certificate already exists for cue.is"
+          fi
+
+          # Auto-renewal setup
+          echo "Setting up auto-renewal..."
+          sudo systemctl enable --now certbot-renew.timer
 
           REPO_URL="https://github.com/mahutt/cue.git"
           BRANCH="release"
