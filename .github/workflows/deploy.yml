@@ -46,6 +46,10 @@ jobs:
           echo "Installing nginx..."
           sudo dnf install nginx -y
 
+          # Temporary:
+          echo "Installing Certbot..."
+          sudo dnf install certbot python3-certbot-nginx -y
+
           echo "Starting and enabling nginx..."
           sudo systemctl start nginx
           sudo systemctl enable nginx
@@ -92,8 +96,8 @@ jobs:
           sudo systemctl status nginx --no-pager
 
           # Install Certbot for Let's Encrypt
-          echo "Installing Certbot..."
-          sudo dnf install certbot python3-certbot-nginx -y
+          # echo "Installing Certbot..."
+          # sudo dnf install certbot python3-certbot-nginx -y
 
           # Get SSL certificate
           echo "Getting SSL certificate for cue.is..."
