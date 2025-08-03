@@ -92,16 +92,14 @@ jobs:
               exit 1
           fi
 
-          # Temporary:
-          echo "Installing Certbot..."
-          sudo dnf install certbot python3-certbot-nginx -y
+          # sudo dnf install certbot python3-certbot-nginx -y worked here
 
           echo "Checking nginx status..."
           sudo systemctl status nginx --no-pager
 
           # Install Certbot for Let's Encrypt
-          # echo "Installing Certbot..."
-          # sudo dnf install certbot python3-certbot-nginx -y
+          echo "Installing Certbot..."
+          sudo dnf install certbot python3-certbot-nginx -y
 
           # Get SSL certificate
           echo "Getting SSL certificate for cue.is..."
