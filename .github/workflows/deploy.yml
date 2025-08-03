@@ -95,7 +95,7 @@ jobs:
           # sudo dnf install certbot python3-certbot-nginx -y worked here
 
           echo "Checking nginx status..."
-          sudo systemctl status nginx --no-pager
+          # sudo systemctl status nginx --no-pager
 
           # Install Certbot for Let's Encrypt
           echo "Installing Certbot..."
