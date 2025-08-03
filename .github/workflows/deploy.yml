@@ -96,12 +96,8 @@ jobs:
           sudo dnf install -y certbot python3-certbot-nginx
 
           # Get SSL certificate
-          if [ ! -f /etc/letsencrypt/live/cue.is/fullchain.pem ]; then
-              echo "Getting SSL certificate for cue.is..."
-              sudo certbot --nginx -d cue.is --non-interactive --agree-tos --email tommy.mahut@gmail.com
-          else
-              echo "SSL certificate already exists for cue.is"
-          fi
+          echo "Getting SSL certificate for cue.is..."
+          sudo certbot --nginx -d cue.is --non-interactive --agree-tos --email tommy.mahut@gmail.com
 
           # Auto-renewal setup
           echo "Setting up auto-renewal..."
