@@ -93,7 +93,7 @@ jobs:
 
           # Install Certbot for Let's Encrypt
           echo "Installing Certbot..."
-          sudo /usr/bin/dnf install -y certbot python3-certbot-nginx
+          sudo dnf install certbot python3-certbot-nginx -y
 
           # Get SSL certificate
           echo "Getting SSL certificate for cue.is..."
