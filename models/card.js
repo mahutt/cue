@@ -1,5 +1,17 @@
 const db = require('../database/database');
 
+exports.findById = function (id) {
+    return new Promise((resolve, reject) => {
+        db.get(`SELECT * FROM cards WHERE id = ?`, [id], (err, row) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(row);
+            }
+        });
+    });
+};
+
 // Find courses by user_id
 exports.allByDeckId = function (deck_id) {
     return new Promise((resolve, reject) => {
@@ -99,8 +111,9 @@ exports.findWeakestByUserIdAndDeckId = function ({ user_id, deck_id, limit }) {
     return new Promise((resolve, reject) => {
         db.all(
             `
-            SELECT  
+            SELECT
                 c.id,
+                c.deck_id,
                 c.position,
                 c.front,
                 c.back,

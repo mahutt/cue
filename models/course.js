@@ -91,3 +91,15 @@ exports.deleteById = function (id) {
         });
     });
 };
+
+exports.getIdByDepartmentAndNumber = function (department, number) {
+    return new Promise((resolve, reject) => {
+        db.get(`SELECT id FROM courses WHERE department = ? AND number = ?`, [department, number], (err, row) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(row.id);
+            }
+        });
+    });
+};

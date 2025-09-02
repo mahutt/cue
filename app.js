@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
 
 const authController = require('./controllers/authController');
 const appController = require('./controllers/appController');
@@ -12,11 +13,20 @@ const usersRouter = require('./routes/users');
 const coursesRouter = require('./routes/courses');
 const decksRouter = require('./routes/decks');
 const cardsRouter = require('./routes/cards');
+const apiRouter = require('./routes/api');
 
 var app = express();
 
 require('dotenv').config();
 require('./database/database');
+
+const corsOptions = {
+    origin: process.env.CLIENT_URL,
+    credentials: true, // Allow cookies to be sent
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'cue-app-request'],
+};
+app.use(cors(corsOptions));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,6 +42,7 @@ app.use(express.static(path.join(__dirname, 'node_modules/bootstrap-icons')));
 app.use(authController.authenticate);
 app.use(appController.serve);
 
+app.use('/api', apiRouter);
 app.use('/courses', coursesRouter);
 app.use('/decks', decksRouter);
 app.use('/cards', cardsRouter);

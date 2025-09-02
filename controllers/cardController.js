@@ -21,6 +21,22 @@ exports.create_card = asyncHandler(async (req, res, next) => {
     res.render('card/preview', { card: savedCard });
 });
 
+// JSON version of create_card
+exports.createCard = asyncHandler(async (req, res, next) => {
+    const deck_id = req.body.deck_id;
+
+    const owner = await User.findByDeckId(deck_id);
+    if (!req.user || req.user.name !== owner.name) {
+        return res.sendStatus(401);
+    }
+
+    const front = req.body.front.trim();
+    const back = req.body.back.trim();
+
+    const savedCard = await Card.save({ front, back, deck_id });
+    res.json({ card: savedCard });
+});
+
 // Update a course
 exports.update_card = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
@@ -33,7 +49,8 @@ exports.update_card = asyncHandler(async (req, res, next) => {
     const back = req.body.back.trim();
 
     await Card.updateById({ id, front, back });
-    res.sendStatus(200);
+    const updatedCard = await Card.findById(id);
+    res.json({ card: updatedCard });
 });
 
 exports.update_score = asyncHandler(async (req, res, next) => {

@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Course = require('../models/course');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -63,4 +64,22 @@ exports.authenticate = asyncHandler(async (req, res, next) => {
             next();
         });
     }
+});
+
+exports.get_authenticated_user = asyncHandler(async (req, res, next) => {
+    if (req.user === null) {
+        return res.sendStatus(403);
+    }
+
+    const user = await User.findByName(req.user.name);
+    const courses = await Course.allByUserId(user.id);
+
+    if (user === undefined) {
+        return res.sendStatus(403);
+    }
+
+    res.send({
+        name: user.name,
+        courses,
+    });
 });
