@@ -43,3 +43,4 @@ jobs:
 
           echo "Application deployed successfully!"
           pm2 list
+          EOF
