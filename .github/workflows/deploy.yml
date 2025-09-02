@@ -18,7 +18,7 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
 
-          ssh -T -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
+          ssh -T -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << EOF
           set -e  # Exit on any error
 
           echo "Current directory: $(pwd)"
