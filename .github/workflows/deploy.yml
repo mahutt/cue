@@ -17,7 +17,10 @@ jobs:
           USER: ${{ secrets.EC2_USER }}
         run: |
           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
-          ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} '
+
+          ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
+          set -e  # Exit on any error
+
           echo "Current directory: $(pwd)"
           echo "Listing home directory:"
           ls -la ~
@@ -26,18 +29,17 @@ jobs:
           BRANCH="main"
           REPO_DIR="$HOME/github-aws-ec2"
 
-          cd "$REPO_DIR"
-          git pull origin "$BRANCH"
+          echo "Navigating to repository directory..."
+          cd "$REPO_DIR" || { echo "Failed to navigate to $REPO_DIR"; exit 1; }
 
-          npm install
+          echo "Pulling latest changes..."
+          git pull origin "$BRANCH" || { echo "Git pull failed"; exit 1; }
 
-          echo "Starting/restarting cue API with PM2..."
-          pm2 stop cue-api 2>/dev/null || true
-          pm2 delete cue-app 2>/dev/null || true
-          pm2 start npm --name "cue-app" -- start
-          pm2 save
-          pm2 startup systemd -u $USER --hp $HOME
+          echo "Installing dependencies..."
+          npm install || { echo "npm install failed"; exit 1; }
+
+          # Start the application
+          pm2 restart cue-app
 
           echo "Application deployed successfully!"
           pm2 list
-          '
