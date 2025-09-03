@@ -44,6 +44,7 @@ export default function LoginForm() {
                 'Content-Type': 'application/json',
                 'Cue-App-Request': 'true',
             },
+            credentials: 'include',
             body: JSON.stringify({ name: username, password }),
         });
 
@@ -52,8 +53,6 @@ export default function LoginForm() {
             setError(data.error);
             setLoading(false);
         } else {
-            const token = data.token;
-            document.cookie = `jwt=${token}; path=/; max-age=86400`;
             setAuthLoading(true);
             navigate(`/${username}`);
         }
