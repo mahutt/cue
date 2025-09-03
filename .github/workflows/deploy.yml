@@ -56,7 +56,7 @@ jobs:
 
           cd ..
           echo "Starting/restarting cue API with PM2..."
-          pm2 stop cue-api 2>/dev/null || true
+          pm2 stop cue-app 2>/dev/null || true
           pm2 delete cue-app 2>/dev/null || true
           pm2 start npm --name "cue-app" -- start
           pm2 save
