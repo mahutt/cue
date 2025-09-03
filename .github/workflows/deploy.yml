@@ -36,8 +36,24 @@ jobs:
           echo "Cleaning untracked files..."
           git clean -fd
 
+          echo "Installing backend dependencies..."
           npm install
 
+          echo "Building React frontend..."
+          cd cue-client
+          npm install
+          npm run build
+
+          echo "Deploying frontend to nginx directory..."
+          sudo rm -rf /var/www/cue-client/*
+          sudo cp -r dist/* /var/www/cue-client/
+          sudo chown -R nginx:nginx /var/www/cue-client
+          sudo chmod -R 755 /var/www/cue-client
+
+          echo "Reloading nginx to serve updated frontend..."
+          sudo systemctl reload nginx
+
+          cd ..
           echo "Starting/restarting cue API with PM2..."
           pm2 stop cue-api 2>/dev/null || true
           pm2 delete cue-app 2>/dev/null || true
