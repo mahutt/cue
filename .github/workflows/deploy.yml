@@ -27,7 +27,14 @@ jobs:
           REPO_DIR="$HOME/github-aws-ec2"
 
           cd "$REPO_DIR"
-          git pull origin "$BRANCH"
+
+          echo "Fetching latest changes..."
+          git fetch origin
+
+          git reset --hard origin/"$BRANCH"
+
+          echo "Cleaning untracked files..."
+          git clean -fd
 
           npm install
 
