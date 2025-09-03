@@ -45,6 +45,7 @@ jobs:
           npm run build
 
           echo "Deploying frontend to nginx directory..."
+          sudo mkdir -p /var/www/cue-client
           sudo rm -rf /var/www/cue-client/*
           sudo cp -r dist/* /var/www/cue-client/
           sudo chown -R nginx:nginx /var/www/cue-client
