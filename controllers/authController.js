@@ -39,7 +39,7 @@ exports.login = asyncHandler(async (req, res, next) => {
         res.cookie('jwt', token, {
             httpOnly: true,
             secure: true,
-            sameSite: 'Strict',
+            sameSite: 'None',
             expires: new Date(Date.now() + 30 * 24 * 3600000),
         });
         return res.send({ token: token });
