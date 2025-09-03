@@ -15,9 +15,9 @@ export default function CollapsibleColumn() {
                 {user ? (
                     <>
                         <div className="d-flex flex-row justify-content-between mb-2">
-                            <a href={`/${user.name}`} className="title">
+                            <Link to={`/${user.name}`} className="title">
                                 {user.name}
-                            </a>
+                            </Link>
                             <div>
                                 <div className="mobile btn btn-light toggle" onClick={closeSidebar}>
                                     <i className="bi bi-list"></i>
