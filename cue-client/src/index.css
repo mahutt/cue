@@ -46,9 +46,6 @@ main #content {
         grid-template-columns: auto 1fr;
         grid-template-rows: 1fr;
     }
-    .mobile {
-        display: none;
-    }
 }
 /* End App Structure */
 

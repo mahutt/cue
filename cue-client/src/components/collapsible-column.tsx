@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import { useAuth } from '../hooks/auth-hook';
 import { useSidebar } from '../hooks/sidebar-hook';
 import CoursePreview from './course-preview';
+import LightButton from './light-button';
 
 export default function CollapsibleColumn() {
     const { user, allUserNames } = useAuth();
@@ -19,9 +20,9 @@ export default function CollapsibleColumn() {
                                 {user.name}
                             </Link>
                             <div>
-                                <div className="mobile btn btn-light toggle" onClick={closeSidebar}>
+                                <LightButton onClick={closeSidebar}>
                                     <i className="bi bi-list"></i>
-                                </div>
+                                </LightButton>
                             </div>
                         </div>
                         <div className="courses mb-4">
@@ -43,11 +44,14 @@ export default function CollapsibleColumn() {
                     <>
                         <div>
                             <div className="row">
-                                <div className="mobile toggle" onClick={closeSidebar}>
+                                <div className="md:hidden toggle" onClick={closeSidebar}>
                                     <i className="bi bi-list"></i>
                                 </div>
                             </div>
-                            <Link to="/login" className="btn btn-light mb-3 w-100">
+                            <Link
+                                to="/login"
+                                className="block text-center px-[0.75rem] py-[0.375rem] bg-gray-100 border-[1px] border-gray-100 rounded hover:bg-gray-200 hover:border-gray-300 mb-3 w-full"
+                            >
                                 Log in
                             </Link>
                         </div>
