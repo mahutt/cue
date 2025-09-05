@@ -110,7 +110,7 @@ export default function CourseForm() {
                     </div>
 
                     <div className="flex justify-end">
-                        <Button id="createCourseButton" type="button" onClick={createCourse}>
+                        <Button type="button" onClick={createCourse}>
                             Create
                         </Button>
                     </div>

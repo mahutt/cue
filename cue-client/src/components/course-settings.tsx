@@ -53,7 +53,7 @@ export default function CourseSettings({ courseId }: { courseId: number }) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="secondary" id="courseSettingsButton" type="button">
+                <Button variant="secondary" type="button">
                     <Settings size={16} strokeWidth={1.5} />
                 </Button>
             </DialogTrigger>

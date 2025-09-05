@@ -10,7 +10,7 @@ export default function StudySettings({
 }) {
     return (
         <div>
-            <Button variant="secondary" id="editCardButton" type="button" onClick={() => setEditing((prev) => !prev)}>
+            <Button variant="secondary" type="button" onClick={() => setEditing((prev) => !prev)}>
                 <Pencil size={16} strokeWidth={1.5} />
             </Button>{' '}
             <Button variant="secondary" type="button" onClick={reset}>

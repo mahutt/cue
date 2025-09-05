@@ -18,7 +18,7 @@ function App() {
                     <Button variant="secondary" type="button" onClick={toggleSidebar}>
                         <Menu size={16} strokeWidth={1.5} />
                     </Button>
-                    <Button variant="secondary" id="navigateBack" type="button" onClick={navigateBack}>
+                    <Button variant="secondary" type="button" onClick={navigateBack}>
                         <CornerUpLeft size={16} strokeWidth={1.5} />
                     </Button>
                     <div id="dynamic" className="flex justify-end w-full">

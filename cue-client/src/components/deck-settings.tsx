@@ -58,7 +58,7 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
 
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <Button id="deckSettingsButton" variant="secondary" size="icon">
+                    <Button variant="secondary" size="icon">
                         <Settings size={16} strokeWidth={1.5} />
                     </Button>
                 </DialogTrigger>
@@ -67,11 +67,11 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
                         <DialogTitle>Deck Settings</DialogTitle>
                     </DialogHeader>
                     <div className="space-y-2">
-                        <Button id="resetProgressButton" variant="outline" className="w-full" onClick={resetProgress}>
+                        <Button variant="outline" className="w-full" onClick={resetProgress}>
                             Reset Progress
                         </Button>
                         {belongs && (
-                            <Button id="deleteDeckButton" variant="destructive" className="w-full" onClick={deleteDeck}>
+                            <Button variant="destructive" className="w-full" onClick={deleteDeck}>
                                 Delete Deck
                             </Button>
                         )}
