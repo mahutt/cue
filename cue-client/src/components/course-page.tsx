@@ -63,7 +63,7 @@ export default function CoursePage() {
     return (
         <>
             <style>{'#content { padding: 0 1rem 1rem 1rem; }'}</style>
-            <div className="container flex flex-col gap-2">
+            <div className="max-w-screen-xl mx-auto px-4 flex flex-col gap-2">
                 <CourseTitle course={course} />
                 <div className="text-gray-500 ms-1">Decks:</div>
                 <div className="decks flex flex-col gap-1">

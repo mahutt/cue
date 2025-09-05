@@ -47,7 +47,7 @@ export default function Profile() {
     return (
         <>
             <style>{`#content { padding: 0 1rem 1rem 1rem; }`}</style>
-            <div className="container">
+            <div className="max-w-screen-xl mx-auto px-4">
                 <div className="font-semibold text-3xl mb-2">{username}</div>
                 <div>
                     <div className="mb-2 mx-1 flex flex-row justify-between items-center">
