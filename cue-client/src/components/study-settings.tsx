@@ -1,3 +1,4 @@
+import { Pencil, RotateCw } from 'lucide-react';
 import LightButton from './light-button';
 
 export default function StudySettings({
@@ -10,10 +11,10 @@ export default function StudySettings({
     return (
         <div>
             <LightButton id="editCardButton" type="button" onClick={() => setEditing((prev) => !prev)}>
-                <i className="bi bi-pencil"></i>
+                <Pencil size={16} strokeWidth={1.5} />
             </LightButton>{' '}
             <LightButton type="button" onClick={reset}>
-                <i className="bi bi-arrow-clockwise"></i>
+                <RotateCw size={16} strokeWidth={1.5} />
             </LightButton>
         </div>
     );

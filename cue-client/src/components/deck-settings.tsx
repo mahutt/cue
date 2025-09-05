@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router';
 import { useNotification } from '../hooks/notification-hook';
 import { api } from '../api';
 import LightButton from './light-button';
+import { Glasses, Settings } from 'lucide-react';
 
 export default function DeckSettings({ deckId, belongs }: { deckId: number; belongs: boolean }) {
     const navigate = useNavigate();
@@ -58,7 +59,7 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
         <div>
             <Link to={`${location.pathname}/study`}>
                 <LightButton type="button">
-                    <i className="bi bi-eyeglasses"></i>
+                    <Glasses size={16} strokeWidth={1.5} />
                 </LightButton>
             </Link>{' '}
             {belongs && (
@@ -72,7 +73,7 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
                             }
                         }}
                     >
-                        <i className="bi bi-gear-fill"></i>
+                        <Settings size={16} strokeWidth={1.5} />
                     </LightButton>
                     <div
                         ref={modalDivRef}

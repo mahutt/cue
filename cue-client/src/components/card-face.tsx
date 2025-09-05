@@ -1,3 +1,4 @@
+import { RotateCcw } from 'lucide-react';
 import { useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
 
 export interface FaceRef {
@@ -66,7 +67,7 @@ export default forwardRef<FaceRef, Props>(
                             textareaRef.current?.focus();
                         }}
                     >
-                        <i className="bi bi-arrow-counterclockwise"></i>
+                        <RotateCcw size={16} strokeWidth={1.5} />
                     </button>
                 )}
                 <textarea

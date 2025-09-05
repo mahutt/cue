@@ -4,7 +4,7 @@ import { useSidebar } from './hooks/sidebar-hook';
 import NotificationBanner from './components/notification-banner';
 import { useTool } from './hooks/tool-hook';
 import LightButton from './components/light-button';
-import { Menu } from 'lucide-react';
+import { CornerUpLeft, Menu } from 'lucide-react';
 
 function App() {
     const { toggleSidebar } = useSidebar();
@@ -19,7 +19,7 @@ function App() {
                         <Menu size={16} strokeWidth={1.5} />
                     </LightButton>
                     <LightButton id="navigateBack" type="button" onClick={navigateBack}>
-                        <i className="bi bi-arrow-90deg-left"></i>
+                        <CornerUpLeft size={16} strokeWidth={1.5} />
                     </LightButton>
                     <div id="dynamic" className="d-flex justify-content-end w-100">
                         {tool}

@@ -3,6 +3,7 @@ import { api } from '../api';
 import { useAuth } from '../hooks/auth-hook';
 import { useNotification } from '../hooks/notification-hook';
 import LightButton from './light-button';
+import { Plus } from 'lucide-react';
 
 export default function CourseForm() {
     const { setUser } = useAuth();
@@ -64,7 +65,7 @@ export default function CourseForm() {
                     }
                 }}
             >
-                <i className="bi bi-plus-lg"></i>
+                <Plus size={16} strokeWidth={1.5} />
             </LightButton>
             <div ref={modalDivRef} className="modal fade" tabIndex={-1} aria-hidden="true">
                 <div className="modal-dialog">

@@ -6,6 +6,7 @@ import CardFace from './card-face';
 import { useTool } from '../hooks/tool-hook';
 import StudySettings from './study-settings';
 import { useNotification } from '../hooks/notification-hook';
+import { Ban, Check, Frown, Meh, Smile } from 'lucide-react';
 
 interface ScoredCard extends Card {
     score: number;
@@ -157,17 +158,17 @@ function CardFlipper({
             )}
             <div className="scores" style={{ display: !editing && showScores ? 'flex' : 'none' }}>
                 <div onClick={() => updateScore(0)}>
-                    <i className="bi bi-emoji-tear-fill"></i>
+                    <Frown size={16} />
                 </div>
                 <div onClick={() => updateScore(1)}>
-                    <i className="bi bi-emoji-neutral-fill"></i>
+                    <Meh size={16} />
                 </div>
                 <div onClick={() => updateScore(2)}>
-                    <i className="bi bi-emoji-sunglasses-fill"></i>
+                    <Smile size={16} />
                 </div>
             </div>
             <div className="editButtonsDiv" style={{ display: editing ? 'flex' : 'none' }}>
-                <a
+                <button
                     id="cancelEdit"
                     role="button"
                     className="btn btn-dark p-2"
@@ -180,8 +181,10 @@ function CardFlipper({
                         setEditing(false);
                     }}
                 >
-                    <i className="bi bi-slash-circle"></i>
-                </a>
+                    <div className="flex justify-center items-center">
+                        <Ban size={16} strokeWidth={1.5} />
+                    </div>
+                </button>
                 <a
                     id="saveEdit"
                     role="button"
@@ -208,7 +211,9 @@ function CardFlipper({
                         setShowScores(false);
                     }}
                 >
-                    <i className="bi bi-check"></i>
+                    <div className="flex justify-center items-center">
+                        <Check size={16} strokeWidth={1.5} />
+                    </div>
                 </a>
             </div>
         </div>

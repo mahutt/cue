@@ -4,6 +4,7 @@ import CardFace from './card-face';
 import { api } from '../api';
 import { useNotification } from '../hooks/notification-hook';
 import { useDeck } from '../hooks/deck-hook';
+import { Trash2 } from 'lucide-react';
 
 export function CardEditor({
     position,
@@ -84,7 +85,7 @@ export function CardEditor({
                     <span className="card-position">{position}</span>.
                 </div>
                 <button className="delete" onClick={deleteCard}>
-                    <i className="bi bi-trash3"></i>
+                    <Trash2 size={16} strokeWidth={1.5} />
                 </button>
             </div>
             <div className="body">
