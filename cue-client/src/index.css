@@ -79,12 +79,6 @@ a {
     color: inherit;
     text-decoration: none;
 }
-.black {
-    color: white;
-    background-color: black;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-}
 .percentage {
     font-size: 2rem;
 }
