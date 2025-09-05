@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/auth-hook';
 import { useSidebar } from '../hooks/sidebar-hook';
 import CoursePreview from './course-preview';
 import LightButton from './light-button';
+import { Menu } from 'lucide-react';
 
 export default function CollapsibleColumn() {
     const { user, allUserNames } = useAuth();
@@ -15,13 +16,13 @@ export default function CollapsibleColumn() {
             <div className="flex flex-col w-[260px] max-h-screen overflow-y-auto p-3">
                 {user ? (
                     <>
-                        <div className="flex flex-row justify-between mb-2">
+                        <div className="flex flex-row justify-between items-center mb-2">
                             <Link to={`/${user.name}`} className="font-semibold text-3xl">
                                 {user.name}
                             </Link>
                             <div className="md:hidden">
-                                <LightButton onClick={closeSidebar}>
-                                    <i className="bi bi-list"></i>
+                                <LightButton onClick={closeSidebar} style={{ height: '38px' }}>
+                                    <Menu size={16} strokeWidth={1.5} />
                                 </LightButton>
                             </div>
                         </div>
@@ -50,8 +51,8 @@ export default function CollapsibleColumn() {
                                 Log in
                             </Link>
                             <div className="md:hidden">
-                                <LightButton onClick={closeSidebar}>
-                                    <i className="bi bi-list"></i>
+                                <LightButton onClick={closeSidebar} style={{ height: '38px' }}>
+                                    <Menu size={16} strokeWidth={1.5} />
                                 </LightButton>
                             </div>
                         </div>

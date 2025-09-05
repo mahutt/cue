@@ -4,6 +4,7 @@ import { useSidebar } from './hooks/sidebar-hook';
 import NotificationBanner from './components/notification-banner';
 import { useTool } from './hooks/tool-hook';
 import LightButton from './components/light-button';
+import { Menu } from 'lucide-react';
 
 function App() {
     const { toggleSidebar } = useSidebar();
@@ -15,7 +16,7 @@ function App() {
             <main>
                 <div className="d-flex gap-2 menu-bar">
                     <LightButton type="button" onClick={toggleSidebar}>
-                        <i className="bi bi-list"></i>
+                        <Menu size={16} strokeWidth={1.5} />
                     </LightButton>
                     <LightButton id="navigateBack" type="button" onClick={navigateBack}>
                         <i className="bi bi-arrow-90deg-left"></i>
