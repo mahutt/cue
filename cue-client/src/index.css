@@ -65,14 +65,6 @@ a {
 }
 /* End Style Components */
 
-/* Start Navigation Styling */
-.users {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-/* End Navigation Styling */
-
 /* course styling */
 .course-title .course-name,
 .deck-title .deck-name {

@@ -29,7 +29,7 @@ export default function CollapsibleColumn() {
                             <div className="text-gray-500 ms-1">Courses</div>
                             {user.courses.map((course) => CoursePreview({ username: user.name, course }))}
                         </div>
-                        <div className="users ms-1">
+                        <div className="flex flex-col gap-2 ms-1">
                             <div className="text-gray-500">Other Users</div>
                             {allUserNames
                                 .filter((userName) => userName !== user.name)
@@ -55,7 +55,7 @@ export default function CollapsibleColumn() {
                                 Log in
                             </Link>
                         </div>
-                        <div className="users">
+                        <div className="flex flex-col gap-2">
                             <div className="text-gray-500">All Users</div>
                             {allUserNames.map((otherUserName) => (
                                 <Link key={otherUserName} to={`/${otherUserName}`} className="user">
