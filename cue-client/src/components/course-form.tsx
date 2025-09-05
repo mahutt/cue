@@ -1,26 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { api } from '../api';
 import { useAuth } from '../hooks/auth-hook';
 import { useNotification } from '../hooks/notification-hook';
-import LightButton from './light-button';
 import { Plus } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export default function CourseForm() {
     const { setUser } = useAuth();
     const { setNotification } = useNotification();
-    const modalDivRef = useRef<HTMLDivElement>(null);
-    const [modal, setModal] = useState<any>(null);
+    const [open, setOpen] = useState(false);
 
     const [courseName, setCourseName] = useState<string>('');
     const [department, setDepartment] = useState<string>('');
     const [courseNumber, setCourseNumber] = useState<string>('');
-
-    useEffect(() => {
-        if (modalDivRef.current) {
-            const modal = new window.bootstrap!.Modal(modalDivRef.current);
-            setModal(modal);
-        }
-    }, [modalDivRef]);
 
     const createCourse = async () => {
         try {
@@ -46,108 +41,81 @@ export default function CourseForm() {
                 };
             });
 
-            modal.hide();
+            setOpen(false);
             setNotification('Course created.');
+
+            // Reset form
+            setCourseName('');
+            setDepartment('');
+            setCourseNumber('');
         } catch {
-            modal.hide();
+            setOpen(false);
             setNotification('Could not create course.');
         }
     };
 
     return (
-        <>
-            <LightButton
-                id="newCourseFormButton"
-                type="button"
-                onClick={() => {
-                    if (modal) {
-                        modal.show();
-                    }
-                }}
-            >
-                <Plus size={16} strokeWidth={1.5} />
-            </LightButton>
-            <div ref={modalDivRef} className="modal fade" tabIndex={-1} aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5">New Course</h1>
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            ></button>
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button id="newCourseFormButton" size="icon">
+                    <Plus size={16} strokeWidth={1.5} />
+                </Button>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>New Course</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                    <div>
+                        <Label htmlFor="name">Course Name:</Label>
+                        <Input
+                            value={courseName}
+                            onChange={(e) => setCourseName(e.target.value)}
+                            type="text"
+                            id="name"
+                            name="name"
+                            required
+                            maxLength={100}
+                            placeholder="Data Structures & Algorithms"
+                        />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="department">Department:</Label>
+                            <Input
+                                value={department}
+                                onChange={(e) => setDepartment(e.target.value)}
+                                type="text"
+                                id="department"
+                                name="department"
+                                required
+                                minLength={4}
+                                maxLength={4}
+                                placeholder="COMP"
+                            />
                         </div>
-                        <form>
-                            <div className="modal-body">
-                                <div className="mb-3">
-                                    <label htmlFor="name" className="form-label">
-                                        Course Name:
-                                    </label>
-                                    <input
-                                        value={courseName}
-                                        onChange={(e) => setCourseName(e.target.value)}
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        className="form-control"
-                                        required
-                                        maxLength={100}
-                                        placeholder="Data Structures & Algorithms"
-                                    />
-                                </div>
+                        <div>
+                            <Label htmlFor="number">Course Number:</Label>
+                            <Input
+                                value={courseNumber}
+                                onChange={(e) => setCourseNumber(e.target.value)}
+                                type="number"
+                                id="number"
+                                name="number"
+                                required
+                                placeholder="352"
+                            />
+                        </div>
+                    </div>
 
-                                <div className="row">
-                                    <div className="col-md-6 mb-3">
-                                        <label htmlFor="department" className="form-label">
-                                            Department:
-                                        </label>
-                                        <input
-                                            value={department}
-                                            onChange={(e) => setDepartment(e.target.value)}
-                                            type="text"
-                                            id="department"
-                                            name="department"
-                                            className="form-control"
-                                            required
-                                            minLength={4}
-                                            maxLength={4}
-                                            placeholder="COMP"
-                                        />
-                                    </div>
-                                    <div className="col-md-6 mb-3">
-                                        <label htmlFor="number" className="form-label">
-                                            Course Number:
-                                        </label>
-                                        <input
-                                            value={courseNumber}
-                                            onChange={(e) => setCourseNumber(e.target.value)}
-                                            type="number"
-                                            id="number"
-                                            name="number"
-                                            className="form-control"
-                                            required
-                                            placeholder="352"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="modal-footer">
-                                <button
-                                    id="createCourseButton"
-                                    type="button"
-                                    className="btn btn-dark"
-                                    onClick={createCourse}
-                                >
-                                    Create
-                                </button>
-                            </div>
-                        </form>
+                    <div className="flex justify-end">
+                        <Button id="createCourseButton" type="button" onClick={createCourse}>
+                            Create
+                        </Button>
                     </div>
                 </div>
-            </div>
-        </>
+            </DialogContent>
+        </Dialog>
     );
 }

@@ -1,24 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { api } from '../api';
 import { useAuth } from '../hooks/auth-hook';
 import { useNotification } from '../hooks/notification-hook';
 import LightButton from './light-button';
 import { Settings } from 'lucide-react';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogFooter,
+    DialogTrigger,
+    DialogClose,
+} from '@/components/ui/dialog';
+import { Button } from './ui/button';
 
 export default function CourseSettings({ courseId }: { courseId: number }) {
     const { setUser } = useAuth();
     const navigate = useNavigate();
     const { setNotification } = useNotification();
-    const modalDivRef = useRef<HTMLDivElement>(null);
-    const [modal, setModal] = useState<any>(null);
-
-    useEffect(() => {
-        if (modalDivRef.current) {
-            const modal = new window.bootstrap!.Modal(modalDivRef.current);
-            setModal(modal);
-        }
-    }, [modalDivRef]);
+    const [open, setOpen] = useState(false);
 
     const deleteCourse = async () => {
         try {
@@ -29,7 +31,6 @@ export default function CourseSettings({ courseId }: { courseId: number }) {
                     'Content-Type': 'application/json',
                 },
             });
-
             if (response.ok) {
                 setNotification('Course deleted.');
                 setUser((prevUser) => {
@@ -43,54 +44,35 @@ export default function CourseSettings({ courseId }: { courseId: number }) {
             } else {
                 setNotification('Could not delete course.');
             }
-
-            modal.hide();
+            setOpen(false);
         } catch {
             setNotification('Could not delete course.');
-            modal.hide();
+            setOpen(false);
         }
     };
 
     return (
-        <>
-            <LightButton
-                id="courseSettingsButton"
-                type="button"
-                onClick={() => {
-                    if (modal) {
-                        modal.show();
-                    }
-                }}
-            >
-                <Settings size={16} strokeWidth={1.5} />
-            </LightButton>
-            <div ref={modalDivRef} className="modal fade" tabIndex={-1} aria-hidden="true" course-id="<%= course.id %>">
-                <div className="modal-dialog modal-sm">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5">Course Settings</h1>
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            ></button>
-                        </div>
-                        <form>
-                            <div className="modal-body d-flex flex-column gap-2">
-                                <a id="deleteCourseButton" className="btn btn-danger w-100" onClick={deleteCourse}>
-                                    Delete Course
-                                </a>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-dark" data-bs-dismiss="modal">
-                                    Close
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </>
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <LightButton id="courseSettingsButton" type="button">
+                    <Settings size={16} strokeWidth={1.5} />
+                </LightButton>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Course Settings</DialogTitle>
+                </DialogHeader>
+                <Button variant="destructive" onClick={deleteCourse}>
+                    Delete Course
+                </Button>
+                <DialogFooter>
+                    <DialogClose asChild>
+                        <Button type="button" variant="secondary">
+                            Close
+                        </Button>
+                    </DialogClose>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     );
 }

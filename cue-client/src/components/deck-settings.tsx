@@ -1,23 +1,16 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router';
 import { useNotification } from '../hooks/notification-hook';
 import { api } from '../api';
-import LightButton from './light-button';
 import { Glasses, Settings } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 
 export default function DeckSettings({ deckId, belongs }: { deckId: number; belongs: boolean }) {
     const navigate = useNavigate();
     const location = useLocation();
     const { setNotification } = useNotification();
-    const modalDivRef = useRef<HTMLDivElement>(null);
-    const [modal, setModal] = useState<any>(null);
-
-    useEffect(() => {
-        if (modalDivRef.current) {
-            const modal = new window.bootstrap!.Modal(modalDivRef.current);
-            setModal(modal);
-        }
-    }, [modalDivRef]);
+    const [open, setOpen] = useState(false);
 
     const resetProgress = async () => {
         const response = await api(`/decks/${deckId}/progress`, {
@@ -27,7 +20,7 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
                 'Content-Type': 'application/json',
             },
         });
-        modal.hide();
+        setOpen(false);
         if (response.ok) {
             setNotification('Progress reset.');
         } else {
@@ -36,7 +29,7 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
     };
 
     const deleteDeck = async () => {
-        modal.hide();
+        setOpen(false);
         // @todo: add confirmation dialog
 
         const response = await api(`/decks/${deckId}`, {
@@ -56,76 +49,40 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
     };
 
     return (
-        <div>
+        <div className="flex gap-2">
             <Link to={`${location.pathname}/study`}>
-                <LightButton type="button">
+                <Button variant="ghost" size="icon">
                     <Glasses size={16} strokeWidth={1.5} />
-                </LightButton>
-            </Link>{' '}
-            {belongs && (
-                <>
-                    <LightButton
-                        id="deckSettingsButton"
-                        type="button"
-                        onClick={() => {
-                            if (modal) {
-                                modal.show();
-                            }
-                        }}
-                    >
+                </Button>
+            </Link>
+
+            <Dialog open={open} onOpenChange={setOpen}>
+                <DialogTrigger asChild>
+                    <Button id="deckSettingsButton" variant="ghost" size="icon">
                         <Settings size={16} strokeWidth={1.5} />
-                    </LightButton>
-                    <div
-                        ref={modalDivRef}
-                        className="modal fade"
-                        tabIndex={-1}
-                        aria-hidden="true"
-                        deck-id="<%= deck.id %>"
-                    >
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h1 className="modal-title fs-5">Deck Settings</h1>
-                                    <button
-                                        type="button"
-                                        className="btn-close"
-                                        data-bs-dismiss="modal"
-                                        aria-label="Close"
-                                    ></button>
-                                </div>
-                                <form>
-                                    <div className="modal-body d-flex flex-column gap-2">
-                                        <button
-                                            id="resetProgressButton"
-                                            className="btn btn-warning w-100"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                resetProgress();
-                                            }}
-                                        >
-                                            Reset Progress
-                                        </button>
-                                        <a
-                                            id="deleteDeckButton"
-                                            className="btn btn-danger w-100"
-                                            onClick={() => {
-                                                deleteDeck();
-                                            }}
-                                        >
-                                            Delete Deck
-                                        </a>
-                                    </div>
-                                    <div className="modal-footer">
-                                        <button type="button" className="btn btn-dark" data-bs-dismiss="modal">
-                                            Close
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                    </Button>
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Deck Settings</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-2">
+                        <Button id="resetProgressButton" variant="outline" className="w-full" onClick={resetProgress}>
+                            Reset Progress
+                        </Button>
+                        {belongs && (
+                            <Button id="deleteDeckButton" variant="destructive" className="w-full" onClick={deleteDeck}>
+                                Delete Deck
+                            </Button>
+                        )}
                     </div>
-                </>
-            )}
+                    <div className="flex justify-end">
+                        <DialogClose asChild>
+                            <Button variant="outline">Close</Button>
+                        </DialogClose>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }
