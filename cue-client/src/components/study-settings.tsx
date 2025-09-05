@@ -1,5 +1,5 @@
 import { Pencil, RotateCw } from 'lucide-react';
-import LightButton from './light-button';
+import { Button } from './ui/button';
 
 export default function StudySettings({
     setEditing,
@@ -10,12 +10,12 @@ export default function StudySettings({
 }) {
     return (
         <div>
-            <LightButton id="editCardButton" type="button" onClick={() => setEditing((prev) => !prev)}>
+            <Button variant="secondary" id="editCardButton" type="button" onClick={() => setEditing((prev) => !prev)}>
                 <Pencil size={16} strokeWidth={1.5} />
-            </LightButton>{' '}
-            <LightButton type="button" onClick={reset}>
+            </Button>{' '}
+            <Button variant="secondary" type="button" onClick={reset}>
                 <RotateCw size={16} strokeWidth={1.5} />
-            </LightButton>
+            </Button>
         </div>
     );
 }

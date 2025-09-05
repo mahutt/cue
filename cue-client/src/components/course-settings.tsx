@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router';
 import { api } from '../api';
 import { useAuth } from '../hooks/auth-hook';
 import { useNotification } from '../hooks/notification-hook';
-import LightButton from './light-button';
 import { Settings } from 'lucide-react';
 import {
     Dialog,
@@ -54,9 +53,9 @@ export default function CourseSettings({ courseId }: { courseId: number }) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <LightButton id="courseSettingsButton" type="button">
+                <Button variant="secondary" id="courseSettingsButton" type="button">
                     <Settings size={16} strokeWidth={1.5} />
-                </LightButton>
+                </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

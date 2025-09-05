@@ -3,8 +3,8 @@ import CollapsibleColumn from './components/collapsible-column';
 import { useSidebar } from './hooks/sidebar-hook';
 import NotificationBanner from './components/notification-banner';
 import { useTool } from './hooks/tool-hook';
-import LightButton from './components/light-button';
 import { CornerUpLeft, Menu } from 'lucide-react';
+import { Button } from './components/ui/button';
 
 function App() {
     const { toggleSidebar } = useSidebar();
@@ -15,12 +15,12 @@ function App() {
             <CollapsibleColumn />
             <main>
                 <div className="flex gap-2 p-4">
-                    <LightButton type="button" onClick={toggleSidebar}>
+                    <Button variant="secondary" type="button" onClick={toggleSidebar}>
                         <Menu size={16} strokeWidth={1.5} />
-                    </LightButton>
-                    <LightButton id="navigateBack" type="button" onClick={navigateBack}>
+                    </Button>
+                    <Button variant="secondary" id="navigateBack" type="button" onClick={navigateBack}>
                         <CornerUpLeft size={16} strokeWidth={1.5} />
-                    </LightButton>
+                    </Button>
                     <div id="dynamic" className="flex justify-end w-full">
                         {tool}
                     </div>
