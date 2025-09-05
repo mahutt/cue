@@ -42,18 +42,18 @@ export default function CollapsibleColumn() {
                     </>
                 ) : (
                     <>
-                        <div>
-                            <div className="row">
-                                <div className="md:hidden" onClick={closeSidebar}>
-                                    <i className="bi bi-list"></i>
-                                </div>
-                            </div>
+                        <div className="flex flex-row gap-2">
                             <Link
                                 to="/login"
                                 className="block text-center px-[0.75rem] py-[0.375rem] bg-gray-100 border-[1px] border-gray-100 rounded hover:bg-gray-200 hover:border-gray-300 mb-3 w-full"
                             >
                                 Log in
                             </Link>
+                            <div className="md:hidden">
+                                <LightButton onClick={closeSidebar}>
+                                    <i className="bi bi-list"></i>
+                                </LightButton>
+                            </div>
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="text-gray-500">All Users</div>
