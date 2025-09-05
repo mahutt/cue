@@ -14,7 +14,7 @@ export default function CollapsibleColumn() {
             <div className="flex flex-col w-[260px] max-h-screen overflow-y-auto p-3">
                 {user ? (
                     <>
-                        <div className="d-flex flex-row justify-content-between mb-2">
+                        <div className="flex flex-row justify-between mb-2">
                             <Link to={`/${user.name}`} className="font-semibold text-3xl">
                                 {user.name}
                             </Link>
