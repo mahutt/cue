@@ -83,15 +83,6 @@ a {
     font-size: 2rem;
 }
 
-button {
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
-}
 .row {
     display: flex;
     flex-direction: row;
