@@ -13,6 +13,7 @@ import Profile from './components/profile.tsx';
 import CoursePage from './components/course-page.tsx';
 import DeckPage from './components/deck-page.tsx';
 import StudyStack from './components/study-stack.tsx';
+import HomePage from './components/home-page.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
@@ -23,7 +24,7 @@ createRoot(document.getElementById('root')!).render(
                         <BrowserRouter>
                             <Routes>
                                 <Route element={<App />}>
-                                    <Route path="/" element={<div>Home</div>} />
+                                    <Route path="/" element={<HomePage />} />
                                     <Route path="/login" element={<LoginForm />} />
                                     <Route path="/:username" element={<Profile />} />
                                     <Route path="/:username/:courseCode" element={<CoursePage />} />
