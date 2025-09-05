@@ -3,7 +3,7 @@ import { api } from '../api';
 import { useAuth } from '../hooks/auth-hook';
 import { useNotification } from '../hooks/notification-hook';
 import { Plus } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -65,8 +65,9 @@ export default function CourseForm() {
                 <DialogHeader>
                     <DialogTitle>New Course</DialogTitle>
                 </DialogHeader>
-                <div className="space-y-4">
-                    <div>
+
+                <div className="grid gap-4">
+                    <div className="grid gap-3">
                         <Label htmlFor="name">Course Name:</Label>
                         <Input
                             value={courseName}
@@ -79,9 +80,8 @@ export default function CourseForm() {
                             placeholder="Data Structures & Algorithms"
                         />
                     </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
+                    <div className="grid md:grid-cols-2 gap-4">
+                        <div className="grid gap-3">
                             <Label htmlFor="department">Department:</Label>
                             <Input
                                 value={department}
@@ -95,7 +95,7 @@ export default function CourseForm() {
                                 placeholder="COMP"
                             />
                         </div>
-                        <div>
+                        <div className="grid gap-3">
                             <Label htmlFor="number">Course Number:</Label>
                             <Input
                                 value={courseNumber}
@@ -108,13 +108,13 @@ export default function CourseForm() {
                             />
                         </div>
                     </div>
-
-                    <div className="flex justify-end">
-                        <Button type="button" onClick={createCourse}>
-                            Create
-                        </Button>
-                    </div>
                 </div>
+
+                <DialogFooter>
+                    <Button type="submit" onClick={createCourse}>
+                        Create
+                    </Button>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     );
