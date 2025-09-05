@@ -19,7 +19,7 @@ export default function CollapsibleColumn() {
                             <Link to={`/${user.name}`} className="font-semibold text-3xl">
                                 {user.name}
                             </Link>
-                            <div>
+                            <div className="md:hidden">
                                 <LightButton onClick={closeSidebar}>
                                     <i className="bi bi-list"></i>
                                 </LightButton>
