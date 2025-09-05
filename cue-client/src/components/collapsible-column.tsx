@@ -25,7 +25,7 @@ export default function CollapsibleColumn() {
                                 </LightButton>
                             </div>
                         </div>
-                        <div className="courses mb-4">
+                        <div className="flex flex-col gap-2 mb-4">
                             <div className="text-gray-500 ms-1">Courses</div>
                             {user.courses.map((course) => CoursePreview({ username: user.name, course }))}
                         </div>

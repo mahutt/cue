@@ -54,7 +54,7 @@ export default function Profile() {
                         <div className="text-secondary">Courses</div>
                         <div>{belongsTo && <CourseForm />}</div>
                     </div>
-                    <div className="courses">
+                    <div className="flex flex-col gap-2">
                         {(belongsTo ? user.courses : courses).map((course) => (
                             <CoursePreview key={course.id} username={username} course={course} />
                         ))}
