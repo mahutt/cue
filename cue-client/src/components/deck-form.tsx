@@ -64,7 +64,6 @@ export default function DeckForm({ courseId, addDeck }: { courseId: number; addD
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>New deck</DialogTitle>
-                    <DialogDescription>Create a new deck to start adding flashcards!</DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4">
                     <div className="grid gap-3">
@@ -86,9 +85,6 @@ export default function DeckForm({ courseId, addDeck }: { courseId: number; addD
                     </div>
                 </div>
                 <DialogFooter>
-                    <DialogClose asChild>
-                        <Button variant="outline">Cancel</Button>
-                    </DialogClose>
                     <Button type="submit" onClick={createDeck}>
                         Create
                     </Button>
