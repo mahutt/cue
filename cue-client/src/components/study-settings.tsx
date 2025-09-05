@@ -9,13 +9,13 @@ export default function StudySettings({
         <div>
             <button
                 id="editCardButton"
-                className="btn btn-light toggle"
+                className="btn btn-light"
                 type="button"
                 onClick={() => setEditing((prev) => !prev)}
             >
                 <i className="bi bi-pencil"></i>
             </button>{' '}
-            <button className="btn btn-light toggle" type="button" onClick={reset}>
+            <button className="btn btn-light" type="button" onClick={reset}>
                 <i className="bi bi-arrow-clockwise"></i>
             </button>
         </div>

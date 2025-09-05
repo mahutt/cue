@@ -53,7 +53,7 @@ export default function CourseSettings({ courseId }: { courseId: number }) {
         <>
             <button
                 id="courseSettingsButton"
-                className="btn btn-light toggle"
+                className="btn btn-light"
                 type="button"
                 onClick={() => {
                     if (modal) {

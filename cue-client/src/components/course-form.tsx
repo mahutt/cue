@@ -56,7 +56,7 @@ export default function CourseForm() {
         <>
             <button
                 id="newCourseFormButton"
-                className="btn btn-light toggle"
+                className="btn btn-light"
                 type="button"
                 onClick={() => {
                     if (modal) {

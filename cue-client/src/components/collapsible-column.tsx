@@ -44,7 +44,7 @@ export default function CollapsibleColumn() {
                     <>
                         <div>
                             <div className="row">
-                                <div className="md:hidden toggle" onClick={closeSidebar}>
+                                <div className="md:hidden" onClick={closeSidebar}>
                                     <i className="bi bi-list"></i>
                                 </div>
                             </div>

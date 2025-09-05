@@ -56,7 +56,7 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
     return (
         <div>
             <Link to={`${location.pathname}/study`}>
-                <button className="btn btn-light toggle" type="button">
+                <button className="btn btn-light" type="button">
                     <i className="bi bi-eyeglasses"></i>
                 </button>
             </Link>{' '}
@@ -64,7 +64,7 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
                 <>
                     <button
                         id="deckSettingsButton"
-                        className="btn btn-light toggle"
+                        className="btn btn-light"
                         type="button"
                         onClick={() => {
                             if (modal) {

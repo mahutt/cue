@@ -13,7 +13,7 @@ function App() {
             <CollapsibleColumn />
             <main>
                 <div className="d-flex gap-2 menu-bar">
-                    <button className="btn btn-light toggle" type="button" onClick={toggleSidebar}>
+                    <button className="btn btn-light" type="button" onClick={toggleSidebar}>
                         <i className="bi bi-list"></i>
                     </button>
                     <button id="navigateBack" className="btn btn-light" type="button" onClick={navigateBack}>
