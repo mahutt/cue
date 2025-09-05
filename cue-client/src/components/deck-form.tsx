@@ -33,7 +33,7 @@ export default function DeckForm({ courseId, addDeck }: { courseId: number; addD
 
     return (
         <div className="ms-1">
-            <div className="text-secondary">Create a new deck:</div>
+            <div className="text-gray-500">Create a new deck:</div>
             <label htmlFor="name">Deck Name:</label>{' '}
             <input
                 ref={inputRef}

@@ -7,6 +7,7 @@ import { useTool } from '../hooks/tool-hook';
 import StudySettings from './study-settings';
 import { useNotification } from '../hooks/notification-hook';
 import { Ban, Check, Frown, Meh, Smile } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface ScoredCard extends Card {
     score: number;
@@ -168,11 +169,8 @@ function CardFlipper({
                 </div>
             </div>
             <div className="editButtonsDiv" style={{ display: editing ? 'flex' : 'none' }}>
-                <button
-                    id="cancelEdit"
-                    role="button"
-                    className="btn btn-dark p-2"
-                    style={{ width: '50px' }}
+                <Button
+                    className="w-[50px]"
                     onClick={(e) => {
                         e.stopPropagation();
                         setFlipped(false);
@@ -180,16 +178,12 @@ function CardFlipper({
                         setInternalCard(card);
                         setEditing(false);
                     }}
+                    // size="icon"
                 >
-                    <div className="flex justify-center items-center">
-                        <Ban size={16} strokeWidth={1.5} />
-                    </div>
-                </button>
-                <a
-                    id="saveEdit"
-                    role="button"
-                    className="btn btn-dark p-2"
-                    style={{ width: '50px' }}
+                    <Ban />
+                </Button>
+                <Button
+                    className="w-[50px]"
                     onClick={async (e) => {
                         e.stopPropagation();
                         const response = await api(`/cards/${card.id}`, {
@@ -210,11 +204,10 @@ function CardFlipper({
                         setFlipped(false);
                         setShowScores(false);
                     }}
+                    size="icon"
                 >
-                    <div className="flex justify-center items-center">
-                        <Check size={16} strokeWidth={1.5} />
-                    </div>
-                </a>
+                    <Check />
+                </Button>
             </div>
         </div>
     );

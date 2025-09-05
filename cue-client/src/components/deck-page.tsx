@@ -101,7 +101,7 @@ export default function DeckPage() {
                 {deck && belongs && (
                     <div className="card-form-wrapper">
                         <div className="card-form-content">
-                            <div className="mb-2 text-secondary">New card</div>
+                            <div className="mb-2 text-gray-500">New card</div>
                             <CardForm deckId={deck.id} addCard={addCard} />
                         </div>
                     </div>

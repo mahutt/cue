@@ -57,8 +57,8 @@ export default function CourseForm() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button id="newCourseFormButton" size="icon">
-                    <Plus size={16} strokeWidth={1.5} />
+                <Button id="newCourseFormButton" variant="secondary" size="icon">
+                    <Plus />
                 </Button>
             </DialogTrigger>
             <DialogContent>

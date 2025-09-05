@@ -14,14 +14,14 @@ function App() {
         <div id="app">
             <CollapsibleColumn />
             <main>
-                <div className="d-flex gap-2 menu-bar">
+                <div className="flex gap-2 p-4">
                     <LightButton type="button" onClick={toggleSidebar}>
                         <Menu size={16} strokeWidth={1.5} />
                     </LightButton>
                     <LightButton id="navigateBack" type="button" onClick={navigateBack}>
                         <CornerUpLeft size={16} strokeWidth={1.5} />
                     </LightButton>
-                    <div id="dynamic" className="d-flex justify-content-end w-100">
+                    <div id="dynamic" className="flex justify-end w-full">
                         {tool}
                     </div>
                 </div>

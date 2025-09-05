@@ -50,8 +50,8 @@ export default function Profile() {
             <div className="container">
                 <div className="font-semibold text-3xl mb-2">{username}</div>
                 <div>
-                    <div className="mb-2 mx-1 d-flex flex-row justify-content-between align-items-center">
-                        <div className="text-secondary">Courses</div>
+                    <div className="mb-2 mx-1 flex flex-row justify-between items-center">
+                        <div className="text-gray-500">Courses</div>
                         <div>{belongsTo && <CourseForm />}</div>
                     </div>
                     <div className="flex flex-col gap-2">

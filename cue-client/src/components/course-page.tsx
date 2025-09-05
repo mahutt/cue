@@ -63,10 +63,10 @@ export default function CoursePage() {
     return (
         <>
             <style>{'#content { padding: 0 1rem 1rem 1rem; }'}</style>
-            <div className="container d-flex flex-column gap-2">
+            <div className="container flex flex-col gap-2">
                 <CourseTitle course={course} />
-                <div className="text-secondary ms-1">Decks:</div>
-                <div className="decks d-flex flex-column gap-1">
+                <div className="text-gray-500 ms-1">Decks:</div>
+                <div className="decks flex flex-col gap-1">
                     {decks.map((deck) => (
                         <DeckPreview key={deck.id} deck={deck} />
                     ))}
@@ -81,7 +81,7 @@ function DeckPreview({ deck }: { deck: Deck }) {
     return (
         <Link to={`${deck.position}`} className="deck">
             <LightButton style={{ width: '100%', display: 'flex', gap: '0.5rem' }}>
-                <div className="flex-grow-1 text-start text-truncate">{deck.name}</div>
+                <div className="flex-grow-1 text-left text-truncate">{deck.name}</div>
                 {deck.percentage !== undefined && deck.percentage !== null && <DeckRating value={deck.percentage} />}
             </LightButton>
         </Link>

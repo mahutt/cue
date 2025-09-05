@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -53,19 +53,7 @@ body {
     position: relative;
 }
 
-/* Bootstrap overrides */
-@media (hover: none) {
-    .btn:hover {
-        color: var(--bs-btn-color);
-        background-color: var(--bs-btn-bg);
-        border-color: var(--bs-btn-border-color);
-    }
-}
-
 /* Start App Structure */
-.menu-bar {
-    padding: 1rem;
-}
 main {
     height: 100dvh;
     display: grid;
@@ -350,10 +338,10 @@ flash-card {
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+    * {
+        @apply border-border outline-ring/50;
     }
-  body {
-    @apply bg-background text-foreground;
+    body {
+        @apply bg-background text-foreground;
     }
 }

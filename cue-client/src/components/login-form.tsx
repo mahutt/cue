@@ -2,6 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { api } from '../api';
 import { useAuth } from '../hooks/auth-hook';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent } from '@/components/ui/card';
+import { Loader2 } from 'lucide-react';
 
 export default function LoginForm() {
     const navigate = useNavigate();
@@ -64,49 +70,51 @@ export default function LoginForm() {
     }, [username, password, firstAttempt]);
 
     return (
-        <div className="mt-4 container d-flex justify-content-center">
-            <div className="bg-light p-4 rounded-4 needs-validation" style={{ width: 300 }}>
-                <div className={`alert alert-danger ${error ? '' : 'd-none'}`} role="alert">
-                    {error}
-                </div>
-                <div className="has-validation mb-3">
-                    <label htmlFor="name" className="form-label">
-                        Name
-                    </label>
-                    <input
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        id="name"
-                        className={`form-control ${invalidUsername ? 'is-invalid' : ''}`}
-                        type="text"
-                        required
-                        disabled={loading}
-                    />
-                    <div className="invalid-feedback">Required.</div>
-                </div>
-                <div className="has-validation mb-3">
-                    <label htmlFor="password" className="form-label">
-                        Password
-                    </label>
-                    <input
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        id="password"
-                        className={`form-control ${invalidPassword ? 'is-invalid' : ''}`}
-                        type="password"
-                        required
-                        disabled={loading}
-                    />
-                    <div className="invalid-feedback">Required.</div>
-                </div>
-                <button id="submit" className="btn btn-dark w-100" onClick={login} disabled={loading}>
-                    <span
-                        className={`spinner-border spinner-border-sm ${loading ? '' : 'd-none'}`}
-                        aria-hidden="true"
-                    ></span>
-                    Login
-                </button>
-            </div>
+        <div className="mt-4 flex justify-center">
+            <Card className="w-80 bg-gray-50">
+                <CardContent className="p-6">
+                    {error && (
+                        <Alert variant="destructive" className="mb-4">
+                            <AlertDescription>{error}</AlertDescription>
+                        </Alert>
+                    )}
+
+                    <div className="space-y-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="name">Name</Label>
+                            <Input
+                                id="name"
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                disabled={loading}
+                                className={invalidUsername ? 'border-red-500' : ''}
+                                required
+                            />
+                            {invalidUsername && <p className="text-sm text-red-500">Required.</p>}
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="password">Password</Label>
+                            <Input
+                                id="password"
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                disabled={loading}
+                                className={invalidPassword ? 'border-red-500' : ''}
+                                required
+                            />
+                            {invalidPassword && <p className="text-sm text-red-500">Required.</p>}
+                        </div>
+
+                        <Button onClick={login} disabled={loading} className="w-full bg-gray-900 hover:bg-gray-800">
+                            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            Login
+                        </Button>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     );
 }
