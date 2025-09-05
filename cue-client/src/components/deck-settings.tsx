@@ -51,14 +51,14 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
     return (
         <div className="flex gap-2">
             <Link to={`${location.pathname}/study`}>
-                <Button variant="ghost" size="icon">
+                <Button variant="secondary" size="icon">
                     <Glasses size={16} strokeWidth={1.5} />
                 </Button>
             </Link>
 
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <Button id="deckSettingsButton" variant="ghost" size="icon">
+                    <Button id="deckSettingsButton" variant="secondary" size="icon">
                         <Settings size={16} strokeWidth={1.5} />
                     </Button>
                 </DialogTrigger>
