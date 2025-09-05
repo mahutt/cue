@@ -48,7 +48,7 @@ export default function Profile() {
         <>
             <style>{`#content { padding: 0 1rem 1rem 1rem; }`}</style>
             <div className="container">
-                <div className="title mb-2">{username}</div>
+                <div className="font-semibold text-3xl mb-2">{username}</div>
                 <div>
                     <div className="mb-2 mx-1 d-flex flex-row justify-content-between align-items-center">
                         <div className="text-secondary">Courses</div>
