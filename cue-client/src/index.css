@@ -28,15 +28,6 @@ body {
 }
 
 /* Start App Structure */
-#navigation {
-    width: 260px;
-    max-height: 100vh;
-    overflow-y: auto;
-    padding: 1rem;
-
-    display: flex;
-    flex-direction: column;
-}
 .menu-bar {
     padding: 1rem;
 }

@@ -11,7 +11,7 @@ export default function CollapsibleColumn() {
             className="z-10 absolute l-0 h-full bg-white md:static shadow"
             style={{ overflow: 'hidden', transition: 'all 0.2s ease-out', width: isSidebarOpen ? 260 : 0 }}
         >
-            <div id="navigation">
+            <div className="flex flex-col w-[260px] max-h-screen overflow-y-auto p-3">
                 {user ? (
                     <>
                         <div className="d-flex flex-row justify-content-between mb-2">
