@@ -8,7 +8,7 @@ export default function CollapsibleColumn() {
     const { isSidebarOpen, closeSidebar } = useSidebar();
     return (
         <div
-            className="collapsible-column"
+            className="z-10 absolute l-0 h-full bg-white md:static shadow"
             style={{ overflow: 'hidden', transition: 'all 0.2s ease-out', width: isSidebarOpen ? 260 : 0 }}
         >
             <div id="navigation">

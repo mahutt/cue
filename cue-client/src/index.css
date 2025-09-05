@@ -28,16 +28,6 @@ body {
 }
 
 /* Start App Structure */
-.collapsible-column {
-    z-index: 1;
-    position: absolute;
-    left: 0;
-    height: 100%;
-
-    background-color: white;
-    width: 260px;
-    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.1);
-}
 #navigation {
     width: 260px;
     max-height: 100vh;
@@ -59,14 +49,11 @@ main #content {
     position: relative;
     overflow-y: auto;
 }
-@media (min-width: 780px) {
+@media (min-width: 768px) {
     #app {
         display: grid;
         grid-template-columns: auto 1fr;
         grid-template-rows: 1fr;
-    }
-    .collapsible-column {
-        position: static;
     }
     .mobile {
         display: none;
