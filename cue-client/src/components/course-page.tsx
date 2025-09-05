@@ -65,13 +65,17 @@ export default function CoursePage() {
             <style>{'#content { padding: 0 1rem 1rem 1rem; }'}</style>
             <div className="max-w-screen-xl mx-auto px-4 flex flex-col gap-2">
                 <CourseTitle course={course} />
-                <div className="text-gray-500 ms-1">Decks:</div>
+                <div className="flex items-center justify-between">
+                    <div className="text-gray-500 ms-1">Decks:</div>
+                    {belongs && (
+                        <DeckForm courseId={course.id} addDeck={(deck) => setDecks((prev) => [...prev, deck])} />
+                    )}
+                </div>
                 <div className="decks flex flex-col gap-1">
                     {decks.map((deck) => (
                         <DeckPreview key={deck.id} deck={deck} />
                     ))}
                 </div>
-                {belongs && <DeckForm courseId={course.id} addDeck={(deck) => setDecks((prev) => [...prev, deck])} />}
             </div>
         </>
     );
