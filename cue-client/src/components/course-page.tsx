@@ -7,6 +7,7 @@ import { Course, Deck } from '../types';
 import CourseSettings from './course-settings';
 import CourseTitle from './course-title';
 import DeckForm from './deck-form';
+import LightButton from './light-button';
 
 export default function CoursePage() {
     const navigate = useNavigate();
@@ -79,10 +80,10 @@ export default function CoursePage() {
 function DeckPreview({ deck }: { deck: Deck }) {
     return (
         <Link to={`${deck.position}`} className="deck">
-            <button className="btn btn-light w-100 d-flex gap-1">
+            <LightButton style={{ width: '100%', display: 'flex', gap: '0.5rem' }}>
                 <div className="flex-grow-1 text-start text-truncate">{deck.name}</div>
                 {deck.percentage !== undefined && deck.percentage !== null && <DeckRating value={deck.percentage} />}
-            </button>
+            </LightButton>
         </Link>
     );
 }

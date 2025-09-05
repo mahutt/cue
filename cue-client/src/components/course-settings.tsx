@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { api } from '../api';
 import { useAuth } from '../hooks/auth-hook';
 import { useNotification } from '../hooks/notification-hook';
+import LightButton from './light-button';
 
 export default function CourseSettings({ courseId }: { courseId: number }) {
     const { setUser } = useAuth();
@@ -51,9 +52,8 @@ export default function CourseSettings({ courseId }: { courseId: number }) {
 
     return (
         <>
-            <button
+            <LightButton
                 id="courseSettingsButton"
-                className="btn btn-light"
                 type="button"
                 onClick={() => {
                     if (modal) {
@@ -62,7 +62,7 @@ export default function CourseSettings({ courseId }: { courseId: number }) {
                 }}
             >
                 <i className="bi bi-gear-fill"></i>
-            </button>
+            </LightButton>
             <div ref={modalDivRef} className="modal fade" tabIndex={-1} aria-hidden="true" course-id="<%= course.id %>">
                 <div className="modal-dialog modal-sm">
                     <div className="modal-content">

@@ -3,6 +3,7 @@ import CollapsibleColumn from './components/collapsible-column';
 import { useSidebar } from './hooks/sidebar-hook';
 import NotificationBanner from './components/notification-banner';
 import { useTool } from './hooks/tool-hook';
+import LightButton from './components/light-button';
 
 function App() {
     const { toggleSidebar } = useSidebar();
@@ -13,12 +14,12 @@ function App() {
             <CollapsibleColumn />
             <main>
                 <div className="d-flex gap-2 menu-bar">
-                    <button className="btn btn-light" type="button" onClick={toggleSidebar}>
+                    <LightButton type="button" onClick={toggleSidebar}>
                         <i className="bi bi-list"></i>
-                    </button>
-                    <button id="navigateBack" className="btn btn-light" type="button" onClick={navigateBack}>
+                    </LightButton>
+                    <LightButton id="navigateBack" type="button" onClick={navigateBack}>
                         <i className="bi bi-arrow-90deg-left"></i>
-                    </button>
+                    </LightButton>
                     <div id="dynamic" className="d-flex justify-content-end w-100">
                         {tool}
                     </div>

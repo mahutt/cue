@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { api } from '../api';
 import { useAuth } from '../hooks/auth-hook';
 import { useNotification } from '../hooks/notification-hook';
+import LightButton from './light-button';
 
 export default function CourseForm() {
     const { setUser } = useAuth();
@@ -54,9 +55,8 @@ export default function CourseForm() {
 
     return (
         <>
-            <button
+            <LightButton
                 id="newCourseFormButton"
-                className="btn btn-light"
                 type="button"
                 onClick={() => {
                     if (modal) {
@@ -65,7 +65,7 @@ export default function CourseForm() {
                 }}
             >
                 <i className="bi bi-plus-lg"></i>
-            </button>
+            </LightButton>
             <div ref={modalDivRef} className="modal fade" tabIndex={-1} aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">

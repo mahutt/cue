@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 import { useAuth } from '../hooks/auth-hook';
+import LightButton from './light-button';
 
 export default function LogoutButton() {
     const navigate = useNavigate();
@@ -10,9 +11,5 @@ export default function LogoutButton() {
         navigate('/login');
     };
 
-    return (
-        <button className="btn btn-light" onClick={logout}>
-            Logout
-        </button>
-    );
+    return <LightButton onClick={logout}>Logout</LightButton>;
 }

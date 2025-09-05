@@ -1,3 +1,5 @@
+import LightButton from './light-button';
+
 export default function StudySettings({
     setEditing,
     reset,
@@ -7,17 +9,12 @@ export default function StudySettings({
 }) {
     return (
         <div>
-            <button
-                id="editCardButton"
-                className="btn btn-light"
-                type="button"
-                onClick={() => setEditing((prev) => !prev)}
-            >
+            <LightButton id="editCardButton" type="button" onClick={() => setEditing((prev) => !prev)}>
                 <i className="bi bi-pencil"></i>
-            </button>{' '}
-            <button className="btn btn-light" type="button" onClick={reset}>
+            </LightButton>{' '}
+            <LightButton type="button" onClick={reset}>
                 <i className="bi bi-arrow-clockwise"></i>
-            </button>
+            </LightButton>
         </div>
     );
 }

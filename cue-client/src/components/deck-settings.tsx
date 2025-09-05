@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router';
 import { useNotification } from '../hooks/notification-hook';
 import { api } from '../api';
+import LightButton from './light-button';
 
 export default function DeckSettings({ deckId, belongs }: { deckId: number; belongs: boolean }) {
     const navigate = useNavigate();
@@ -56,15 +57,14 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
     return (
         <div>
             <Link to={`${location.pathname}/study`}>
-                <button className="btn btn-light" type="button">
+                <LightButton type="button">
                     <i className="bi bi-eyeglasses"></i>
-                </button>
+                </LightButton>
             </Link>{' '}
             {belongs && (
                 <>
-                    <button
+                    <LightButton
                         id="deckSettingsButton"
-                        className="btn btn-light"
                         type="button"
                         onClick={() => {
                             if (modal) {
@@ -73,7 +73,7 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
                         }}
                     >
                         <i className="bi bi-gear-fill"></i>
-                    </button>
+                    </LightButton>
                     <div
                         ref={modalDivRef}
                         className="modal fade"
