@@ -1,7 +1,7 @@
 import { useAuth } from '@/hooks/auth-hook';
-import { LoaderCircle } from 'lucide-react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import LoaderPage from './loader-page';
 
 export default function HomePage() {
     const { user, loading } = useAuth();
@@ -16,9 +16,5 @@ export default function HomePage() {
         }
     }, [user, loading]);
 
-    return (
-        <div className="flex justify-center items-center h-full">
-            <LoaderCircle size={48} className="animate-spin" />
-        </div>
-    );
+    return <LoaderPage />;
 }

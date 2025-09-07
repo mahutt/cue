@@ -14,6 +14,7 @@ import CoursePage from './components/course-page.tsx';
 import DeckPage from './components/deck-page.tsx';
 import StudyStack from './components/study-stack.tsx';
 import HomePage from './components/home-page.tsx';
+import Dashboard from './pages/dashboard/dashboard.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
@@ -26,6 +27,7 @@ createRoot(document.getElementById('root')!).render(
                                 <Route element={<App />}>
                                     <Route path="/" element={<HomePage />} />
                                     <Route path="/login" element={<LoginForm />} />
+                                    <Route path="/dashboard" element={<Dashboard />} />
                                     <Route path="/:username" element={<Profile />} />
                                     <Route path="/:username/:courseCode" element={<CoursePage />} />
                                     <Route path="/:username/:courseCode/:deckPosition" element={<DeckPage />} />
