@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "esnext",
+        "moduleResolution": "node10",
+        "outDir": "./dist",
+        "rootDir": ".",
+        "strict": true, // Start with false for gradual migration
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "allowJs": true, // This is key - allows JS files alongside TS
+        "checkJs": false // Don't type-check JS files initially
+    },
+    "include": ["**/*"],
+    "exclude": ["node_modules", "dist", "cue-client"]
+}
