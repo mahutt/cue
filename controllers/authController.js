@@ -4,29 +4,6 @@ const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// Render the signup page.
-exports.view_signup = asyncHandler(async (req, res, next) => {
-    res.render('signup');
-});
-
-exports.register = asyncHandler(async (req, res, next) => {
-    const hash = await bcrypt.hash(req.body.password, 10);
-    try {
-        await User.register({ name: req.body.name, hash: hash });
-    } catch (e) {
-        if (e.code === 'SQLITE_CONSTRAINT' && e.errno === 19) {
-            res.render('signup', { error: 'Username is already taken.' });
-        } else {
-            res.render('signup', { error: 'Unknown error occured.' });
-        }
-    }
-    res.render('signup');
-});
-
-exports.view_login = asyncHandler(async (req, res, next) => {
-    res.render('login');
-});
-
 exports.login = asyncHandler(async (req, res, next) => {
     const user = await User.findByName(req.body.name);
 

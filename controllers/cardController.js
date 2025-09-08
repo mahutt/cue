@@ -5,22 +5,6 @@ const Card = require('../models/card');
 const Score = require('../models/score');
 const asyncHandler = require('express-async-handler');
 
-// Create a card
-exports.create_card = asyncHandler(async (req, res, next) => {
-    const deck_id = req.body.deck_id;
-
-    const owner = await User.findByDeckId(deck_id);
-    if (!req.user || req.user.name !== owner.name) {
-        return res.sendStatus(401);
-    }
-
-    const front = req.body.front.trim();
-    const back = req.body.back.trim();
-
-    const savedCard = await Card.save({ front, back, deck_id });
-    res.render('card/preview', { card: savedCard });
-});
-
 // JSON version of create_card
 exports.createCard = asyncHandler(async (req, res, next) => {
     const deck_id = req.body.deck_id;

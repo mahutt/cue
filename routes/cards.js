@@ -5,9 +5,6 @@ var router = express.Router();
 const auth_controller = require('../controllers/authController');
 const card_controller = require('../controllers/cardController');
 
-// Creating a card.
-router.post('/', card_controller.create_card);
-
 // Updating a card.
 router.patch('/:id', card_controller.update_card);
 

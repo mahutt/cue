@@ -6,7 +6,6 @@ var logger = require('morgan');
 var cors = require('cors');
 
 const authController = require('./controllers/authController');
-const appController = require('./controllers/appController');
 const authRouter = require('./routes/auth');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -28,10 +27,6 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -40,7 +35,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules/bootstrap-icons')));
 
 app.use(authController.authenticate);
-app.use(appController.serve);
 
 app.use('/api', apiRouter);
 app.use('/courses', coursesRouter);
@@ -61,9 +55,8 @@ app.use(function (err, req, res, next) {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.json({ error: err.message });
 });
 
 module.exports = app;

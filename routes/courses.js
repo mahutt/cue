@@ -5,9 +5,6 @@ var router = express.Router();
 const auth_controller = require('../controllers/authController');
 const course_controller = require('../controllers/courseController');
 
-// Creating a course.
-router.post('/', course_controller.create_course);
-
 // Updating a course.
 router.patch('/:id', course_controller.update_course);
 

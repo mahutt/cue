@@ -3,17 +3,6 @@ const Course = require('../models/course');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
 
-// View profile
-exports.view_profile = asyncHandler(async (req, res, next) => {
-    const name = req.params.name;
-    const user = await User.findByName(name);
-    const courses = await Course.allByUserId(user.id);
-
-    const belongs = Boolean(req.user) && req.user.name === user.name;
-    const otherUsers = await User.allExcept(name);
-    res.render('profile', { user: user, courses: courses, belongs: belongs, users: otherUsers });
-});
-
 exports.allUsers = asyncHandler(async (req, res, _) => {
     // since users don't have a roles attribute, I hardcode my username for now
     if (!req.user || req.user.name !== 'mahutt') {

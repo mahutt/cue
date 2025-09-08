@@ -5,9 +5,6 @@ var router = express.Router();
 const auth_controller = require('../controllers/authController');
 const deck_controller = require('../controllers/deckController');
 
-// Creating a deck.
-router.post('/', deck_controller.create_deck);
-
 // Updating a deck.
 router.patch('/:id', deck_controller.update_deck);
 
