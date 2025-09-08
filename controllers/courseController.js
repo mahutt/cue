@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Course = require('../models/course');
 const Deck = require('../models/deck');
 const asyncHandler = require('express-async-handler');
+const { extractDepartmentAndNumber } = require('./common');
 
 // Create a course.
 exports.create_course = asyncHandler(async (req, res, next) => {
@@ -70,8 +71,7 @@ exports.view_course = asyncHandler(async (req, res, next) => {
 // JSON API for viewing a course
 exports.getCourse = asyncHandler(async (req, res, next) => {
     const { userName, courseCode } = req.params;
-    const department = courseCode.substring(0, 4);
-    const number = courseCode.substring(4);
+    const { department, number } = extractDepartmentAndNumber(courseCode);
     const user = await User.findByName(userName);
 
     const course = await Course.find({ department, number, user_id: user.id });
@@ -101,8 +101,7 @@ exports.update_course = asyncHandler(async (req, res, next) => {
 
     const name = req.body.name;
     const code = req.body.code.toLowerCase().replace(/\s/g, '');
-    const department = code.substring(0, 4);
-    const number = code.substring(4);
+    const { department, number } = extractDepartmentAndNumber(code);
 
     await Course.updateById(id, { name, department, number });
     res.send(code);

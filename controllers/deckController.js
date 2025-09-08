@@ -3,6 +3,7 @@ const Course = require('../models/course');
 const Deck = require('../models/deck');
 const Card = require('../models/card');
 const asyncHandler = require('express-async-handler');
+const { extractDepartmentAndNumber } = require('./common');
 
 // Create a deck.
 exports.create_deck = asyncHandler(async (req, res, next) => {
@@ -50,8 +51,7 @@ exports.view_deck = asyncHandler(async (req, res, next) => {
 exports.viewDeck = asyncHandler(async (req, res, next) => {
     const { userName, courseCode, deckPosition } = req.params;
 
-    const department = courseCode.substring(0, 4);
-    const number = courseCode.substring(4);
+    const { department, number } = extractDepartmentAndNumber(courseCode);
 
     const user = await User.findByName(userName);
     const course = await Course.find({ department, number, user_id: user.id });
@@ -130,9 +130,7 @@ exports.studyDeck = asyncHandler(async (req, res, next) => {
     }
 
     const { userName, courseCode, deckPosition } = req.params;
-
-    const department = courseCode.substring(0, 4);
-    const number = courseCode.substring(4);
+    const { department, number } = extractDepartmentAndNumber(courseCode);
 
     const user = await User.findByName(userName);
     const course = await Course.find({ department, number, user_id: user.id });
