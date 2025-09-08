@@ -34,6 +34,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules/bootstrap-icons')));
 
+app.get('/', (req, res) => {
+    res.json({ message: 'Welcome to the Cue API' });
+});
+
 app.use(authController.authenticate);
 
 app.use('/api', apiRouter);
