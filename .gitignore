@@ -5,3 +5,4 @@ backups/
 todo.txt
 database/cue.db
 .ssh
+dist
