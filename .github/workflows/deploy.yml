@@ -61,7 +61,6 @@ jobs:
           pm2 delete cue-app 2>/dev/null || true
           pm2 start npm --name "cue-app" -- start
           pm2 save
-          pm2 startup systemd -u $USER --hp $HOME
 
           echo "Application deployed successfully!"
           pm2 list
