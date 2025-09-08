@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <circle style="stroke: rgb(0, 0, 0); fill: rgb(37, 37, 37); transform-origin: -341.46875px 249.921875px;" cx="250" cy="250" r="250"/>
+  <ellipse style="stroke: rgb(0, 0, 0); fill: rgb(203, 203, 203); transform-origin: 367.768995px 121.327px;" cx="367.769" cy="121.327" rx="78.09" ry="75.657" transform="matrix(0.991008102894, 0.133804023266, 0.345121949911, 1.055670976639, -11.131847385482, -1.113365010703)"/>
+</svg>
