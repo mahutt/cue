@@ -2,7 +2,7 @@ import { useParams } from 'react-router';
 import { useAuth } from '../hooks/auth-hook';
 import { useEffect, useState } from 'react';
 import { useTool } from '../hooks/tool-hook';
-import { api } from '../api';
+import api from '../api';
 import { Card, Deck } from '../types';
 import DeckSettings from './deck-settings';
 import DeckTitle from './deck-title';
@@ -43,16 +43,9 @@ export default function DeckPage() {
     }, [deck]);
 
     useEffect(() => {
-        api(`/api/decks/${username}/${courseCode}/${deckPosition}`, {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-                'Cue-App-Request': 'true',
-            },
-        })
+        api.get(`/api/decks/${username}/${courseCode}/${deckPosition}`)
             .then((response) => {
-                return response.json();
+                return response.data;
             })
             .then((data: { deck: Deck; cards: Card[]; belongs: boolean }) => {
                 setDeck(data.deck);

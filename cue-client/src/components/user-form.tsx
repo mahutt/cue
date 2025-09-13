@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNotification } from '../hooks/notification-hook';
-import { api } from '../api';
+import api from '../api';
 import { Plus } from 'lucide-react';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -16,28 +16,16 @@ export default function UserForm() {
     const createUser = async () => {
         if (!userName || !password) return;
         try {
-            const response = await api('/api/users', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: userName,
-                    password: password,
-                }),
+            await api.post('/api/users', {
+                name: userName,
+                password: password,
             });
 
-            if (response.ok) {
-                setOpen(false);
-                setNotification('User created!');
+            setOpen(false);
+            setNotification('User created!');
 
-                // Reset form
-                setUserName('');
-            } else {
-                setOpen(false);
-                setNotification('Could not create user.');
-            }
+            // Reset form
+            setUserName('');
         } catch {
             setOpen(false);
             setNotification('Could not create user.');

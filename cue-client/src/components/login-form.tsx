@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { api } from '../api';
+import api from '../api';
 import { useAuth } from '../hooks/auth-hook';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -44,17 +44,12 @@ export default function LoginForm() {
         }
         setLoading(true);
 
-        const response = await api('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Cue-App-Request': 'true',
-            },
-            credentials: 'include',
-            body: JSON.stringify({ name: username, password }),
+        const response = await api.post('/login', {
+            name: username,
+            password,
         });
 
-        const data = await response.json();
+        const data = response.data;
         if (data.error !== undefined) {
             setError(data.error);
             setLoading(false);

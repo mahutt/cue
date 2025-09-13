@@ -1,7 +1,7 @@
 import { useDeck } from '../hooks/deck-hook';
 import CardFace from './card-face';
 import { useNotification } from '../hooks/notification-hook';
-import { api } from '../api';
+import api from '../api';
 import { Card } from '../types';
 
 export default function CardForm({ deckId, addCard }: { deckId: number; addCard: (card: Card) => void }) {
@@ -10,30 +10,22 @@ export default function CardForm({ deckId, addCard }: { deckId: number; addCard:
         useDeck();
 
     const createCard = async () => {
-        const response = await api('/api/cards', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
+        try {
+            const response = await api.post<{ card: Card }>('/api/cards', {
                 front: formFrontValue.trim(),
                 back: formBackValue.trim(),
                 deck_id: deckId,
-            }),
-            credentials: 'include',
-        });
+            });
 
-        if (!response.ok) {
+            setFormFrontValue('');
+            setFormBackValue('');
+            formFrontFaceRef.current?.focus();
+            const { card } = response.data;
+            addCard(card);
+            setNotification('Card created!');
+        } catch {
             setNotification('Could not create card.');
-            return;
         }
-
-        setFormFrontValue('');
-        setFormBackValue('');
-        formFrontFaceRef.current?.focus();
-        const { card }: { card: Card } = await response.json();
-        addCard(card);
-        setNotification('Card created!');
     };
 
     return (

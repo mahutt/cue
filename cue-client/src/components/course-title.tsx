@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Course } from '../types';
 import { useNotification } from '../hooks/notification-hook';
-import { api } from '../api';
+import api from '../api';
 
 export default function CourseTitle({ course }: { course: Course }) {
     const { setNotification } = useNotification();
@@ -14,23 +14,12 @@ export default function CourseTitle({ course }: { course: Course }) {
     }, [course]);
 
     const updateCourse = () => {
-        api(`/courses/${course.id}`, {
-            method: 'PATCH',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: name,
-                code: code,
-            }),
+        api.patch(`/courses/${course.id}`, {
+            name: name,
+            code: code,
         })
             .then((response) => {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    setNotification('Could not update course.');
-                }
+                return response.data;
             })
             .then((code) => {
                 if (code) {
@@ -38,7 +27,8 @@ export default function CourseTitle({ course }: { course: Course }) {
                 }
             })
             .catch((error) => {
-                console.error('Error:', error);
+                console.error('Error updating course:', error);
+                setNotification('Could not update course.');
             });
     };
     return (

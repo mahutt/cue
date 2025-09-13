@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router';
 import { Course } from '../types';
 import { useEffect, useState } from 'react';
 import CoursePreview from './course-preview';
-import { api } from '../api';
+import api from '../api';
 import { useAuth } from '../hooks/auth-hook';
 import CourseForm from './course-form';
 import { useTool } from '../hooks/tool-hook';
@@ -25,16 +25,9 @@ export default function Profile() {
     useEffect(() => {
         setTool(belongsTo ? <LogoutButton /> : null);
         if (belongsTo) return;
-        api(`/api/users/${username}/courses`, {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-                'Cue-App-Request': 'true',
-            },
-        })
+        api.get(`/api/users/${username}/courses`, {})
             .then((response) => {
-                return response.json();
+                return response.data;
             })
             .then((data) => {
                 setCourses(data);

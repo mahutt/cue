@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { api } from '../api';
+import api from '../api';
 import { useAuth } from '../hooks/auth-hook';
 import { useNotification } from '../hooks/notification-hook';
 import { Settings } from 'lucide-react';
@@ -23,29 +23,19 @@ export default function CourseSettings({ courseId }: { courseId: number }) {
 
     const deleteCourse = async () => {
         try {
-            const response = await api(`/courses/${courseId}`, {
-                method: 'DELETE',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            await api.delete(`/courses/${courseId}`);
+            setNotification('Course deleted.');
+            setUser((prevUser) => {
+                if (!prevUser) return prevUser;
+                return {
+                    ...prevUser,
+                    courses: prevUser.courses.filter((course) => course.id !== courseId),
+                };
             });
-            if (response.ok) {
-                setNotification('Course deleted.');
-                setUser((prevUser) => {
-                    if (!prevUser) return prevUser;
-                    return {
-                        ...prevUser,
-                        courses: prevUser.courses.filter((course) => course.id !== courseId),
-                    };
-                });
-                navigate(-1);
-            } else {
-                setNotification('Could not delete course.');
-            }
-            setOpen(false);
+            navigate(-1);
         } catch {
             setNotification('Could not delete course.');
+        } finally {
             setOpen(false);
         }
     };

@@ -1,5 +1,5 @@
 import React, { createContext, useState, ReactNode, useEffect } from 'react';
-import { api } from '../api';
+import api from '../api';
 import { Course } from '../types';
 
 interface User {
@@ -35,15 +35,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const checkUser = async () => {
         try {
-            const response = await api('/user', {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Cue-App-Request': 'true',
-                },
-            });
-            const { name, courses } = await response.json();
+            const response = await api.get('/user');
+            const { name, courses } = response.data;
             setUser({ name, courses });
             setLoading(false);
         } catch {
@@ -54,15 +47,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const fetchAllUsers = async () => {
         try {
-            const response = await api('/api/users/all', {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Cue-App-Request': 'true',
-                },
-            });
-            const users = await response.json();
+            const response = await api.get('/api/users/all');
+            const users = response.data;
             setAllUserNames(users.map((user: { name: string }) => user.name));
         } catch {}
     };

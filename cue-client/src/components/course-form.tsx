@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { api } from '../api';
+import api from '../api';
 import { useAuth } from '../hooks/auth-hook';
 import { useNotification } from '../hooks/notification-hook';
 import { Plus } from 'lucide-react';
@@ -19,20 +19,13 @@ export default function CourseForm() {
 
     const createCourse = async () => {
         try {
-            const response = await api('/api/courses', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: courseName,
-                    department: department,
-                    number: courseNumber,
-                }),
+            const response = await api.post('/api/courses', {
+                name: courseName,
+                department: department,
+                number: courseNumber,
             });
 
-            const { course } = await response.json();
+            const { course } = await response.data;
             setUser((prevUser) => {
                 if (!prevUser) return prevUser;
                 return {

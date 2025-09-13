@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Card } from '../types';
 import CardFace from './card-face';
-import { api } from '../api';
+import api from '../api';
 import { useNotification } from '../hooks/notification-hook';
 import { useDeck } from '../hooks/deck-hook';
 import { Trash2 } from 'lucide-react';
@@ -33,39 +33,27 @@ export function CardEditor({
         const sanitizedFrontValue = frontValue.trim();
         const sanitizedBackValue = backValue.trim();
 
-        const response = await api(`/cards/${card.id}`, {
-            method: 'PATCH',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
+        try {
+            const response = await api.patch<{ card: Card }>(`/cards/${card.id}`, {
                 front: sanitizedFrontValue,
                 back: sanitizedBackValue,
-            }),
-        });
-
-        if (response.ok) {
-            const updatedCard = ((await response.json()) as { card: Card }).card;
+            });
+            const updatedCard = response.data.card;
             setCard(updatedCard);
             focusForm();
             setNotification('Card updated!');
-        } else {
+        } catch (error) {
             setNotification('Could not update card.');
         }
     };
 
     const deleteCard = async () => {
-        const response = await api(`/cards/${card.id}`, {
-            method: 'DELETE',
-            credentials: 'include',
-        });
-
-        if (response.ok) {
+        try {
+            await api.delete(`/cards/${card.id}`);
             removeCard();
             focusForm();
             setNotification('Card deleted!');
-        } else {
+        } catch {
             setNotification('Could not delete card.');
         }
     };

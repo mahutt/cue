@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNotification } from '../hooks/notification-hook';
-import { api } from '../api';
+import api from '../api';
 import { Deck } from '../types';
 import { Plus } from 'lucide-react';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -15,30 +15,18 @@ export default function DeckForm({ courseId, addDeck }: { courseId: number; addD
 
     const createDeck = async () => {
         try {
-            const response = await api('/api/decks', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    course_id: courseId,
-                    name: deckName,
-                }),
+            const response = await api.post('/api/decks', {
+                course_id: courseId,
+                name: deckName,
             });
 
-            if (response.ok) {
-                const { deck } = await response.json();
-                addDeck(deck);
-                setOpen(false);
-                setNotification('Deck created!');
+            const { deck } = response.data;
+            addDeck(deck);
+            setOpen(false);
+            setNotification('Deck created!');
 
-                // Reset form
-                setDeckName('');
-            } else {
-                setOpen(false);
-                setNotification('Could not create deck.');
-            }
+            // Reset form
+            setDeckName('');
         } catch {
             setOpen(false);
             setNotification('Could not create deck.');

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router';
-import { api } from '../api';
+import api from '../api';
 import { useAuth } from '../hooks/auth-hook';
 import { useTool } from '../hooks/tool-hook';
 import { Course, Deck } from '../types';
@@ -38,16 +38,9 @@ export default function CoursePage() {
     }, [user, username, courseCode]);
 
     useEffect(() => {
-        api(`/api/courses/${username}/${courseCode}`, {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-                'Cue-App-Request': 'true',
-            },
-        })
+        api.get(`/api/courses/${username}/${courseCode}`)
             .then((response) => {
-                return response.json();
+                return response.data;
             })
             .then((data: { course: Course; decks: Deck[] }) => {
                 setCourse(data.course);

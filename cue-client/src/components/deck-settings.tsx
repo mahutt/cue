@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router';
 import { useNotification } from '../hooks/notification-hook';
-import { api } from '../api';
+import api from '../api';
 import { Glasses, Settings } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -13,17 +13,11 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
     const [open, setOpen] = useState(false);
 
     const resetProgress = async () => {
-        const response = await api(`/decks/${deckId}/progress`, {
-            method: 'DELETE',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        setOpen(false);
-        if (response.ok) {
+        try {
+            await api.delete(`/decks/${deckId}/progress`);
+            setOpen(false);
             setNotification('Progress reset.');
-        } else {
+        } catch {
             setNotification('Could not reset progress.');
         }
     };
@@ -32,18 +26,11 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
         setOpen(false);
         // @todo: add confirmation dialog
 
-        const response = await api(`/decks/${deckId}`, {
-            method: 'DELETE',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (response.ok) {
+        try {
+            await api.delete(`/decks/${deckId}`);
             setNotification('Deck deleted.');
             navigate(-1);
-        } else {
+        } catch {
             setNotification('Could not delete deck.');
         }
     };

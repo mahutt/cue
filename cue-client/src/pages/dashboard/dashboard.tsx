@@ -1,4 +1,4 @@
-import { api } from '@/api';
+import api from '@/api';
 
 import { useEffect, useState } from 'react';
 import { columns, User } from './columns';
@@ -11,14 +11,8 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api(`/api/users`, {
-                    credentials: 'include',
-                    headers: {
-                        'Cue-App-Request': 'true',
-                    },
-                });
-                const users = await response.json();
-                console.log(users);
+                const response = await api.get<User[]>(`/api/users`, {});
+                const users = response.data;
                 setData(users);
             } catch (error) {
                 console.error('Error fetching data:', error);

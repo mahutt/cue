@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { Deck } from '../types';
 import { useNotification } from '../hooks/notification-hook';
-import { api } from '../api';
+import api from '../api';
 
 export default function DeckTitle({ deck }: { deck: Deck }) {
     const { setNotification } = useNotification();
@@ -13,20 +13,13 @@ export default function DeckTitle({ deck }: { deck: Deck }) {
     }, [deck]);
 
     const renameDeck = async () => {
-        const response = await api(`/decks/${deck.id}`, {
-            method: 'PATCH',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
+        try {
+            await api.patch(`/decks/${deck.id}`, {
                 name: deckName,
-            }),
-        });
-        if (response.ok) {
+            });
             inputRef.current?.blur();
             setNotification('Deck renamed!');
-        } else {
+        } catch {
             setNotification('Could not rename deck.');
         }
     };

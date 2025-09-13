@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router';
-import { api } from '../api';
+import api from '../api';
 import { Card } from '../types';
 import CardFace from './card-face';
 import { useTool } from '../hooks/tool-hook';
@@ -23,25 +23,17 @@ export default function StudyStack() {
     const [finished, setFinished] = useState<boolean>(false);
 
     const fetchStudyCards = async () => {
-        const response = await api(`/api/decks/${username}/${courseCode}/${deckPosition}/study`, {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-                'Cue-App-Request': 'true',
-            },
-        });
+        try {
+            const response = await api.get(`/api/decks/${username}/${courseCode}/${deckPosition}/study`);
+            const { cards, deckId }: { cards: ScoredCard[]; deckId: number } = response.data;
 
-        if (!response.ok) {
-            console.error('Failed to fetch study cards:', response.statusText);
+            setScoredCards(cards);
+            setDeckId(deckId);
+            setIndex(0);
+        } catch {
+            console.error('Failed to fetch study cards');
             return;
         }
-
-        const { cards, deckId }: { cards: ScoredCard[]; deckId: number } = await response.json();
-
-        setScoredCards(cards);
-        setDeckId(deckId);
-        setIndex(0);
     };
 
     const reset = async () => {
@@ -101,18 +93,11 @@ function CardFlipper({
 
     const updateScore = async (score: number) => {
         nextCard();
-        const response = await api(`/cards/${card.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include',
-            body: JSON.stringify({
+        try {
+            await api.put(`/cards/${card.id}`, {
                 score: score,
-            }),
-        });
-
-        if (!response.ok) {
+            });
+        } catch {
             setNotification('Could not update score.');
             return;
         }
@@ -186,16 +171,9 @@ function CardFlipper({
                     className="w-[50px]"
                     onClick={async (e) => {
                         e.stopPropagation();
-                        const response = await api(`/cards/${card.id}`, {
-                            method: 'PATCH',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            credentials: 'include',
-                            body: JSON.stringify(internalCard),
-                        });
-
-                        if (!response.ok) {
+                        try {
+                            await api.patch(`/cards/${card.id}`, internalCard);
+                        } catch {
                             setNotification('Could not save card.');
                             return;
                         }
@@ -221,22 +199,14 @@ function ScoreBoard({ deckId, reset }: { deckId: number; reset: () => void }) {
     const [percentage, setPercentage] = useState<number>(0);
 
     const fetchScore = async () => {
-        const response = await api(`/decks/${deckId}/score`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Cue-App-Request': 'true',
-            },
-            credentials: 'include',
-        });
-        if (!response.ok) {
+        try {
+            const response = await api.get(`/decks/${deckId}/score`);
+            const percentage = Math.round(response.data.percentage);
+            setPercentage(percentage);
+        } catch {
             setNotification('Could not fetch score.');
             return;
         }
-        const data = await response.json();
-        console.log(data);
-        const percentage = Math.round(data.percentage);
-        setPercentage(percentage);
     };
 
     useEffect(() => {
