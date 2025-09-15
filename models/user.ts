@@ -1,6 +1,6 @@
-const db = require('../database/database').default;
+import db from '../database/database';
 
-exports.all = function () {
+export function all() {
     return new Promise((resolve, reject) => {
         db.all('SELECT id, name FROM users ORDER BY id', [], (err, rows) => {
             if (err) {
@@ -10,10 +10,10 @@ exports.all = function () {
             }
         });
     });
-};
+}
 
 // find all usernames
-exports.allNames = function () {
+export function allNames() {
     return new Promise((resolve, reject) => {
         db.all('SELECT name FROM users', [], (err, rows) => {
             if (err) {
@@ -23,10 +23,10 @@ exports.allNames = function () {
             }
         });
     });
-};
+}
 
 // find user by name
-exports.findByName = function (name) {
+export function findByName(name: string) {
     return new Promise((resolve, reject) => {
         db.get('SELECT * FROM users WHERE name = ?', [name], (err, rows) => {
             if (err) {
@@ -36,10 +36,10 @@ exports.findByName = function (name) {
             }
         });
     });
-};
+}
 
 // Given a course ID, returns the user that owns this course.
-exports.findByCourseId = function (id) {
+export function findByCourseId(id: string) {
     return new Promise((resolve, reject) => {
         db.get(
             `SELECT users.* FROM users
@@ -55,10 +55,10 @@ exports.findByCourseId = function (id) {
             }
         );
     });
-};
+}
 
 // Given a deck ID, returns the user that owns this deck.
-exports.findByDeckId = function (id) {
+export function findByDeckId(id: string) {
     return new Promise((resolve, reject) => {
         db.get(
             `SELECT users.* FROM users
@@ -75,9 +75,9 @@ exports.findByDeckId = function (id) {
             }
         );
     });
-};
+}
 
-exports.findByCardId = function (id) {
+export function findByCardId(id: string) {
     return new Promise((resolve, reject) => {
         db.get(
             `SELECT users.* FROM users
@@ -95,10 +95,10 @@ exports.findByCardId = function (id) {
             }
         );
     });
-};
+}
 
 // register a new user
-exports.register = function ({ name, hash }) {
+export function register(name: string, hash: string) {
     console.log({ name, hash });
     return new Promise((resolve, reject) => {
         db.get('INSERT INTO users (name, hash) VALUES (?, ?);', [name, hash], (err, rows) => {
@@ -109,9 +109,9 @@ exports.register = function ({ name, hash }) {
             }
         });
     });
-};
+}
 
-exports.allExcept = function (name) {
+export function allExcept(name: string) {
     return new Promise((resolve, reject) => {
         db.all('SELECT * FROM users WHERE name != ?', [name], (err, rows) => {
             if (err) {
@@ -121,4 +121,4 @@ exports.allExcept = function (name) {
             }
         });
     });
-};
+}
