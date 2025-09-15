@@ -31,9 +31,7 @@ export default function MessageForm() {
                 <label htmlFor="messageContent" className="text-gray-500">
                     Requests & feedback
                 </label>
-                <Badge variant="secondary" className="bg-blue-500 text-white dark:bg-blue-600">
-                    New!
-                </Badge>
+                <Badge>New!</Badge>
             </div>
             <Textarea
                 id="messageContent"
