@@ -4,6 +4,7 @@ import { useSidebar } from '../../hooks/sidebar-hook';
 import CoursePreview from '../course-preview';
 import { Menu } from 'lucide-react';
 import { Button } from '../ui/button';
+import MessageForm from './message-form';
 
 export default function CollapsibleColumn() {
     const { user, allUserNames } = useAuth();
@@ -32,6 +33,7 @@ export default function CollapsibleColumn() {
                                 <CoursePreview key={course.id} username={user.name} course={course} />
                             ))}
                         </div>
+                        <MessageForm />
                         <div className="flex flex-col gap-2 ms-1">
                             <div className="text-gray-500">Other Users</div>
                             {allUserNames
