@@ -1,4 +1,4 @@
-const db = require('../database/database');
+const db = require('../database/database').default;
 
 exports.all = function () {
     return new Promise((resolve, reject) => {

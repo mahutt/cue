@@ -1,4 +1,4 @@
-const db = require('../database/database');
+const db = require('../database/database').default;
 
 exports.findById = function (id) {
     return new Promise((resolve, reject) => {

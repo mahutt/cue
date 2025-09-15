@@ -1,4 +1,4 @@
-const db = require('../database/database');
+const db = require('../database/database').default;
 
 // Save or update a score
 exports.save = function ({ score, user_id, card_id }) {

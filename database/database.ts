@@ -1,4 +1,4 @@
-const sqlite3 = require('sqlite3');
+import sqlite3 from 'sqlite3';
 
 let db = new sqlite3.Database('./database/cue.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
     if (err) {
@@ -89,4 +89,4 @@ db.serialize(function () {
     db.run("INSERT OR IGNORE INTO users (name) VALUES ('mahutt');");
 });
 
-module.exports = db;
+export default db;

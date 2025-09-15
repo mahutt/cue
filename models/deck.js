@@ -1,4 +1,4 @@
-const db = require('../database/database');
+const db = require('../database/database').default;
 
 // Find courses by user_id
 exports.allByCourseId = function (course_id) {
