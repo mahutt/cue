@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router';
 import { Course } from '../types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import CoursePreview from './course-preview';
 import api from '../api';
 import { useAuth } from '../hooks/auth-hook';
@@ -20,7 +20,7 @@ export default function Profile() {
     }
 
     let [courses, setCourses] = useState<Course[]>([]);
-    const belongsTo = user && user.name === username;
+    const belongsTo = useMemo(() => user && user.name === username, [user, username]);
 
     useEffect(() => {
         setTool(belongsTo ? <LogoutButton /> : null);
@@ -35,7 +35,7 @@ export default function Profile() {
             .catch((error) => {
                 console.error('Error fetching courses:', error);
             });
-    }, [username]);
+    }, [belongsTo, username, setTool]);
 
     return (
         <>
@@ -48,7 +48,7 @@ export default function Profile() {
                         <div>{belongsTo && <CourseForm />}</div>
                     </div>
                     <div className="flex flex-col gap-2">
-                        {(belongsTo ? user.courses : courses).map((course) => (
+                        {(belongsTo && user ? user.courses : courses).map((course) => (
                             <CoursePreview key={course.id} username={username} course={course} />
                         ))}
                     </div>
