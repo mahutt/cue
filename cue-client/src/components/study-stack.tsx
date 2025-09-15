@@ -216,11 +216,13 @@ function ScoreBoard({ deckId, reset }: { deckId: number; reset: () => void }) {
     return (
         <div className="scoreboard">
             <div className="percentage">{percentage}%</div>
-            <button className="text-white bg-black p-2 rounded-3" onClick={reset}>
+            <Button variant="default" onClick={reset}>
                 again
-            </button>
-            <Link to={parentPath} className="text-white bg-black p-2 rounded-3">
-                return to deck
+            </Button>
+            <Link to={parentPath}>
+                <Button variant="ghost" className="cursor-pointer">
+                    return to deck
+                </Button>
             </Link>
         </div>
     );
