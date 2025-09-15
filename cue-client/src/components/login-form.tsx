@@ -8,10 +8,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
+import { useTool } from '@/hooks/tool-hook';
 
 export default function LoginForm() {
     const navigate = useNavigate();
     const { setLoading: setAuthLoading } = useAuth();
+    const { setTool } = useTool();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [invalidUsername, setInvalidUsername] = useState(false);
@@ -58,6 +60,10 @@ export default function LoginForm() {
             navigate(`/${username}`);
         }
     };
+
+    useEffect(() => {
+        setTool(null);
+    }, []);
 
     useEffect(() => {
         if (firstAttempt) return;
