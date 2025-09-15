@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router';
-import CollapsibleColumn from './components/collapsible-column';
+import CollapsibleColumn from './components/sidebar/collapsible-column';
 import { useSidebar } from './hooks/sidebar-hook';
 import NotificationBanner from './components/notification-banner';
 import { useTool } from './hooks/tool-hook';

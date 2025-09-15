@@ -1,9 +1,9 @@
 import { Link } from 'react-router';
-import { useAuth } from '../hooks/auth-hook';
-import { useSidebar } from '../hooks/sidebar-hook';
-import CoursePreview from './course-preview';
+import { useAuth } from '../../hooks/auth-hook';
+import { useSidebar } from '../../hooks/sidebar-hook';
+import CoursePreview from '../course-preview';
 import { Menu } from 'lucide-react';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 
 export default function CollapsibleColumn() {
     const { user, allUserNames } = useAuth();
