@@ -1,3 +1,4 @@
+import { IUser } from '../controllers/types';
 import db from '../database/database';
 
 export function all() {
@@ -26,9 +27,9 @@ export function allNames() {
 }
 
 // find user by name
-export function findByName(name: string) {
+export function findByName(name: string): Promise<IUser> {
     return new Promise((resolve, reject) => {
-        db.get('SELECT * FROM users WHERE name = ?', [name], (err, rows) => {
+        db.get('SELECT * FROM users WHERE name = ?', [name], (err, rows: IUser) => {
             if (err) {
                 reject(err);
             } else {
@@ -98,7 +99,7 @@ export function findByCardId(id: string) {
 }
 
 // register a new user
-export function register(name: string, hash: string) {
+export function register({ name, hash }: { name: string; hash: string }) {
     console.log({ name, hash });
     return new Promise((resolve, reject) => {
         db.get('INSERT INTO users (name, hash) VALUES (?, ?);', [name, hash], (err, rows) => {
