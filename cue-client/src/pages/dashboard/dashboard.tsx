@@ -1,8 +1,8 @@
 import api from '@/api';
 
 import { useEffect, useState } from 'react';
-import { columns, User } from './columns';
-import { DataTable } from './data-table';
+import { columns, User } from './user-table/columns';
+import { DataTable } from './user-table/data-table';
 
 export default function Dashboard() {
     const [data, setData] = useState<User[]>([]);
