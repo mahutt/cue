@@ -15,7 +15,7 @@ export default function MessageForm() {
         if (!content.trim()) return;
         setIsSubmitting(true);
         try {
-            await api.post('/messages', { content });
+            await api.post('/messages', { content: content.trim() });
             setContent('');
             setNotification('Message submitted successfully!');
         } catch {
