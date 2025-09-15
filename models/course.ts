@@ -1,7 +1,7 @@
-const db = require('../database/database').default;
+import db from '../database/database';
 
 // Find courses by user_id
-exports.allByUserId = function (user_id) {
+export function allByUserId(user_id: string) {
     return new Promise((resolve, reject) => {
         db.all(
             `SELECT *, department || number AS code
@@ -16,10 +16,10 @@ exports.allByUserId = function (user_id) {
             }
         );
     });
-};
+}
 
 // Find course by department, number, and user_id
-exports.find = function ({ department, number, user_id }) {
+export function find({ department, number, user_id }: { department: string; number: number; user_id: string }) {
     return new Promise((resolve, reject) => {
         db.get(
             `SELECT *, department || number AS code
@@ -34,10 +34,20 @@ exports.find = function ({ department, number, user_id }) {
             }
         );
     });
-};
+}
 
 // Save a course
-exports.save = function ({ name, department, number, user_id }) {
+export function save({
+    name,
+    department,
+    number,
+    user_id,
+}: {
+    name: string;
+    department: string;
+    number: number;
+    user_id: string;
+}) {
     return new Promise((resolve, reject) => {
         return db.run(
             `
@@ -45,21 +55,24 @@ exports.save = function ({ name, department, number, user_id }) {
                 VALUES (?, ?, ?, ?);
             `,
             [name, department, number, user_id],
-            (err, rows) => {
+            function (err) {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(rows);
+                    resolve(this.lastID);
                 }
             }
         );
     });
-};
+}
 
-exports.updateById = function (id, { name, department, number }) {
+export function updateById(
+    id: string,
+    { name, department, number }: { name: string; department: string; number: string }
+) {
     name = name.trim();
     department = department.trim().toLowerCase();
-    number = parseInt(number.trim(), 10);
+    const typedNumber = parseInt(number.trim(), 10);
 
     return new Promise((resolve, reject) => {
         return db.run(
@@ -68,38 +81,42 @@ exports.updateById = function (id, { name, department, number }) {
                 SET name = ?, department = ?, number = ?
                 WHERE id = ?
             `,
-            [name, department, number, id],
-            (err, rows) => {
+            [name, department, typedNumber, id],
+            function (err) {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(rows);
+                    resolve(this.lastID);
                 }
             }
         );
     });
-};
+}
 
-exports.deleteById = function (id) {
+export function deleteById(id: string) {
     return new Promise((resolve, reject) => {
-        return db.run(`DELETE from courses WHERE id = ?`, [id], (err, rows) => {
+        return db.run(`DELETE from courses WHERE id = ?`, [id], function (err) {
             if (err) {
                 reject(err);
             } else {
-                resolve(rows);
+                resolve(this.lastID);
             }
         });
     });
-};
+}
 
-exports.getIdByDepartmentAndNumber = function (department, number) {
+export function getIdByDepartmentAndNumber(department: string, number: number) {
     return new Promise((resolve, reject) => {
-        db.get(`SELECT id FROM courses WHERE department = ? AND number = ?`, [department, number], (err, row) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(row.id);
+        db.get(
+            `SELECT id FROM courses WHERE department = ? AND number = ?`,
+            [department, number],
+            (err, row: { id: string }) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(row.id);
+                }
             }
-        });
+        );
     });
-};
+}
