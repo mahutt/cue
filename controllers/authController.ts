@@ -44,7 +44,6 @@ exports.authenticate = asyncHandler(async (req: AuthenticatedRequest, res: Respo
             (err: VerifyErrors | null, decoded: any) => {
                 if (err) return res.sendStatus(403);
                 req.user = decoded as IUserFromToken;
-                console.log(decoded);
                 next();
             }
         );

@@ -100,7 +100,6 @@ export function findByCardId(id: string) {
 
 // register a new user
 export function register({ name, hash }: { name: string; hash: string }) {
-    console.log({ name, hash });
     return new Promise((resolve, reject) => {
         db.get('INSERT INTO users (name, hash) VALUES (?, ?);', [name, hash], (err, rows) => {
             if (err) {
