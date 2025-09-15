@@ -13,6 +13,7 @@ const coursesRouter = require('./routes/courses');
 const decksRouter = require('./routes/decks');
 const cardsRouter = require('./routes/cards');
 const apiRouter = require('./routes/api');
+const messagesRouter = require('./routes/messages').default;
 
 var app = express();
 
@@ -44,6 +45,7 @@ app.use('/api', apiRouter);
 app.use('/courses', coursesRouter);
 app.use('/decks', decksRouter);
 app.use('/cards', cardsRouter);
+app.use('/messages', messagesRouter);
 app.use('/', authRouter);
 app.use('/', indexRouter);
 app.use('/', usersRouter);

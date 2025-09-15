@@ -86,6 +86,16 @@ db.serialize(function () {
         )`
     );
 
+    db.run(
+        `CREATE TABLE IF NOT EXISTS messages (
+            id INTEGER PRIMARY KEY,
+            content TEXT NOT NULL,
+            user_id INTEGER,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+        )`
+    );
+
     db.run("INSERT OR IGNORE INTO users (name) VALUES ('mahutt');");
 });
 

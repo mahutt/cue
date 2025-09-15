@@ -14,3 +14,10 @@ export interface IUser {
     name: string;
     hash: string;
 }
+
+export interface IMessage {
+    id: number;
+    content: string;
+    user_id: number | null;
+    created_at: string;
+}
