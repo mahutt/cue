@@ -11,5 +11,6 @@ router.get('/api/users', user_controller.allUsers); // all users and all their i
 router.post('/api/users', user_controller.create_user); // create a new user
 router.get('/api/users/all', user_controller.allUserNames); // just user names, unauthenticated
 router.get('/api/users/:name/courses', course_controller.getCoursesByUser);
+router.delete('/users/:id', auth_controller.authenticate, user_controller.delete_user);
 
 module.exports = router;

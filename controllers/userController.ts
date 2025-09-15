@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import { AuthenticatedRequest } from './types';
 import { Response } from 'express';
 
-exports.allUsers = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+export const allUsers = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     // since users don't have a roles attribute, I hardcode my username for now
     if (!req.user || req.user.name !== 'mahutt') {
         res.sendStatus(401);
@@ -14,12 +14,12 @@ exports.allUsers = asyncHandler(async (req: AuthenticatedRequest, res: Response)
     res.send(users);
 });
 
-exports.allUserNames = asyncHandler(async (_, res) => {
+export const allUserNames = asyncHandler(async (_, res) => {
     const users = await User.allNames();
     res.send(users);
 });
 
-exports.create_user = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+export const create_user = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     try {
         // since users don't have a roles attribute, I hardcode my username for now
         if (!req.user || req.user.name !== 'mahutt') {
@@ -58,4 +58,15 @@ exports.create_user = asyncHandler(async (req: AuthenticatedRequest, res: Respon
         console.error('Error creating user:', error);
         res.status(500).send({ error: 'An unexpected error occurred.' });
     }
+});
+
+export const delete_user = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+    // since users don't have a roles attribute, I hardcode my username for now
+    if (!req.user || req.user.name !== 'mahutt') {
+        res.sendStatus(401);
+        return;
+    }
+
+    await User.deleteById(req.params.id);
+    res.send({ message: 'User deleted successfully.' });
 });
