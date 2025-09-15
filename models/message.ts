@@ -31,3 +31,15 @@ export function create(content: string, user_id: number | null): Promise<number>
         });
     });
 }
+
+export function deleteById(id: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+        db.run('DELETE FROM messages WHERE id = ?', [id], function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
+}

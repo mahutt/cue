@@ -4,6 +4,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Check, Copy, Trash2 } from 'lucide-react';
 import { Message } from '@/types';
 import { useState } from 'react';
+import api from '@/api';
 
 export const columns: ColumnDef<Message>[] = [
     {
@@ -65,9 +66,8 @@ export const columns: ColumnDef<Message>[] = [
                         variant="ghost"
                         size="sm"
                         className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                        onClick={() => {
-                            // Add delete logic here
-                            console.log('Delete message:', message.id);
+                        onClick={async () => {
+                            await api.delete(`/messages/${message.id}`);
                         }}
                         title="Delete message"
                     >
