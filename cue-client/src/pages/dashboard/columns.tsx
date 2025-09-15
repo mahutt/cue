@@ -26,6 +26,14 @@ export const columns: ColumnDef<User>[] = [
     {
         accessorKey: 'name',
         header: 'Name',
+        cell: ({ row }) => {
+            const user = row.original;
+            return (
+                <Link className="hover:underline" to={`/${user.name}`}>
+                    {user.name}
+                </Link>
+            );
+        },
     },
     {
         id: 'actions',
