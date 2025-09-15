@@ -102,6 +102,11 @@ export default function LoginForm() {
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        login();
+                                    }
+                                }}
                                 disabled={loading}
                                 className={invalidPassword ? 'border-red-500' : ''}
                                 required
