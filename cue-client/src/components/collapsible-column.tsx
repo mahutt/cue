@@ -28,7 +28,7 @@ export default function CollapsibleColumn() {
                         </div>
                         <div className="flex flex-col gap-2 mb-4">
                             <div className="text-gray-500 ms-1">Courses</div>
-                            {user.courses.map((course) => (
+                            {[...user.courses].reverse().map((course) => (
                                 <CoursePreview key={course.id} username={user.name} course={course} />
                             ))}
                         </div>
