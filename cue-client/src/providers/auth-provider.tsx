@@ -1,11 +1,6 @@
 import React, { createContext, useState, ReactNode, useEffect } from 'react';
 import api from '../api';
-import { Course } from '../types';
-
-interface User {
-    name: string;
-    courses: Course[];
-}
+import { User } from '../types';
 
 export interface AuthState {
     user: User | null;

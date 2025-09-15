@@ -6,6 +6,11 @@ declare global {
     }
 }
 
+export interface User {
+    name: string;
+    courses: Course[];
+}
+
 export interface Course {
     id: number;
     name: string;
