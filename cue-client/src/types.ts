@@ -34,3 +34,11 @@ export interface Card {
     front: string;
     back: string;
 }
+
+export interface Message {
+    id: number;
+    content: string;
+    user_id: number | null;
+    username?: string;
+    created_at: string;
+}

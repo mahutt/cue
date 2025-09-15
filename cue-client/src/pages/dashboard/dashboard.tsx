@@ -1,19 +1,27 @@
 import api from '@/api';
 
 import { useEffect, useState } from 'react';
-import { columns, User } from './user-table/columns';
-import { DataTable } from './user-table/data-table';
+import { columns as userColumns, User } from './user-table/columns';
+import { DataTable as UserDataTable } from './user-table/data-table';
+import { DataTable as MessageDataTable } from './message-table/data-table';
+import { columns as messageColumns } from './message-table/columns';
+import { Message } from '@/types';
 
 export default function Dashboard() {
-    const [data, setData] = useState<User[]>([]);
+    const [users, setUsers] = useState<User[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get<User[]>(`/api/users`, {});
-                const users = response.data;
-                setData(users);
+                const [usersResponse, messagesResponse] = await Promise.all([
+                    api.get<User[]>(`/api/users`, {}),
+                    api.get<Message[]>(`/messages`, {}),
+                ]);
+
+                setUsers(usersResponse.data);
+                setMessages(messagesResponse.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
@@ -33,7 +41,11 @@ export default function Dashboard() {
             <div className="font-semibold text-3xl">Developer Dashboard</div>
             <div>
                 <p className="text-gray-500 ml-1">Users</p>
-                <DataTable columns={columns} data={data} />
+                <UserDataTable columns={userColumns} data={users} />
+            </div>
+            <div>
+                <p className="text-gray-500 ml-1">Messages</p>
+                <MessageDataTable columns={messageColumns} data={messages} />
             </div>
         </div>
     );

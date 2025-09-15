@@ -3,13 +3,20 @@ import db from '../database/database';
 
 export function all(): Promise<IMessage[]> {
     return new Promise((resolve, reject) => {
-        db.all('SELECT * FROM messages ORDER BY created_at DESC', [], (err, rows: IMessage[]) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(rows);
+        db.all(
+            `SELECT messages.*, users.name as username
+             FROM messages 
+             LEFT JOIN users ON messages.user_id = users.id 
+             ORDER BY messages.created_at DESC`,
+            [],
+            (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows as IMessage[]);
+                }
             }
-        });
+        );
     });
 }
 
