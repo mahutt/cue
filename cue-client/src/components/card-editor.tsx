@@ -17,7 +17,7 @@ export function CardEditor({
     setCard: (card: Card) => void;
     removeCard: () => void;
 }) {
-    const { setFormFrontValue, setFormBackValue, formFrontFaceRef, formBackFaceRef, focusForm } = useDeck();
+    const { setFormFrontValue, setFormBackValue, formFrontFaceRef, formBackFaceRef, focusForm, belongs } = useDeck();
     const { setNotification } = useNotification();
 
     const [frontValue, setFrontValue] = useState(card.front);
@@ -72,9 +72,11 @@ export function CardEditor({
                 <div>
                     <span className="card-position">{position}</span>.
                 </div>
-                <button className="delete" onClick={deleteCard}>
-                    <Trash2 size={16} strokeWidth={1.5} />
-                </button>
+                {belongs && (
+                    <button className="delete" onClick={deleteCard}>
+                        <Trash2 size={16} strokeWidth={1.5} />
+                    </button>
+                )}
             </div>
             <div className="body">
                 <CardFace

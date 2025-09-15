@@ -67,7 +67,7 @@ export default function DeckPage() {
     }, [cards, scrollToBottom]);
 
     return (
-        <DeckProvider>
+        <DeckProvider belongs={belongs}>
             <style>
                 {`.deck-body { height: 100%; display: grid; grid-template-columns: 1fr; }
                 .cards { overflow-y: auto; padding: 1rem; }

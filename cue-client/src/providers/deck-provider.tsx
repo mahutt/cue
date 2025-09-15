@@ -9,15 +9,17 @@ export interface DeckState {
     formFrontFaceRef: React.RefObject<FaceRef | null>;
     formBackFaceRef: React.RefObject<FaceRef | null>;
     focusForm: () => void;
+    belongs: boolean;
 }
 
 const DeckContext = createContext<DeckState | undefined>(undefined);
 
 interface DeckProviderProps {
     children: ReactNode;
+    belongs: boolean;
 }
 
-export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
+export const DeckProvider: React.FC<DeckProviderProps> = ({ children, belongs }) => {
     const [formFrontValue, setFormFrontValue] = React.useState<string>('');
     const [formBackValue, setFormBackValue] = React.useState<string>('');
 
@@ -36,6 +38,7 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
         formFrontFaceRef,
         formBackFaceRef,
         focusForm,
+        belongs,
     };
 
     return <DeckContext.Provider value={value}>{children}</DeckContext.Provider>;
