@@ -62,6 +62,7 @@ export default forwardRef<FaceRef, Props>(
                     <button
                         role="button"
                         className="undo-button"
+                        tabIndex={-1}
                         onClick={() => {
                             reset();
                             textareaRef.current?.focus();
