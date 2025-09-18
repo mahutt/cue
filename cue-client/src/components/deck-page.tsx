@@ -3,21 +3,23 @@ import { useAuth } from '../hooks/auth-hook';
 import { useEffect, useState } from 'react';
 import { useTool } from '../hooks/tool-hook';
 import api from '../api';
-import { Card, Deck } from '../types';
+import { Card, Deck, PendingCard } from '../types';
 import DeckSettings from './deck-settings';
 import DeckTitle from './deck-title';
 import { CardEditor } from './card-editor';
 import CardForm from './card-form';
 import { DeckProvider } from '../providers/deck-provider';
+import { useNotification } from '@/hooks/notification-hook';
 
 export default function DeckPage() {
+    const { setNotification } = useNotification();
     const { setTool } = useTool();
     const { username, courseCode, deckPosition } = useParams();
     const { user } = useAuth();
 
     const belongs = Boolean(user && username && user.name === username);
     const [deck, setDeck] = useState<Deck | null>(null);
-    const [cards, setCards] = useState<Card[]>([]);
+    const [cards, setCards] = useState<(Card | PendingCard)[]>([]);
 
     const [scrollToBottom, setScrollToBottom] = useState<boolean>(false);
 
@@ -33,9 +35,13 @@ export default function DeckPage() {
         });
     };
 
-    const addCard = (card: Card) => {
+    const addPendingCard = (card: PendingCard) => {
         setCards((prevCards) => [...prevCards, card]);
         setScrollToBottom(true);
+        card.promise.then((resolvedCard) => {
+            setCards((prevCards) => prevCards.map((c) => (c === card ? resolvedCard : c)));
+            setNotification('Card created!');
+        });
     };
 
     useEffect(() => {
@@ -95,7 +101,7 @@ export default function DeckPage() {
                     <div className="card-form-wrapper">
                         <div className="card-form-content">
                             <div className="mb-2 text-gray-500">New card</div>
-                            <CardForm deckId={deck.id} addCard={addCard} />
+                            <CardForm deckId={deck.id} addPendingCard={addPendingCard} />
                         </div>
                     </div>
                 )}

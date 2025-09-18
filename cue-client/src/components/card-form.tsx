@@ -2,27 +2,34 @@ import { useDeck } from '../hooks/deck-hook';
 import CardFace from './card-face';
 import { useNotification } from '../hooks/notification-hook';
 import api from '../api';
-import { Card } from '../types';
+import { Card, PendingCard } from '../types';
 
-export default function CardForm({ deckId, addCard }: { deckId: number; addCard: (card: Card) => void }) {
+export default function CardForm({
+    deckId,
+    addPendingCard,
+}: {
+    deckId: number;
+    addPendingCard: (card: PendingCard) => void;
+}) {
     const { setNotification } = useNotification();
     const { formFrontValue, setFormFrontValue, formBackValue, setFormBackValue, formFrontFaceRef, formBackFaceRef } =
         useDeck();
 
     const createCard = async () => {
         try {
-            const response = await api.post<{ card: Card }>('/api/cards', {
-                front: formFrontValue.trim(),
-                back: formBackValue.trim(),
-                deck_id: deckId,
-            });
+            const promise = api
+                .post<{ card: Card }>('/api/cards', {
+                    front: formFrontValue.trim(),
+                    back: formBackValue.trim(),
+                    deck_id: deckId,
+                })
+                .then(({ data }) => data.card);
+
+            addPendingCard({ id: Date.now(), front: formFrontValue.trim(), back: formBackValue.trim(), promise });
 
             setFormFrontValue('');
             setFormBackValue('');
             formFrontFaceRef.current?.focus();
-            const { card } = response.data;
-            addCard(card);
-            setNotification('Card created!');
         } catch {
             setNotification('Could not create card.');
         }

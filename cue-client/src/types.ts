@@ -35,6 +35,13 @@ export interface Card {
     back: string;
 }
 
+export interface PendingCard {
+    id: number;
+    front: string;
+    back: string;
+    promise: Promise<Card>;
+}
+
 export interface Message {
     id: number;
     content: string;

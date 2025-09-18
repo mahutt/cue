@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card } from '../types';
+import { Card, PendingCard } from '../types';
 import CardFace from './card-face';
 import api from '../api';
 import { useNotification } from '../hooks/notification-hook';
@@ -13,7 +13,7 @@ export function CardEditor({
     removeCard,
 }: {
     position: number;
-    card: Card;
+    card: Card | PendingCard;
     setCard: (card: Card) => void;
     removeCard: () => void;
 }) {
@@ -23,7 +23,10 @@ export function CardEditor({
     const [frontValue, setFrontValue] = useState(card.front);
     const [backValue, setBackValue] = useState(card.back);
 
+    const isPendingCard = 'promise' in card;
+
     const updateCard = async () => {
+        if (isPendingCard) return;
         if (card.front === frontValue && card.back === backValue) {
             focusForm();
             return;
@@ -49,6 +52,7 @@ export function CardEditor({
 
     const deleteCard = async () => {
         try {
+            if (isPendingCard) return;
             await api.delete(`/cards/${card.id}`);
             removeCard();
             focusForm();
@@ -60,7 +64,7 @@ export function CardEditor({
 
     return (
         <div
-            className="card-editor"
+            className={`card-editor ${isPendingCard ? 'opacity-50 pointer-events-none' : ''}`}
             onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
@@ -91,6 +95,7 @@ export function CardEditor({
                         setFormFrontValue(frontValue);
                         formFrontFaceRef.current?.focus();
                     }}
+                    readOnly={isPendingCard}
                 />
                 <CardFace
                     side="back"
@@ -104,6 +109,7 @@ export function CardEditor({
                         setFormBackValue(backValue);
                         formBackFaceRef.current?.focus();
                     }}
+                    readOnly={isPendingCard}
                 />
             </div>
         </div>
