@@ -72,14 +72,6 @@ main #content {
 }
 /* End App Structure */
 
-/* Start Style Components */
-.row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-/* End Style Components */
-
 /* course styling */
 .course-title .course-name,
 .deck-title .deck-name {
