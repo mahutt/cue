@@ -73,10 +73,6 @@ main #content {
 /* End App Structure */
 
 /* Start Style Components */
-.percentage {
-    font-size: 2rem;
-}
-
 .row {
     display: flex;
     flex-direction: row;
