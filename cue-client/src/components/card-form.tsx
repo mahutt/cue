@@ -37,7 +37,7 @@ export default function CardForm({
 
     return (
         <div
-            className="card-form cue-card"
+            className="card-form w-full max-w-[750px] flex flex-row flex-wrap gap-4"
             onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();

@@ -92,17 +92,6 @@ main #content {
     gap: 2rem;
     align-items: center;
 }
-.cue-card {
-    width: 100%;
-    max-width: 750px;
-
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-
-    gap: 1rem;
-    border-radius: 0.5rem;
-}
 .card-face {
     position: relative;
 }
