@@ -214,7 +214,7 @@ function ScoreBoard({ deckId, reset }: { deckId: number; reset: () => void }) {
     }, [deckId]);
 
     return (
-        <div className="scoreboard">
+        <div className="w-full h-full flex flex-col justify-center items-center gap-4">
             <div className="text-4xl">{percentage}%</div>
             <Button variant="default" onClick={reset}>
                 again
