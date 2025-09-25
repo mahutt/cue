@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label';
 
 export default function CourseForm() {
     const { setUser } = useAuth();
-    const { setNotification } = useNotification();
+    const { notify } = useNotification();
     const [open, setOpen] = useState(false);
 
     const [courseName, setCourseName] = useState<string>('');
@@ -35,7 +35,7 @@ export default function CourseForm() {
             });
 
             setOpen(false);
-            setNotification('Course created.');
+            notify('Course created.');
 
             // Reset form
             setCourseName('');
@@ -43,7 +43,7 @@ export default function CourseForm() {
             setCourseNumber('');
         } catch {
             setOpen(false);
-            setNotification('Could not create course.');
+            notify('Could not create course.');
         }
     };
 

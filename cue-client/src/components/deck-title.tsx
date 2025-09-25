@@ -4,7 +4,7 @@ import { useNotification } from '../hooks/notification-hook';
 import api from '../api';
 
 export default function DeckTitle({ deck }: { deck: Deck }) {
-    const { setNotification } = useNotification();
+    const { notify } = useNotification();
     const inputRef = useRef<HTMLInputElement>(null);
     const [deckName, setDeckName] = useState(deck.name);
 
@@ -18,9 +18,9 @@ export default function DeckTitle({ deck }: { deck: Deck }) {
                 name: deckName,
             });
             inputRef.current?.blur();
-            setNotification('Deck renamed!');
+            notify('Deck renamed!');
         } catch {
-            setNotification('Could not rename deck.');
+            notify('Could not rename deck.');
         }
     };
 

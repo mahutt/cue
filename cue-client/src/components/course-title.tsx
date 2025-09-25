@@ -4,7 +4,7 @@ import { useNotification } from '../hooks/notification-hook';
 import api from '../api';
 
 export default function CourseTitle({ course }: { course: Course }) {
-    const { setNotification } = useNotification();
+    const { notify } = useNotification();
     const [name, setName] = useState<string>(course.name);
     const [code, setCode] = useState<string>(`${course.department.toUpperCase()} ${course.number}`);
 
@@ -28,7 +28,7 @@ export default function CourseTitle({ course }: { course: Course }) {
             })
             .catch((error) => {
                 console.error('Error updating course:', error);
-                setNotification('Could not update course.');
+                notify('Could not update course.');
             });
     };
     return (

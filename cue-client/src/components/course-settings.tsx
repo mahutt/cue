@@ -18,13 +18,13 @@ import { Button } from './ui/button';
 export default function CourseSettings({ courseId }: { courseId: number }) {
     const { setUser } = useAuth();
     const navigate = useNavigate();
-    const { setNotification } = useNotification();
+    const { notify } = useNotification();
     const [open, setOpen] = useState(false);
 
     const deleteCourse = async () => {
         try {
             await api.delete(`/courses/${courseId}`);
-            setNotification('Course deleted.');
+            notify('Course deleted.');
             setUser((prevUser) => {
                 if (!prevUser) return prevUser;
                 return {
@@ -34,7 +34,7 @@ export default function CourseSettings({ courseId }: { courseId: number }) {
             });
             navigate(-1);
         } catch {
-            setNotification('Could not delete course.');
+            notify('Could not delete course.');
         } finally {
             setOpen(false);
         }

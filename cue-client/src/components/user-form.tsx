@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 export default function UserForm() {
-    const { setNotification } = useNotification();
+    const { notify } = useNotification();
     const [open, setOpen] = useState(false);
     const [userName, setUserName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -22,13 +22,13 @@ export default function UserForm() {
             });
 
             setOpen(false);
-            setNotification('User created!');
+            notify('User created!');
 
             // Reset form
             setUserName('');
         } catch {
             setOpen(false);
-            setNotification('Could not create user.');
+            notify('Could not create user.');
         }
     };
 

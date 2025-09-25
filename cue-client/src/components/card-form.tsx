@@ -11,7 +11,7 @@ export default function CardForm({
     deckId: number;
     addPendingCard: (card: PendingCard) => void;
 }) {
-    const { setNotification } = useNotification();
+    const { notify } = useNotification();
     const { formFrontValue, setFormFrontValue, formBackValue, setFormBackValue, formFrontFaceRef, formBackFaceRef } =
         useDeck();
 
@@ -31,7 +31,7 @@ export default function CardForm({
             setFormBackValue('');
             formFrontFaceRef.current?.focus();
         } catch {
-            setNotification('Could not create card.');
+            notify('Could not create card.');
         }
     };
 

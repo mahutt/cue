@@ -9,16 +9,16 @@ import { Button } from '@/components/ui/button';
 export default function DeckSettings({ deckId, belongs }: { deckId: number; belongs: boolean }) {
     const navigate = useNavigate();
     const location = useLocation();
-    const { setNotification } = useNotification();
+    const { notify } = useNotification();
     const [open, setOpen] = useState(false);
 
     const resetProgress = async () => {
         try {
             await api.delete(`/decks/${deckId}/progress`);
             setOpen(false);
-            setNotification('Progress reset.');
+            notify('Progress reset.');
         } catch {
-            setNotification('Could not reset progress.');
+            notify('Could not reset progress.');
         }
     };
 
@@ -28,10 +28,10 @@ export default function DeckSettings({ deckId, belongs }: { deckId: number; belo
 
         try {
             await api.delete(`/decks/${deckId}`);
-            setNotification('Deck deleted.');
+            notify('Deck deleted.');
             navigate(-1);
         } catch {
-            setNotification('Could not delete deck.');
+            notify('Could not delete deck.');
         }
     };
 

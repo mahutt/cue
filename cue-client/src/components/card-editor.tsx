@@ -18,7 +18,7 @@ export function CardEditor({
     removeCard: () => void;
 }) {
     const { setFormFrontValue, setFormBackValue, formFrontFaceRef, formBackFaceRef, focusForm, belongs } = useDeck();
-    const { setNotification } = useNotification();
+    const { notify } = useNotification();
 
     const [frontValue, setFrontValue] = useState(card.front);
     const [backValue, setBackValue] = useState(card.back);
@@ -44,9 +44,9 @@ export function CardEditor({
             const updatedCard = response.data.card;
             setCard(updatedCard);
             focusForm();
-            setNotification('Card updated!');
+            notify('Card updated!');
         } catch (error) {
-            setNotification('Could not update card.');
+            notify('Could not update card.');
         }
     };
 
@@ -56,9 +56,9 @@ export function CardEditor({
             await api.delete(`/cards/${card.id}`);
             removeCard();
             focusForm();
-            setNotification('Card deleted!');
+            notify('Card deleted!');
         } catch {
-            setNotification('Could not delete card.');
+            notify('Could not delete card.');
         }
     };
 

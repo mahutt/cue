@@ -12,7 +12,7 @@ import { DeckProvider } from '../providers/deck-provider';
 import { useNotification } from '@/hooks/notification-hook';
 
 export default function DeckPage() {
-    const { setNotification } = useNotification();
+    const { notify } = useNotification();
     const { setTool } = useTool();
     const { username, courseCode, deckPosition } = useParams();
     const { user } = useAuth();
@@ -40,7 +40,7 @@ export default function DeckPage() {
         setScrollToBottom(true);
         card.promise.then((resolvedCard) => {
             setCards((prevCards) => prevCards.map((c) => (c === card ? resolvedCard : c)));
-            setNotification('Card created!');
+            notify('Card created!');
         });
     };
 

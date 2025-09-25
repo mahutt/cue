@@ -86,7 +86,7 @@ function CardFlipper({
     setEditing: React.Dispatch<React.SetStateAction<boolean>>;
     nextCard: () => ScoredCard;
 }) {
-    const { setNotification } = useNotification();
+    const { notify } = useNotification();
     const [internalCard, setInternalCard] = useState<ScoredCard>(card);
     const [flipped, setFlipped] = useState(false);
     const [showScores, setShowScores] = useState(false);
@@ -98,7 +98,7 @@ function CardFlipper({
                 score: score,
             });
         } catch {
-            setNotification('Could not update score.');
+            notify('Could not update score.');
             return;
         }
 
@@ -174,7 +174,7 @@ function CardFlipper({
                         try {
                             await api.patch(`/cards/${card.id}`, internalCard);
                         } catch {
-                            setNotification('Could not save card.');
+                            notify('Could not save card.');
                             return;
                         }
 
@@ -195,7 +195,7 @@ function ScoreBoard({ deckId, reset }: { deckId: number; reset: () => void }) {
     const { pathname } = useLocation();
     const parentPath = pathname.split('/').slice(0, -1).join('/') || '/';
 
-    const { setNotification } = useNotification();
+    const { notify } = useNotification();
     const [percentage, setPercentage] = useState<number>(0);
 
     const fetchScore = async () => {
@@ -204,7 +204,7 @@ function ScoreBoard({ deckId, reset }: { deckId: number; reset: () => void }) {
             const percentage = Math.round(response.data.percentage);
             setPercentage(percentage);
         } catch {
-            setNotification('Could not fetch score.');
+            notify('Could not fetch score.');
             return;
         }
     };

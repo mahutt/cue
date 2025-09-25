@@ -7,7 +7,7 @@ import api from '@/api';
 import { Badge } from '../ui/badge';
 
 export default function MessageForm() {
-    const { setNotification } = useNotification();
+    const { notify } = useNotification();
     const [content, setContent] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -17,9 +17,9 @@ export default function MessageForm() {
         try {
             await api.post('/messages', { content: content.trim() });
             setContent('');
-            setNotification('Message submitted successfully!');
+            notify('Message submitted successfully!');
         } catch {
-            setNotification('Could not submit your message at this time.');
+            notify('Could not submit your message at this time.');
         } finally {
             setIsSubmitting(false);
         }

@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 export default function DeckForm({ courseId, addDeck }: { courseId: number; addDeck: (deck: Deck) => void }) {
-    const { setNotification } = useNotification();
+    const { notify } = useNotification();
     const [open, setOpen] = useState(false);
     const [deckName, setDeckName] = useState<string>('');
 
@@ -23,13 +23,13 @@ export default function DeckForm({ courseId, addDeck }: { courseId: number; addD
             const { deck } = response.data;
             addDeck(deck);
             setOpen(false);
-            setNotification('Deck created!');
+            notify('Deck created!');
 
             // Reset form
             setDeckName('');
         } catch {
             setOpen(false);
-            setNotification('Could not create deck.');
+            notify('Could not create deck.');
         }
     };
 
