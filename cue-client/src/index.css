@@ -194,8 +194,7 @@ main #content {
     background-color: var(--green);
 }
 
-.scores,
-.editButtonsDiv {
+.scores {
     flex-direction: row;
     gap: 0.5rem;
 }

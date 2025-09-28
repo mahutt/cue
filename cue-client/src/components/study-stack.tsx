@@ -153,7 +153,7 @@ function CardFlipper({
                     <Smile size={16} />
                 </div>
             </div>
-            <div className="editButtonsDiv" style={{ display: editing ? 'flex' : 'none' }}>
+            <div className="flex-row gap-2" style={{ display: editing ? 'flex' : 'none' }}>
                 <Button
                     className="w-[50px]"
                     onClick={(e) => {
