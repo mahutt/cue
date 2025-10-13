@@ -11,10 +11,10 @@ export default function CollapsibleColumn() {
     const { isSidebarOpen, closeSidebar } = useSidebar();
     return (
         <div
-            className="z-10 absolute l-0 h-dvh bg-white md:static shadow"
+            className="z-10 absolute l-0 h-full bg-white md:static shadow"
             style={{ overflow: 'hidden', transition: 'all 0.2s ease-out', width: isSidebarOpen ? 260 : 0 }}
         >
-            <div className="flex flex-col w-[260px] max-h-screen overflow-y-auto p-3">
+            <div className="flex flex-col w-[260px] max-h-dvh overflow-y-auto p-3">
                 {user ? (
                     <>
                         <div className="flex flex-row justify-between items-center mb-2">
