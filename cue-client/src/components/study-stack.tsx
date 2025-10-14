@@ -116,6 +116,7 @@ function CardFlipper({
     }, [card]);
 
     useEffect(() => {
+        if (editing) return;
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.code === 'Space') {
                 e.preventDefault();
@@ -125,7 +126,7 @@ function CardFlipper({
         };
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [editing]);
 
     return (
         <div
