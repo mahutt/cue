@@ -143,13 +143,28 @@ function CardFlipper({
                 />
             )}
             <div className="scores" style={{ display: !editing && showScores ? 'flex' : 'none' }}>
-                <div onClick={() => updateScore(0)}>
+                <div
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        updateScore(0);
+                    }}
+                >
                     <Frown size={16} />
                 </div>
-                <div onClick={() => updateScore(1)}>
+                <div
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        updateScore(1);
+                    }}
+                >
                     <Meh size={16} />
                 </div>
-                <div onClick={() => updateScore(2)}>
+                <div
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        updateScore(2);
+                    }}
+                >
                     <Smile size={16} />
                 </div>
             </div>
