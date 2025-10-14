@@ -114,6 +114,18 @@ function CardFlipper({
         setShowScores(false);
     }, [card]);
 
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                setFlipped((prev) => !prev);
+                setShowScores(true);
+            }
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
     return (
         <div
             className={`card-flipper score-${card.score}`}
