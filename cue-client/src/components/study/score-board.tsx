@@ -23,7 +23,7 @@ export default function ScoreBoard({ deckId, reset }: { deckId: number; reset: (
     };
 
     const animateScore = (start: number, end: number) => {
-        const duration = 1000;
+        const duration = 500;
         const steps = end - start;
         const stepDuration = duration / steps;
 
