@@ -6,7 +6,7 @@ import CardFace from './card-face';
 import { useTool } from '../hooks/tool-hook';
 import StudySettings from './study-settings';
 import { useNotification } from '../hooks/notification-hook';
-import { Ban, Check, Frown, Meh, Smile } from 'lucide-react';
+import { Ban, Check } from 'lucide-react';
 import { Button } from './ui/button';
 import ScoreBoard from './study/score-board';
 import ScoreButton from './study/score-button';
