@@ -9,6 +9,7 @@ import { useNotification } from '../hooks/notification-hook';
 import { Ban, Check, Frown, Meh, Smile } from 'lucide-react';
 import { Button } from './ui/button';
 import ScoreBoard from './study/score-board';
+import ScoreButton from './study/score-button';
 
 interface ScoredCard extends Card {
     score: number;
@@ -156,31 +157,10 @@ function CardFlipper({
                     readOnly={!editing}
                 />
             )}
-            <div className="scores" style={{ display: !editing && showScores ? 'flex' : 'none' }}>
-                <div
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        updateScore(0);
-                    }}
-                >
-                    <Frown size={16} />
-                </div>
-                <div
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        updateScore(1);
-                    }}
-                >
-                    <Meh size={16} />
-                </div>
-                <div
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        updateScore(2);
-                    }}
-                >
-                    <Smile size={16} />
-                </div>
+            <div className="flex-row gap-2" style={{ display: !editing && showScores ? 'flex' : 'none' }}>
+                <ScoreButton score={0} updateScore={updateScore} />
+                <ScoreButton score={1} updateScore={updateScore} />
+                <ScoreButton score={2} updateScore={updateScore} />
             </div>
             <div className="flex-row gap-2" style={{ display: editing ? 'flex' : 'none' }}>
                 <Button

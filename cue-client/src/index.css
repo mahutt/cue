@@ -194,24 +194,6 @@ main #content {
     background-color: var(--green);
 }
 
-.scores {
-    flex-direction: row;
-    gap: 0.5rem;
-}
-.scores div {
-    color: white;
-    background-color: black;
-    border-radius: 3rem;
-    width: 3rem;
-    height: 3rem;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    cursor: pointer;
-}
-
 @theme inline {
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
