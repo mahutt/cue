@@ -96,7 +96,8 @@ db.serialize(function () {
         )`
     );
 
-    db.run("INSERT OR IGNORE INTO users (name) VALUES ('mahutt');");
+    db.run("INSERT INTO users (name, hash) VALUES ('mahutt', '$2a$10$RuUUqsMmP8qkTzwUfj1TTOPQrys6OOUiruvxLiZFa2uEc5t/pd9P6');");
+    db.run("INSERT INTO users (name, hash) VALUES ('vini', '$2a$10$RuUUqsMmP8qkTzwUfj1TTOPQrys6OOUiruvxLiZFa2uEc5t/pd9P6');");
 });
 
 export default db;
