@@ -17,7 +17,10 @@ export default function ScoreButton({
     const Icon = iconByScore[score];
     return (
         <button
-            onClick={() => updateScore(score)}
+            onClick={(e) => {
+                e.stopPropagation();
+                updateScore(score);
+            }}
             aria-label={`Set score ${score}`}
             className="text-white bg-black w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-all duration-150 hover:bg-gray-800 hover:scale-105 active:scale-95"
         >
