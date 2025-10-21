@@ -124,6 +124,16 @@ function CardFlipper({
                 setFlipped((prev) => !prev);
                 setShowScores(true);
             }
+            if (e.key === '1') {
+                e.preventDefault();
+                updateScore(0);
+            } else if (e.key === '2') {
+                e.preventDefault();
+                updateScore(1);
+            } else if (e.key === '3') {
+                e.preventDefault();
+                updateScore(2);
+            }
         };
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
