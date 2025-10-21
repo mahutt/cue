@@ -137,7 +137,7 @@ function CardFlipper({
         };
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [editing]);
+    }, [editing, card]);
 
     return (
         <div
