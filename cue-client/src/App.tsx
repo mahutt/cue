@@ -13,7 +13,7 @@ function App() {
     return (
         <div id="app">
             <CollapsibleColumn />
-            <main>
+            <main className="standalone:pt-[env(safe-area-inset-top)]">
                 <div className="flex gap-2 p-4">
                     <Button variant="secondary" type="button" onClick={toggleSidebar}>
                         <Menu size={16} strokeWidth={1.5} />
