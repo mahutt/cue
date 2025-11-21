@@ -59,7 +59,7 @@ export function findByCourseId(id: string) {
 }
 
 // Given a deck ID, returns the user that owns this deck.
-export function findByDeckId(id: string) {
+export function findByDeckId(id: string): Promise<IUser> {
     return new Promise((resolve, reject) => {
         db.get(
             `SELECT users.* FROM users
@@ -67,7 +67,7 @@ export function findByDeckId(id: string) {
             JOIN decks ON courses.id = decks.course_id
             WHERE decks.id = ?`,
             [id],
-            (err, rows) => {
+            (err, rows: IUser) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -78,7 +78,7 @@ export function findByDeckId(id: string) {
     });
 }
 
-export function findByCardId(id: string) {
+export function findByCardId(id: string): Promise<IUser> {
     return new Promise((resolve, reject) => {
         db.get(
             `SELECT users.* FROM users
@@ -87,7 +87,7 @@ export function findByCardId(id: string) {
             JOIN cards ON decks.id = cards.deck_id
             WHERE cards.id = ?`,
             [id],
-            (err, rows) => {
+            (err, rows: IUser) => {
                 if (err) {
                     reject(err);
                 } else {

@@ -1,0 +1,85 @@
+import { transform } from 'jet-validators/utils';
+import { parseReq } from './common/util';
+import { isString } from 'jet-validators';
+
+import * as User from '../models/user';
+import * as Card from '../models/card';
+import * as Score from '../models/score';
+import { AuthenticatedRequest } from './types';
+import { Response } from 'express';
+
+import asyncHandler from 'express-async-handler';
+import HttpStatusCodes from '../constants/HttpStatusCodes';
+
+const Validators = {
+    createCard: parseReq({
+        deck_id: transform(String, isString),
+        front: transform(String, isString),
+        back: transform(String, isString),
+    }),
+    updateCard: parseReq({
+        front: transform(String, isString),
+        back: transform(String, isString),
+    }),
+} as const;
+
+exports.createCard = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+    let { deck_id, front, back } = Validators.createCard(req.body);
+
+    const owner = await User.findByDeckId(deck_id);
+    if (!req.user || req.user.name !== owner.name) {
+        res.sendStatus(HttpStatusCodes.UNAUTHORIZED);
+    }
+
+    front = req.body.front.trim();
+    back = req.body.back.trim();
+
+    const savedCard = await Card.save({ deck_id, front, back });
+    res.json({ card: savedCard });
+});
+
+exports.update_card = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+    const id = req.params.id;
+    const owner = await User.findByCardId(id);
+
+    if (!req.user || req.user.name !== owner.name) {
+        res.sendStatus(HttpStatusCodes.UNAUTHORIZED);
+    }
+
+    const front = req.body.front.trim();
+    const back = req.body.back.trim();
+
+    await Card.updateById({ id, front, back });
+    const updatedCard = await Card.findById(id);
+    res.json({ card: updatedCard });
+});
+
+exports.update_score = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+    try {
+        if (!req.user) {
+            res.sendStatus(HttpStatusCodes.UNAUTHORIZED);
+            return;
+        }
+
+        const user_id = req.user.id;
+        const card_id = req.params.id;
+        const score = req.body.score;
+        await Score.save({ score, user_id, card_id });
+
+        res.sendStatus(HttpStatusCodes.OK);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+exports.delete_card = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+    const id = req.params.id;
+    const owner = await User.findByCardId(id);
+    if (!req.user || req.user.name !== owner.name) {
+        res.sendStatus(HttpStatusCodes.UNAUTHORIZED);
+    }
+
+    await Card.deleteById(id);
+    res.sendStatus(HttpStatusCodes.OK);
+});
