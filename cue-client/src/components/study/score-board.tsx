@@ -34,6 +34,7 @@ export default function ScoreBoard({ deckId, reset }: { deckId: number; reset: (
 
             if (current >= end) {
                 clearInterval(timer);
+                setPercentage(end);
             }
         }, stepDuration);
     };
