@@ -1,7 +1,8 @@
-const db = require('../database/database').default;
+import db from '../database/database';
+import { Score } from '../controllers/types';
 
 // Save or update a score
-exports.save = function ({ score, user_id, card_id }) {
+export function save({ score, user_id, card_id }: { score: Score; user_id: number; card_id: number }): Promise<number> {
     return new Promise((resolve, reject) => {
         return db.run(
             `
@@ -9,13 +10,13 @@ exports.save = function ({ score, user_id, card_id }) {
                 VALUES (?, ?, ?);
             `,
             [score, user_id, card_id],
-            (err, rows) => {
+            function (err) {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(rows);
+                    resolve(this.lastID);
                 }
             }
         );
     });
-};
+}

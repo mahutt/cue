@@ -22,3 +22,5 @@ export interface IMessage {
     username?: string;
     created_at: string;
 }
+
+export type Score = 0 | 1 | 2;

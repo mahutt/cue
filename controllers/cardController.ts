@@ -62,7 +62,7 @@ exports.update_score = asyncHandler(async (req: AuthenticatedRequest, res: Respo
         }
 
         const user_id = req.user.id;
-        const card_id = req.params.id;
+        const card_id = parseInt(req.params.id);
         const score = req.body.score;
         await Score.save({ score, user_id, card_id });
 
