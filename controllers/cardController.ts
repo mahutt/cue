@@ -1,6 +1,6 @@
 import { transform } from 'jet-validators/utils';
 import { parseReq } from './common/util';
-import { isString } from 'jet-validators';
+import { isNumber, isString } from 'jet-validators';
 
 import * as User from '../models/user';
 import * as Card from '../models/card';
@@ -13,13 +13,16 @@ import HttpStatusCodes from '../constants/HttpStatusCodes';
 
 const Validators = {
     createCard: parseReq({
-        deck_id: transform(String, isString),
+        deck_id: transform(Number, isNumber),
         front: transform(String, isString),
         back: transform(String, isString),
     }),
     updateCard: parseReq({
         front: transform(String, isString),
         back: transform(String, isString),
+    }),
+    deleteCard: parseReq({
+        id: transform(Number, isNumber),
     }),
 } as const;
 
@@ -39,7 +42,7 @@ exports.createCard = asyncHandler(async (req: AuthenticatedRequest, res: Respons
 });
 
 exports.update_card = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
-    const id = req.params.id;
+    const id = Number(req.params.id);
     const owner = await User.findByCardId(id);
 
     if (!req.user || req.user.name !== owner.name) {
@@ -74,7 +77,7 @@ exports.update_score = asyncHandler(async (req: AuthenticatedRequest, res: Respo
 });
 
 exports.delete_card = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
-    const id = req.params.id;
+    const id = Validators.deleteCard(req.params).id;
     const owner = await User.findByCardId(id);
     if (!req.user || req.user.name !== owner.name) {
         res.sendStatus(HttpStatusCodes.UNAUTHORIZED);

@@ -23,4 +23,16 @@ export interface IMessage {
     created_at: string;
 }
 
+export interface ICard {
+    id: number;
+    position: number;
+    front: string;
+    back: string;
+    deck_id: number;
+}
+
+export interface IScoredCard extends ICard {
+    score: Score;
+}
+
 export type Score = 0 | 1 | 2;
