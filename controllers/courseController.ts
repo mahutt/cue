@@ -27,7 +27,7 @@ const Validators = {
 } as const;
 
 // JSON API for creating a course
-exports.createCourse = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const createCourse = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     if (!req.user) {
         res.sendStatus(HttpStatusCodes.UNAUTHORIZED);
         return;
@@ -54,7 +54,7 @@ exports.createCourse = asyncHandler(async (req: AuthenticatedRequest, res: Respo
 });
 
 // JSON API for viewing a course
-exports.getCourse = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const getCourse = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const { userName, courseCode } = Validators.getCourse(req.params);
     const result = extractDepartmentAndNumber(courseCode);
 
@@ -89,7 +89,7 @@ exports.getCourse = asyncHandler(async (req: AuthenticatedRequest, res: Response
 });
 
 // Update a course
-exports.update_course = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const update_course = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const id = req.params.id;
     const owner = await User.findByCourseId(id);
     if (!req.user || req.user.name !== owner.name) {
@@ -111,7 +111,7 @@ exports.update_course = asyncHandler(async (req: AuthenticatedRequest, res: Resp
 });
 
 // Delete a course
-exports.delete_course = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const delete_course = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const id = req.params.id;
     const owner = await User.findByCourseId(id);
     if (!req.user || req.user.name !== owner.name) {
@@ -123,7 +123,7 @@ exports.delete_course = asyncHandler(async (req: AuthenticatedRequest, res: Resp
     res.sendStatus(HttpStatusCodes.OK);
 });
 
-exports.getCoursesByUser = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const getCoursesByUser = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const { name } = req.params;
     const user = await User.findByName(name);
     if (!user) {
@@ -134,3 +134,11 @@ exports.getCoursesByUser = asyncHandler(async (req: AuthenticatedRequest, res: R
     const courses = await Course.allByUserId(user.id);
     res.json(courses);
 });
+
+export default {
+    createCourse,
+    getCourse,
+    update_course,
+    delete_course,
+    getCoursesByUser,
+};
