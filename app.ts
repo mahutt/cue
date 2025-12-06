@@ -67,4 +67,4 @@ app.use(function (err: any, req: AuthenticatedRequest, res: Response, _: NextFun
     res.json({ error: err.message });
 });
 
-module.exports = app;
+export default app;
