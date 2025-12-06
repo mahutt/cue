@@ -6,7 +6,7 @@ import jwt, { VerifyErrors } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { AuthenticatedRequest, IUserFromToken } from './types';
 
-exports.login = asyncHandler(async (req: Request, res: Response, _: NextFunction) => {
+const login = asyncHandler(async (req: Request, res: Response, _: NextFunction) => {
     const user = await User.findByName(req.body.name);
 
     if (user === undefined) {
@@ -28,12 +28,12 @@ exports.login = asyncHandler(async (req: Request, res: Response, _: NextFunction
     }
 });
 
-exports.logout = asyncHandler(async (_, res, __) => {
+const logout = asyncHandler(async (_, res, __) => {
     res.clearCookie('jwt');
     res.sendStatus(200);
 });
 
-exports.authenticate = asyncHandler(async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+const authenticate = asyncHandler(async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     if (!req.cookies || !req.cookies.jwt) {
         req.user = undefined;
         next();
@@ -50,7 +50,7 @@ exports.authenticate = asyncHandler(async (req: AuthenticatedRequest, res: Respo
     }
 });
 
-exports.get_authenticated_user = asyncHandler(async (req: AuthenticatedRequest, res: Response, _: NextFunction) => {
+const get_authenticated_user = asyncHandler(async (req: AuthenticatedRequest, res: Response, _: NextFunction) => {
     if (!req.user || req.user === null) {
         res.sendStatus(403);
         return;
@@ -69,3 +69,10 @@ exports.get_authenticated_user = asyncHandler(async (req: AuthenticatedRequest, 
         courses,
     });
 });
+
+export default {
+    login,
+    logout,
+    authenticate,
+    get_authenticated_user,
+};
