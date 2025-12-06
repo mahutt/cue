@@ -10,4 +10,4 @@ router.patch('/:id', courseController.update_course);
 // deleting a course.
 router.delete('/:id', courseController.delete_course);
 
-module.exports = router;
+export default router;

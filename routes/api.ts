@@ -24,4 +24,4 @@ router.get('/decks/:userName/:courseCode/:deckPosition/study', deckController.st
 // Create card
 router.post('/cards', CardController.createCard);
 
-module.exports = router;
+export default router;

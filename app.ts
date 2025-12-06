@@ -1,19 +1,21 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require('cors');
+import createError from 'http-errors';
+import express, { NextFunction, Response } from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import cors from 'cors';
 
 import authController from './controllers/authController';
-const authRouter = require('./routes/auth');
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const coursesRouter = require('./routes/courses');
-const decksRouter = require('./routes/decks');
-const cardsRouter = require('./routes/cards');
-const apiRouter = require('./routes/api');
-const messagesRouter = require('./routes/messages').default;
+
+import authRouter from './routes/auth';
+import indexRouter from './routes/index';
+import usersRouter from './routes/users';
+import coursesRouter from './routes/courses';
+import decksRouter from './routes/decks';
+import cardsRouter from './routes/cards';
+import apiRouter from './routes/api';
+import messagesRouter from './routes/messages';
+import { AuthenticatedRequest } from './controllers/types';
 
 var app = express();
 
@@ -35,7 +37,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules/bootstrap-icons')));
 
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
     res.json({ message: 'Welcome to the Cue API' });
 });
 
@@ -56,7 +58,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function (err: any, req: AuthenticatedRequest, res: Response, _: NextFunction) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};

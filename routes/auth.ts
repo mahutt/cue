@@ -13,4 +13,4 @@ router.post('/logout', authController.logout);
 // Get logged in user
 router.get('/user', authController.get_authenticated_user);
 
-module.exports = router;
+export default router;

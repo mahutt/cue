@@ -13,4 +13,4 @@ router.put('/:id', CardController.update_score);
 // deleting a card.
 router.delete('/:id', CardController.delete_card);
 
-module.exports = router;
+export default router;

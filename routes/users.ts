@@ -12,4 +12,4 @@ router.get('/api/users/all', userController.allUserNames); // just user names, u
 router.get('/api/users/:name/courses', courseController.getCoursesByUser);
 router.delete('/users/:id', authController.authenticate, userController.delete_user);
 
-module.exports = router;
+export default router;

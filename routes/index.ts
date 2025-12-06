@@ -12,4 +12,4 @@ router.get('/', function (req: AuthenticatedRequest, res: Response) {
     res.redirect(`/${req.user.name}`);
 });
 
-module.exports = router;
+export default router;

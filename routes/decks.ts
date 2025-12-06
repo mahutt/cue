@@ -19,4 +19,4 @@ router.get('/:id/score', deckController.get_score);
 // getting cards from a deck to study
 router.get('/:id/study', deckController.getStudyCards);
 
-module.exports = router;
+export default router;
