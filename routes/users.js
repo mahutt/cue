@@ -5,7 +5,6 @@ var router = express.Router();
 import authController from '../controllers/authController';
 const user_controller = require('../controllers/userController');
 import courseController from '../controllers/courseController';
-const deck_controller = require('../controllers/deckController');
 
 router.get('/api/users', user_controller.allUsers); // all users and all their info, authenticated
 router.post('/api/users', user_controller.create_user); // create a new user

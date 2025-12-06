@@ -42,7 +42,7 @@ const Validators = {
     }),
 } as const;
 
-exports.createDeck = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const createDeck = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const { name, course_id } = req.body;
 
     const owner = await User.findByCourseId(course_id);
@@ -57,7 +57,7 @@ exports.createDeck = asyncHandler(async (req: AuthenticatedRequest, res: Respons
 });
 
 // JSON endpoint to read a deck
-exports.viewDeck = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const viewDeck = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const { userName, courseCode, deckPosition } = Validators.viewDeck(req.params);
 
     const result = extractDepartmentAndNumber(courseCode);
@@ -81,7 +81,7 @@ exports.viewDeck = asyncHandler(async (req: AuthenticatedRequest, res: Response)
 });
 
 // Update a deck
-exports.update_deck = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const update_deck = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const { id } = Validators.updateDeckParams(req.params);
     const owner = await User.findByDeckId(id);
     if (!req.user || req.user.name !== owner.name) {
@@ -95,7 +95,7 @@ exports.update_deck = asyncHandler(async (req: AuthenticatedRequest, res: Respon
 });
 
 // Delete a course
-exports.delete_deck = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const delete_deck = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const { id } = Validators.deleteDeck(req.params);
     const owner = await User.findByDeckId(id);
     if (!req.user || req.user.name !== owner.name) {
@@ -107,7 +107,7 @@ exports.delete_deck = asyncHandler(async (req: AuthenticatedRequest, res: Respon
     res.sendStatus(HttpStatusCodes.OK);
 });
 
-exports.delete_deck_progress = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const delete_deck_progress = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const { id: deckId } = Validators.deleteDeckProgress(req.params);
     if (!req.user) {
         res.sendStatus(HttpStatusCodes.UNAUTHORIZED);
@@ -119,7 +119,7 @@ exports.delete_deck_progress = asyncHandler(async (req: AuthenticatedRequest, re
 });
 
 // TODO: revisit whether getStudyCards and studyDeck should be merged
-exports.getStudyCards = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const getStudyCards = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     if (!req.user) {
         res.sendStatus(HttpStatusCodes.UNAUTHORIZED);
         return;
@@ -132,7 +132,7 @@ exports.getStudyCards = asyncHandler(async (req: AuthenticatedRequest, res: Resp
     res.send({ cards });
 });
 
-exports.studyDeck = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const studyDeck = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     if (!req.user) {
         res.sendStatus(HttpStatusCodes.UNAUTHORIZED);
         return;
@@ -163,7 +163,7 @@ exports.studyDeck = asyncHandler(async (req: AuthenticatedRequest, res: Response
     res.send({ cards, deckId: id });
 });
 
-exports.get_score = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const get_score = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     if (!req.user) {
         res.sendStatus(HttpStatusCodes.UNAUTHORIZED);
         return;
@@ -173,3 +173,14 @@ exports.get_score = asyncHandler(async (req: AuthenticatedRequest, res: Response
     const percentage = await Deck.getPercentageByUserIdAndDeckId({ user_id, deck_id });
     res.send({ percentage });
 });
+
+export default {
+    createDeck,
+    viewDeck,
+    update_deck,
+    delete_deck,
+    delete_deck_progress,
+    getStudyCards,
+    studyDeck,
+    get_score,
+};

@@ -3,7 +3,7 @@ var router = express.Router();
 
 // Require controller modules.
 import courseController from '../controllers/courseController';
-const deck_controller = require('../controllers/deckController');
+import deckController from '../controllers/deckController';
 import CardController from '../controllers/cardController';
 
 // Creating a course
@@ -13,13 +13,13 @@ router.post('/courses', courseController.createCourse);
 router.get('/courses/:userName/:courseCode', courseController.getCourse);
 
 // Create deck
-router.post('/decks', deck_controller.createDeck);
+router.post('/decks', deckController.createDeck);
 
 // Get deck & cards
-router.get('/decks/:userName/:courseCode/:deckPosition', deck_controller.viewDeck);
+router.get('/decks/:userName/:courseCode/:deckPosition', deckController.viewDeck);
 
 // Get cards to study
-router.get('/decks/:userName/:courseCode/:deckPosition/study', deck_controller.studyDeck);
+router.get('/decks/:userName/:courseCode/:deckPosition/study', deckController.studyDeck);
 
 // Create card
 router.post('/cards', CardController.createCard);
