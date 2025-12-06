@@ -1,7 +1,8 @@
+import { ICourse } from '../controllers/types';
 import db from '../database/database';
 
 // Find courses by user_id
-export function allByUserId(user_id: string) {
+export function allByUserId(user_id: number) {
     return new Promise((resolve, reject) => {
         db.all(
             `SELECT *, department || number AS code
@@ -19,13 +20,21 @@ export function allByUserId(user_id: string) {
 }
 
 // Find course by department, number, and user_id
-export function find({ department, number, user_id }: { department: string; number: number; user_id: string }) {
+export function find({
+    department,
+    number,
+    user_id,
+}: {
+    department: string;
+    number: number;
+    user_id: number;
+}): Promise<ICourse> {
     return new Promise((resolve, reject) => {
         db.get(
             `SELECT *, department || number AS code
             FROM courses WHERE department = ? AND number = ? AND user_id = ?`,
             [department, number, user_id],
-            (err, rows) => {
+            (err, rows: ICourse) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -46,8 +55,8 @@ export function save({
     name: string;
     department: string;
     number: number;
-    user_id: string;
-}) {
+    user_id: number;
+}): Promise<number> {
     return new Promise((resolve, reject) => {
         return db.run(
             `
@@ -68,11 +77,10 @@ export function save({
 
 export function updateById(
     id: string,
-    { name, department, number }: { name: string; department: string; number: string }
+    { name, department, number }: { name: string; department: string; number: number }
 ) {
     name = name.trim();
     department = department.trim().toLowerCase();
-    const typedNumber = parseInt(number.trim(), 10);
 
     return new Promise((resolve, reject) => {
         return db.run(
@@ -81,7 +89,7 @@ export function updateById(
                 SET name = ?, department = ?, number = ?
                 WHERE id = ?
             `,
-            [name, department, typedNumber, id],
+            [name, department, number, id],
             function (err) {
                 if (err) {
                     reject(err);

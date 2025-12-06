@@ -57,7 +57,7 @@ exports.get_authenticated_user = asyncHandler(async (req: AuthenticatedRequest, 
     }
 
     const user = await User.findByName(req.user.name);
-    const courses = await Course.allByUserId(`${user.id}`);
+    const courses = await Course.allByUserId(user.id);
 
     if (user === undefined) {
         res.sendStatus(403);

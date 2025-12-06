@@ -23,6 +23,23 @@ export interface IMessage {
     created_at: string;
 }
 
+export interface ICourse {
+    id: number;
+    name: string;
+    department: string;
+    number: number;
+    user_id: number;
+    code?: string;
+}
+
+export interface IDeck {
+    id: number;
+    position: number;
+    name: string;
+    course_id: number;
+    percentage?: number | null;
+}
+
 export interface ICard {
     id: number;
     position: number;

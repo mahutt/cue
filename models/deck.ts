@@ -1,9 +1,10 @@
+import { IDeck } from '../controllers/types';
 import db from '../database/database';
 
 // Find courses by user_id
-exports.allByCourseId = function (course_id: number) {
+export function allByCourseId(course_id: number): Promise<IDeck[]> {
     return new Promise((resolve, reject) => {
-        db.all(`SELECT * FROM decks WHERE course_id = ?`, [course_id], (err, rows) => {
+        db.all(`SELECT * FROM decks WHERE course_id = ?`, [course_id], (err, rows: IDeck[]) => {
             if (err) {
                 reject(err);
             } else {
@@ -11,7 +12,7 @@ exports.allByCourseId = function (course_id: number) {
             }
         });
     });
-};
+}
 
 // Save a deck
 exports.save = function ({ name, course_id }: { name: string; course_id: number }) {
@@ -101,7 +102,13 @@ exports.deleteById = function (id: number): Promise<void> {
     });
 };
 
-exports.getPercentageByUserIdAndDeckId = function ({ user_id, deck_id }: { user_id: number; deck_id: number }) {
+export function getPercentageByUserIdAndDeckId({
+    user_id,
+    deck_id,
+}: {
+    user_id: number;
+    deck_id: number;
+}): Promise<number | null> {
     return new Promise((resolve, reject) => {
         return db.get(
             `
@@ -127,7 +134,7 @@ exports.getPercentageByUserIdAndDeckId = function ({ user_id, deck_id }: { user_
             }
         );
     });
-};
+}
 
 exports.resetProgress = function ({ userId, deckId }: { userId: number; deckId: number }) {
     return new Promise((resolve, reject) => {

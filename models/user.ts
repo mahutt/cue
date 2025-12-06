@@ -40,14 +40,14 @@ export function findByName(name: string): Promise<IUser> {
 }
 
 // Given a course ID, returns the user that owns this course.
-export function findByCourseId(id: string) {
+export function findByCourseId(id: string): Promise<IUser> {
     return new Promise((resolve, reject) => {
         db.get(
             `SELECT users.* FROM users
             JOIN courses ON users.id = courses.user_id
             WHERE courses.id = ?`,
             [id],
-            (err, rows) => {
+            (err, rows: IUser) => {
                 if (err) {
                     reject(err);
                 } else {
