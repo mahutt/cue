@@ -1,7 +1,7 @@
-const db = require('../database/database').default;
+import db from '../database/database';
 
 // Find courses by user_id
-exports.allByCourseId = function (course_id) {
+exports.allByCourseId = function (course_id: number) {
     return new Promise((resolve, reject) => {
         db.all(`SELECT * FROM decks WHERE course_id = ?`, [course_id], (err, rows) => {
             if (err) {
@@ -14,36 +14,45 @@ exports.allByCourseId = function (course_id) {
 };
 
 // Save a deck
-exports.save = function ({ name, course_id }) {
+exports.save = function ({ name, course_id }: { name: string; course_id: number }) {
     return new Promise((resolve, reject) => {
         db.serialize(() => {
-            db.get(`SELECT COUNT(*) as count FROM decks WHERE course_id = ?`, [course_id], (err, row) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    let position = row.count + 1;
-                    db.run(
-                        `
+            db.get(
+                `SELECT COUNT(*) as count FROM decks WHERE course_id = ?`,
+                [course_id],
+                (
+                    err,
+                    row: {
+                        count: number;
+                    }
+                ) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        let position = row.count + 1;
+                        db.run(
+                            `
                             INSERT INTO decks (position, name, course_id)
                             VALUES (?, ?, ?);
                         `,
-                        [position, name, course_id],
-                        function (err) {
-                            if (err) {
-                                reject(err);
-                            } else {
-                                resolve({ id: this.lastID, position, name, course_id });
+                            [position, name, course_id],
+                            function (err) {
+                                if (err) {
+                                    reject(err);
+                                } else {
+                                    resolve({ id: this.lastID, position, name, course_id });
+                                }
                             }
-                        }
-                    );
+                        );
+                    }
                 }
-            });
+            );
         });
     });
 };
 
 // Find deck by position, and course_id
-exports.find = function ({ position, course_id }) {
+exports.find = function ({ position, course_id }: { position: number; course_id: number }) {
     return new Promise((resolve, reject) => {
         db.get(`SELECT * FROM decks WHERE position = ? AND course_id = ?`, [position, course_id], (err, rows) => {
             if (err) {
@@ -55,37 +64,44 @@ exports.find = function ({ position, course_id }) {
     });
 };
 
-exports.updateById = function (id, { name }) {
+exports.updateById = function (
+    id: number,
+    {
+        name,
+    }: {
+        name: string;
+    }
+): Promise<void> {
     return new Promise((resolve, reject) => {
         return db.run(
             `
-                UPDATE decks SET name = ? WHERE id = ?
+            UPDATE decks SET name = ? WHERE id = ?
             `,
             [name, id],
-            (err, rows) => {
+            (err) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(rows);
+                    resolve();
                 }
             }
         );
     });
 };
 
-exports.deleteById = function (id) {
+exports.deleteById = function (id: number): Promise<void> {
     return new Promise((resolve, reject) => {
-        return db.run(`DELETE from decks WHERE id = ?`, [id], (err, rows) => {
+        return db.run(`DELETE from decks WHERE id = ?`, [id], (err) => {
             if (err) {
                 reject(err);
             } else {
-                resolve(rows);
+                resolve();
             }
         });
     });
 };
 
-exports.getPercentageByUserIdAndDeckId = function ({ user_id, deck_id }) {
+exports.getPercentageByUserIdAndDeckId = function ({ user_id, deck_id }: { user_id: number; deck_id: number }) {
     return new Promise((resolve, reject) => {
         return db.get(
             `
@@ -95,7 +111,12 @@ exports.getPercentageByUserIdAndDeckId = function ({ user_id, deck_id }) {
             WHERE c.deck_id = ?
             `,
             [user_id, deck_id],
-            (err, rows) => {
+            (
+                err,
+                rows: {
+                    average: number | null;
+                }
+            ) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -108,7 +129,7 @@ exports.getPercentageByUserIdAndDeckId = function ({ user_id, deck_id }) {
     });
 };
 
-exports.resetProgress = function ({ userId, deckId }) {
+exports.resetProgress = function ({ userId, deckId }: { userId: number; deckId: number }) {
     return new Promise((resolve, reject) => {
         return db.get(
             `
