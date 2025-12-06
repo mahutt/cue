@@ -4,7 +4,7 @@ var router = express.Router();
 // Require controller modules.
 const course_controller = require('../controllers/courseController');
 const deck_controller = require('../controllers/deckController');
-const card_controller = require('../controllers/cardController');
+import CardController from '../controllers/cardController';
 
 // Creating a course
 router.post('/courses', course_controller.createCourse);
@@ -22,6 +22,6 @@ router.get('/decks/:userName/:courseCode/:deckPosition', deck_controller.viewDec
 router.get('/decks/:userName/:courseCode/:deckPosition/study', deck_controller.studyDeck);
 
 // Create card
-router.post('/cards', card_controller.createCard);
+router.post('/cards', CardController.createCard);
 
 module.exports = router;

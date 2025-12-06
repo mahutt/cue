@@ -26,7 +26,7 @@ const Validators = {
     }),
 } as const;
 
-exports.createCard = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const createCard = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     let { deck_id, front, back } = Validators.createCard(req.body);
 
     const owner = await User.findByDeckId(deck_id);
@@ -41,7 +41,7 @@ exports.createCard = asyncHandler(async (req: AuthenticatedRequest, res: Respons
     res.json({ card: savedCard });
 });
 
-exports.update_card = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const update_card = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const id = Number(req.params.id);
     const owner = await User.findByCardId(id);
 
@@ -57,7 +57,7 @@ exports.update_card = asyncHandler(async (req: AuthenticatedRequest, res: Respon
     res.json({ card: updatedCard });
 });
 
-exports.update_score = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const update_score = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     try {
         if (!req.user) {
             res.sendStatus(HttpStatusCodes.UNAUTHORIZED);
@@ -76,7 +76,7 @@ exports.update_score = asyncHandler(async (req: AuthenticatedRequest, res: Respo
     }
 });
 
-exports.delete_card = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+const delete_card = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const id = Validators.deleteCard(req.params).id;
     const owner = await User.findByCardId(id);
     if (!req.user || req.user.name !== owner.name) {
@@ -86,3 +86,10 @@ exports.delete_card = asyncHandler(async (req: AuthenticatedRequest, res: Respon
     await Card.deleteById(id);
     res.sendStatus(HttpStatusCodes.OK);
 });
+
+export default {
+    createCard,
+    update_card,
+    update_score,
+    delete_card,
+};
