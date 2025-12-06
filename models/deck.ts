@@ -15,7 +15,7 @@ export function allByCourseId(course_id: number): Promise<IDeck[]> {
 }
 
 // Save a deck
-exports.save = function ({ name, course_id }: { name: string; course_id: number }) {
+export function save({ name, course_id }: { name: string; course_id: number }): Promise<IDeck> {
     return new Promise((resolve, reject) => {
         db.serialize(() => {
             db.get(
@@ -50,22 +50,26 @@ exports.save = function ({ name, course_id }: { name: string; course_id: number 
             );
         });
     });
-};
+}
 
 // Find deck by position, and course_id
-exports.find = function ({ position, course_id }: { position: number; course_id: number }) {
+export function find({ position, course_id }: { position: number; course_id: number }): Promise<IDeck | undefined> {
     return new Promise((resolve, reject) => {
-        db.get(`SELECT * FROM decks WHERE position = ? AND course_id = ?`, [position, course_id], (err, rows) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(rows);
+        db.get(
+            `SELECT * FROM decks WHERE position = ? AND course_id = ?`,
+            [position, course_id],
+            (err, rows: IDeck | undefined) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
             }
-        });
+        );
     });
-};
+}
 
-exports.updateById = function (
+export function updateById(
     id: number,
     {
         name,
@@ -88,9 +92,9 @@ exports.updateById = function (
             }
         );
     });
-};
+}
 
-exports.deleteById = function (id: number): Promise<void> {
+export function deleteById(id: number): Promise<void> {
     return new Promise((resolve, reject) => {
         return db.run(`DELETE from decks WHERE id = ?`, [id], (err) => {
             if (err) {
@@ -100,7 +104,7 @@ exports.deleteById = function (id: number): Promise<void> {
             }
         });
     });
-};
+}
 
 export function getPercentageByUserIdAndDeckId({
     user_id,
@@ -136,7 +140,7 @@ export function getPercentageByUserIdAndDeckId({
     });
 }
 
-exports.resetProgress = function ({ userId, deckId }: { userId: number; deckId: number }) {
+export function resetProgress({ userId, deckId }: { userId: number; deckId: number }) {
     return new Promise((resolve, reject) => {
         return db.get(
             `
@@ -159,4 +163,4 @@ exports.resetProgress = function ({ userId, deckId }: { userId: number; deckId: 
             }
         );
     });
-};
+}
