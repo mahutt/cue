@@ -58,22 +58,17 @@ const update_card = asyncHandler(async (req: AuthenticatedRequest, res: Response
 });
 
 const update_score = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
-    try {
-        if (!req.user) {
-            res.sendStatus(HttpStatusCodes.UNAUTHORIZED);
-            return;
-        }
-
-        const user_id = req.user.id;
-        const card_id = parseInt(req.params.id);
-        const score = req.body.score;
-        await Score.save({ score, user_id, card_id });
-
-        res.sendStatus(HttpStatusCodes.OK);
-    } catch (e) {
-        console.log(e);
-        res.sendStatus(500);
+    if (!req.user) {
+        res.sendStatus(HttpStatusCodes.UNAUTHORIZED);
+        return;
     }
+
+    const user_id = req.user.id;
+    const card_id = parseInt(req.params.id);
+    const score = req.body.score;
+    await Score.save({ score, user_id, card_id });
+
+    res.sendStatus(HttpStatusCodes.OK);
 });
 
 const delete_card = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {

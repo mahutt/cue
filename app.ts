@@ -16,6 +16,7 @@ import cardsRouter from './routes/cards';
 import apiRouter from './routes/api';
 import messagesRouter from './routes/messages';
 import { AuthenticatedRequest } from './controllers/types';
+import HttpStatusCodes from './constants/HttpStatusCodes';
 
 var app = express();
 
@@ -63,7 +64,7 @@ app.use(function (err: any, req: AuthenticatedRequest, res: Response, _: NextFun
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    res.status(err.status || 500);
+    res.status(err.status || HttpStatusCodes.INTERNAL_SERVER_ERROR);
     res.json({ error: err.message });
 });
 

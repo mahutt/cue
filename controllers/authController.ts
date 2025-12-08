@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import jwt, { VerifyErrors } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { AuthenticatedRequest, IUserFromToken } from './types';
+import HttpStatusCodes from '../constants/HttpStatusCodes';
 
 const login = asyncHandler(async (req: Request, res: Response, _: NextFunction) => {
     const user = await User.findByName(req.body.name);
@@ -30,7 +31,7 @@ const login = asyncHandler(async (req: Request, res: Response, _: NextFunction) 
 
 const logout = asyncHandler(async (_, res, __) => {
     res.clearCookie('jwt');
-    res.sendStatus(200);
+    res.sendStatus(HttpStatusCodes.OK);
 });
 
 const authenticate = asyncHandler(async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
@@ -42,7 +43,7 @@ const authenticate = asyncHandler(async (req: AuthenticatedRequest, res: Respons
             req.cookies.jwt,
             process.env.ACCESS_TOKEN_SECRET as string,
             (err: VerifyErrors | null, decoded: any) => {
-                if (err) return res.sendStatus(403);
+                if (err) return res.sendStatus(HttpStatusCodes.FORBIDDEN);
                 req.user = decoded as IUserFromToken;
                 next();
             }
@@ -52,7 +53,7 @@ const authenticate = asyncHandler(async (req: AuthenticatedRequest, res: Respons
 
 const get_authenticated_user = asyncHandler(async (req: AuthenticatedRequest, res: Response, _: NextFunction) => {
     if (!req.user || req.user === null) {
-        res.sendStatus(403);
+        res.sendStatus(HttpStatusCodes.FORBIDDEN);
         return;
     }
 
@@ -60,7 +61,7 @@ const get_authenticated_user = asyncHandler(async (req: AuthenticatedRequest, re
     const courses = await Course.allByUserId(user.id);
 
     if (user === undefined) {
-        res.sendStatus(403);
+        res.sendStatus(HttpStatusCodes.FORBIDDEN);
         return;
     }
 
