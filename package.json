@@ -4,7 +4,8 @@
     "private": true,
     "scripts": {
         "start": "node ./dist/bin/www.js",
-        "dev": "nodemon ./bin/www",
+        "dev": "ts-node ./bin/www.ts",
+        "dev:hot": "nodemon --exec \"npm run dev\" --watch . --ext ts",
         "build": "tsc",
         "backup": "cp ./database/cue.db ./backups/cue-$(date +%Y-%m-%d-%H-%M-%S).db"
     },
