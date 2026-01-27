@@ -53,7 +53,6 @@ export default function CardForm({
         >
             <CardFace
                 ref={formFrontFaceRef}
-                side="front"
                 value={formFrontValue}
                 setValue={setFormFrontValue}
                 placeholder="front"
@@ -61,7 +60,6 @@ export default function CardForm({
             />
             <CardFace
                 ref={formBackFaceRef}
-                side="back"
                 value={formBackValue}
                 setValue={setFormBackValue}
                 placeholder="back"

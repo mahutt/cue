@@ -84,7 +84,6 @@ export function CardEditor({
             </div>
             <div className="body">
                 <CardFace
-                    side="front"
                     value={frontValue}
                     setValue={setFrontValue}
                     edited={frontValue !== card.front}
@@ -98,7 +97,6 @@ export function CardEditor({
                     readOnly={isPendingCard}
                 />
                 <CardFace
-                    side="back"
                     value={backValue}
                     setValue={setBackValue}
                     edited={backValue !== card.back}

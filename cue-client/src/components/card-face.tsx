@@ -8,7 +8,6 @@ export interface FaceRef {
 interface Props {
     value: string;
     setValue: (value: string) => void;
-    side?: string;
     placeholder?: string;
     readOnly?: boolean;
     edited?: boolean;
@@ -22,7 +21,6 @@ export default forwardRef<FaceRef, Props>(
         {
             value,
             setValue,
-            side = '',
             placeholder = '',
             readOnly = false,
             edited = false,
@@ -30,7 +28,7 @@ export default forwardRef<FaceRef, Props>(
             resettable = true,
             onCommandClick = () => {},
         },
-        ref
+        ref,
     ) => {
         const textareaRef = useRef<HTMLTextAreaElement>(null);
         const resize = () => {
@@ -73,7 +71,7 @@ export default forwardRef<FaceRef, Props>(
                 )}
                 <textarea
                     ref={textareaRef}
-                    className={side}
+                    className="p-[1rem]"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     placeholder={placeholder}
@@ -83,7 +81,6 @@ export default forwardRef<FaceRef, Props>(
                         border: 'none',
                         outline: 'none',
                         margin: 0,
-                        padding: 0,
                         font: 'inherit',
                         color: 'inherit',
                         backgroundColor: 'transparent',
@@ -100,5 +97,5 @@ export default forwardRef<FaceRef, Props>(
                 />
             </div>
         );
-    }
+    },
 );

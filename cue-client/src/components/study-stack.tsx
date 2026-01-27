@@ -149,7 +149,6 @@ function CardFlipper({
         >
             {(editing || !flipped) && (
                 <CardFace
-                    side="front"
                     value={internalCard.front}
                     setValue={(value: string) => setInternalCard({ ...internalCard, front: value })}
                     readOnly={!editing}
@@ -161,7 +160,6 @@ function CardFlipper({
             />
             {(editing || flipped) && (
                 <CardFace
-                    side="back"
                     value={internalCard.back}
                     setValue={(value: string) => setInternalCard({ ...internalCard, back: value })}
                     readOnly={!editing}
