@@ -124,6 +124,7 @@ function CardFlipper({
                 setFlipped((prev) => !prev);
                 setShowScores(true);
             }
+            if (e.metaKey || e.ctrlKey) return;
             if (e.key === '1') {
                 e.preventDefault();
                 updateScore(0);
