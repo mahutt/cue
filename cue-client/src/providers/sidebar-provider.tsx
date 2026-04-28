@@ -1,4 +1,6 @@
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useEffect, useState, ReactNode } from 'react';
+
+const TOGGLE_SIDEBAR_KEY = 'b';
 
 export interface SidebarState {
     isSidebarOpen: boolean;
@@ -19,6 +21,17 @@ export const SidebarProvider: React.FC<SidebarProviderProps> = ({ children, init
     const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
     const openSidebar = () => setIsSidebarOpen(true);
     const closeSidebar = () => setIsSidebarOpen(false);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.metaKey && event.key.toLowerCase() === TOGGLE_SIDEBAR_KEY) {
+                event.preventDefault();
+                setIsSidebarOpen((prev) => !prev);
+            }
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, []);
 
     const value: SidebarState = {
         isSidebarOpen,
