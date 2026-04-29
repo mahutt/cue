@@ -1,5 +1,7 @@
 import React, { createContext, useEffect, useState, ReactNode } from 'react';
+import useLocalStorage from 'use-local-storage';
 
+const SIDEBAR_STORAGE_KEY = 'sidebar-state';
 const TOGGLE_SIDEBAR_KEY = 'b';
 
 export interface SidebarState {
@@ -17,7 +19,7 @@ interface SidebarProviderProps {
 }
 
 export const SidebarProvider: React.FC<SidebarProviderProps> = ({ children, initialSidebarState = true }) => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(initialSidebarState);
+    const [isSidebarOpen, setIsSidebarOpen] = useLocalStorage<boolean>(SIDEBAR_STORAGE_KEY, initialSidebarState);
     const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
     const openSidebar = () => setIsSidebarOpen(true);
     const closeSidebar = () => setIsSidebarOpen(false);
