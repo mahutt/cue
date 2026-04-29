@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, ReactNode } from 'react';
+import React, { createContext, useEffect, ReactNode } from 'react';
 import useLocalStorage from 'use-local-storage';
 
 const SIDEBAR_STORAGE_KEY = 'sidebar-state';
