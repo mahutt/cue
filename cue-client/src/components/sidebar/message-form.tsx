@@ -4,7 +4,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Send } from 'lucide-react';
 import { useNotification } from '@/hooks/notification-hook';
 import api from '@/api';
-import { Badge } from '../ui/badge';
 
 export default function MessageForm() {
     const { notify } = useNotification();
@@ -31,7 +30,6 @@ export default function MessageForm() {
                 <label htmlFor="messageContent" className="text-gray-500">
                     Requests & feedback
                 </label>
-                <Badge>New!</Badge>
             </div>
             <Textarea
                 id="messageContent"
